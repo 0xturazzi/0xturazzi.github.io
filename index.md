@@ -1,5 +1,5 @@
 ## 0xturazzi's random infosec blog
-### [posts](https://0xturazzi.github.io/posts.md)
+### [posts](https://0xturazzi.github.io/posts.html)
 ### whoami
 A human being[citation needed] born in Brazil 🇧🇷 ...
 
