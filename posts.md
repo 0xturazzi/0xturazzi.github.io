@@ -5,6 +5,5 @@
 
 ## Writeups
 ### Try hack me
- <script src="https://tryhackme.com/badge/43809"></script>
 - [Bounty Hacker](https://github.com/0xturazzi/Writeups/blob/master/TryHackMe/Bounty%20Hacker)
 - [Linux Ninja Skills](https://github.com/0xturazzi/Writeups/blob/master/TryHackMe/Linux%20Ninja%20Skills)
