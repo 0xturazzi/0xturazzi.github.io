@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>0xturazzi</title>
-</head>
+<head><title>0xturazzi</title></head>
 
 hello world
