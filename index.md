@@ -1,4 +1,4 @@
-<!DOCTYPE html>
-<head><title>0xturazzi</title></head>
+## 0xturazzi's random infosec blog
 
-hello world
+### [whoami](https://0xturazzi.github.io/whoami.md)
+### [posts](https://0xturazzi.github.io/posts.md)
