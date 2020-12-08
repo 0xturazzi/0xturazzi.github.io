@@ -1,5 +1,7 @@
 ## 0xturazzi's random infosec blog
-[BR](https://0xturazzi.github.io/index-br.html)
+[Versão BR](https://0xturazzi.github.io/index-br.html)
+
+If you are looking for the [exploit dev book in portuguese](https://0xturazzi.github.io/Um-Livrinho-Sobre-Exploit-Dev/book/)
 ### whoami
 A human being[citation needed] born in Brazil 🇧🇷 ...
 
