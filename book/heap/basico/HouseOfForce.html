@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>House of Force - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./aventura.html"><strong>1.</strong> Aventura</a></li><li class="spacer"></li><li><a href="./stack/phoenix/setup.html"><strong>2.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>2.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>2.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>2.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>2.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>2.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>2.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>2.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>3.</strong> Mitigações</a></li><li><strong>4.</strong> from pwn import *</li><li><a href="./stack/ret2libc/intro.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Pratica</li><li><ul class="section"><li><strong>5.1.1.</strong> Protostar Stack Six</li></ul></li><li><strong>5.2.</strong> Múltiplos estágios</li><li><strong>5.3.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><strong>6.</strong> Estilo OSCP</li><li><ul class="section"><li><strong>6.1.</strong> Brainpan</li><li><strong>6.2.</strong> Tib3rius BOF Prep</li></ul></li><li><strong>7.</strong> ROP</li><li><ul class="section"><li><strong>7.1.</strong> Primitivos</li><li><ul class="section"><li><strong>7.1.1.</strong> ROPE</li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><strong>7.2.1.</strong> ROPE: pivot</li></ul></li></ul></li><li><strong>8.</strong> Derrotando ASLR</li><li><strong>9.</strong> Derrotando Canaries</li><li class="spacer"></li><li><strong>10.</strong> Phoenix: Format</li><li class="spacer"></li><li><strong>11.</strong> Teoria</li><li><strong>12.</strong> Básico</li><li><ul class="section"><li><strong>12.1.</strong> Fastbins Dup</li><li><a href="./heap/basico/HouseOfForce.html" class="active"><strong>12.2.</strong> House of Force</a></li><li><strong>12.3.</strong> Unsafe Unlink</li><li><strong>12.4.</strong> Safe Unlink</li><li><strong>12.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>12.6.</strong> Chunk Faking</li></ul></li><li><strong>13.</strong> Intermediário</li><li><ul class="section"><li><strong>13.1.</strong> House of Orange</li><li><ul class="section"><li><strong>13.1.1.</strong> Heap Extension</li><li><strong>13.1.2.</strong> Vtable + File Stream Exploitation</li><li><strong>13.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>13.2.</strong> House of Spirit</li></ul></li><li><strong>14.</strong> Avançado</li><li><ul class="section"><li><strong>14.1.</strong> House of Rust</li></ul></li><li><strong>15.</strong> Shellphish: How2Heap</li><li class="spacer"></li><li><strong>16.</strong> Intro AFL</li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./heap/basico/HouseOfForce.html#house-of-force" id="house-of-force"><h1>House of Force</h1></a>
+<a class="header" href="./heap/basico/HouseOfForce.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<p>A técnica da House Of Force consiste em usar um heap overflow para alterar o
+tamanho do top_chunk para o valor máximo ( 0xffffffffffffffff ) ... permitindo
+que um malloc enorme seja alocado pelo top_chunk!</p>
+<p>Esse chunk enorme ira cobrir a distancia entre o alvo e o heap atual!</p>
+<pre><code class="language-py"> ______________________________
+|                              |  
+|  Resto do heap blablabla     |  
+|______________________________| 
+|             | Size: 0x20     |  &lt;- malloc(0x18)
+|   AAAAAAAAAAAAAAAAAAAAAAA    |  &lt;- write(&quot;A&quot;*0x20)
+|______________________________|
+|                              |  
+| Top size: 0x3c0              |  &lt;- Nao teve overflow
+|______________________________|
+
+ Agora, vamos usar o overflow para deixar o top_chunk.size gigante
+ ______________________________
+|                              |  
+|  Resto do heap blablabla     |  
+|______________________________| 
+|             | Size: 0x20     |  &lt;- malloc(0x18)
+|   AAAAAAAAAAAAAAAAAAAAAAA    |  &lt;- write(&quot;A&quot;*0x20 + p64(0xffffffffffffffff))
+|______________________________|
+|                              |  
+| Top size: 0xffffffffffffffff |
+|______________________________|
+
+Agora, vamos alocar um chunk gigante!
+
+Vamos supor que o heap começa em 0x40000 e o alvo esta em 0x60704
+
+Alem disso, vamos supor que o top_size esta no endereço 0x400d0
+
+Assim, queremos alocar um chunk que pare um pouco antes do alvo, 
+esse chunk servira somente para &quot;andar ate la&quot;
+
+Assim, quando alocarmos um chunk, ele vai ocupar a mesma posição que o alvo
+
+&gt;&gt;&gt; hex((0x60704 - 0x20) - 0x400d0)
+'0x20614'
+ ______________________________  ___ 0x40000
+|                              | 
+|  Resto do heap blablabla     |  
+|______________________________| 
+|             | Size: 0x20     |
+|   AAAAAAAAAAAAAAAAAAAAAAA    |
+|______________________________| ___ 0x400d0 -&gt; top_size ficava aqui
+|                              |
+|     NAO ESCREVER NESSE       |  &lt;- malloc(0x20614)
+|     CHUNK, ELE PODE ESTAR    |  
+|     PASSANDO POR MEMORIA     |
+|  READ_ONLY E CAUSAR SEGFAULT |
+|                              |  
+ ... ...  ... ... ...  ...  ...
+|______________________________| ___ 0x606e4 -&gt; alvo - 0x20
+|                              |  
+| Top size: 0xfffffffffffdf9eb |
+|______________________________|
+
+Agora, um ultimo chunk para cobrir alvo
+
+ ______________________________  ___ 0x40000
+|                              | 
+|  Resto do heap blablabla     |  
+|______________________________| 
+|             | Size: 0x20     |
+|   AAAAAAAAAAAAAAAAAAAAAAA    |
+|______________________________| ___ 0x400d0 -&gt; top_size ficava aqui
+|                              |
+|     NAO ESCREVER NESSE       |
+|     CHUNK, ELE PODE ESTAR    |  
+|     PASSANDO POR MEMORIA     |
+|  READ_ONLY E CAUSAR SEGFAULT |
+|                              |  
+ ... ...  ... ... ...  ...  ...
+|______________________________| ___ 0x606e4
+|             | Size: 0x30     |  
+|                              | &lt;- malloc(0x28) 
+|                              |  
+|                              | ___ 0x60704 -&gt; alvo
+|                              |  
+|______________________________| ___ 0x60714 
+|                              |  
+| Top size: 0xfffffffffffdf9cb |
+|______________________________|
+
+Um edit no chunk pode alterar o alvo!
+
+def Resumo():
+    Chunk_1 -&gt; top size = 0xfff...
+    Chunk_2 -&gt; gigante, usado para atravessar a distancia
+    Chunk_3 -&gt; Pode alterar o alvo
+
+
+Na pratica, o Chunk_3 talvez tenha um tamanho que 
+voce nao controle! Ou, alguma outra limitação assim!
+
+A situação ideal ocorre quando o inicio da user_data do Chunk_3 
+coincide com o endereço do alvo! pois voce nao precisa usar 
+padding para alcançar o alvo e portanto, nao arrisca 
+danificar outras partes da memoria!
+
+Então quando estiver praticando, vale a pena ficar brincando com o tamanho do 
+Chunk_2 para acertar a mira direitinho :D
+</code></pre>
+<a class="header" href="./heap/basico/HouseOfForce.html#va-wrap-around" id="va-wrap-around"><h1>VA Wrap-Around</h1></a>
+<p>No caso anterior, o endereço do alvo era maior que o do heap!</p>
+<p>heap: 0x40000 &lt;------&gt; alvo: 0x60704</p>
+<p>E caso seja ao contrario? Vamos precisar dar uma volta no VA space!</p>
+<blockquote>
+<p>VA = Virtual Address = Endereço Virtual = 0x0000000000000000 ate 0xffffffffffffffff</p>
+</blockquote>
+<p>Os endereços no VA space dao um loop, assim:</p>
+<blockquote>
+<p>Se voce esta em 0xffffffffffffff45 e anda para frente, voce vai terminar em 0x0000000000000000a3 ! Dando uma volta no VA space!</p>
+</blockquote>
+<p>Nos podemos fazer o mesmo com o <code>Chunk_2</code> ! Permitindo que o <code>Chunk_3</code> fique
+em um endereço anterior ao heap! :D</p>
+<p>Para encontrar o tamanho do <code>Chunk_2</code> que possibilite isso, podemos usar a função:</p>
+<pre><code class="language-py">def wrap(A,B):
+    return (0xffffffffffffffff - A)+B
+    #      || tamanho ate        || O quanto andar depois
+    #      || O fim do VA space  || de dar o loop 
+    
+    # Com A = base_do_heap + quantidade_gasta = top_size
+    # B = alvo - 0x20 (tamanho do Chunk_3)  
+</code></pre>
+<a class="header" href="./heap/basico/HouseOfForce.html#limitações" id="limitações"><h1>Limitações</h1></a>
+<ul>
+<li>Requer um heap leak</li>
+<li>Versão Glibc &lt; 2.29</li>
+</ul>
+<a class="header" href="./heap/basico/HouseOfForce.html#fontes-e-materiais-para-praticar" id="fontes-e-materiais-para-praticar"><h1>Fontes e Materiais para praticar</h1></a>
+<ul>
+<li><a href="https://github.com/shellphish/how2heap/blob/master/glibc_2.27/house_of_force.c">shellphish/how2heap</a></li>
+<li>La também tem o link pra alguns ctfs que usam house of force!</li>
+<li><a href="https://www.udemy.com/share/1039QMBEYadFpWRXo=/">O curso de Heap Exploits do Max Kamper</a> </li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/ret2libc/intro.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+
+            </div>
+
+            
+                <a href="./stack/ret2libc/intro.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+    <script type="text/javascript">
+        var socket = new WebSocket("ws://localhost:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                socket.close();
+                location.reload(true); // force reload from server (not from cache)
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    </script>
+
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
