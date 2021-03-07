@@ -86,7 +86,29 @@
                 </div>
 
                 <div id="content" class="content">
-                    <a class="header" href="./stack/ret2libc/intro.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
+                    <ul>
+<li><a href="./stack/ret2libc/intro.html#ret2libc">Ret2LibC</a></li>
+<li><a href="./stack/ret2libc/intro.html#fun%C3%A7%C3%B5es-%C3%BAteis">Funções Úteis</a>
+<ul>
+<li><a href="./stack/ret2libc/intro.html#system">System()</a>
+<ul>
+<li><a href="./stack/ret2libc/intro.html#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></li>
+<li><a href="./stack/ret2libc/intro.html#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></li>
+<li><a href="./stack/ret2libc/intro.html#unindo-tudo">Unindo tudo</a></li>
+</ul>
+</li>
+<li><a href="./stack/ret2libc/intro.html#execve--exit">Execve() + Exit()</a></li>
+<li><a href="./stack/ret2libc/intro.html#mprotect--ret2shellcode-todo">Mprotect() + ret2shellcode (~TODO~)</a></li>
+</ul>
+</li>
+<li><a href="./stack/ret2libc/intro.html#pontos-fracos">Pontos Fracos</a>
+<ul>
+<li><a href="./stack/ret2libc/intro.html#estaticamente-linkado">Estaticamente Linkado</a></li>
+<li><a href="./stack/ret2libc/intro.html#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./stack/ret2libc/intro.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
 <p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
 ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
 <p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos

