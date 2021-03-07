@@ -134,7 +134,7 @@ Assim, quando alocarmos um chunk, ele vai ocupar a mesma posição que o alvo
 |______________________________| 
 |             | Size: 0x20     |
 |   AAAAAAAAAAAAAAAAAAAAAAA    |
-|______________________________| ___ 0x400d0 -&gt; top_size ficava aqui
+|______________________________| ___ 0x400d0 -&gt; &amp;top_size ficava aqui
 |                              |
 |     NAO ESCREVER NESSE       |  &lt;- malloc(0x20614)
 |     CHUNK, ELE PODE ESTAR    |  
@@ -155,7 +155,7 @@ Agora, um ultimo chunk para cobrir alvo
 |______________________________| 
 |             | Size: 0x20     |
 |   AAAAAAAAAAAAAAAAAAAAAAA    |
-|______________________________| ___ 0x400d0 -&gt; top_size ficava aqui
+|______________________________| ___ 0x400d0 -&gt; &amp;top_size ficava aqui
 |                              |
 |     NAO ESCREVER NESSE       |
 |     CHUNK, ELE PODE ESTAR    |  
@@ -177,7 +177,7 @@ Agora, um ultimo chunk para cobrir alvo
 Um edit no chunk pode alterar o alvo!
 
 def Resumo():
-    Chunk_1 -&gt; top size = 0xfff...
+    Chunk_1 -&gt; *top_size = 0xfff...
     Chunk_2 -&gt; gigante, usado para atravessar a distancia
     Chunk_3 -&gt; Pode alterar o alvo
 
@@ -212,7 +212,7 @@ em um endereço anterior ao heap! :D</p>
     #      || tamanho ate        || O quanto andar depois
     #      || O fim do VA space  || de dar o loop 
     
-    # Com A = base_do_heap + quantidade_gasta = top_size
+    # Com A = base_do_heap + quantidade_gasta = &amp;top_size
     # B = alvo - 0x20 (tamanho do Chunk_3)  
 </code></pre>
 <a class="header" href="./heap/basico/HouseOfForce.html#limitações" id="limitações"><h1>Limitações</h1></a>
