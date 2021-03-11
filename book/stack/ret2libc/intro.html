@@ -110,13 +110,14 @@
 <li><a href="./stack/ret2libc/intro.html#execve--exit">Execve() + Exit()</a></li>
 <li><a href="./stack/ret2libc/intro.html#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a>
 <ul>
-<li><a href="./stack/ret2libc/intro.html#analise">Analise</a></li>
 <li><a href="./stack/ret2libc/intro.html#argumentos">Argumentos</a>
 <ul>
 <li><a href="./stack/ret2libc/intro.html#size">Size</a></li>
 <li><a href="./stack/ret2libc/intro.html#perms">Perms</a></li>
 </ul>
 </li>
+<li><a href="./stack/ret2libc/intro.html#classificacao">Classificacao</a></li>
+<li><a href="./stack/ret2libc/intro.html#analise">Analise</a></li>
 </ul>
 </li>
 </ul>
@@ -411,15 +412,31 @@ memory
 size
 perms
 </code></pre>
-<p>Assim, tornando a regiao do nosso shellcode executavel, e somente depois
-pulando para ele!</p>
+<a class="header" href="./stack/ret2libc/intro.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
+<a class="header" href="./stack/ret2libc/intro.html#size" id="size"><h4>Size</h4></a>
+<p>O valor deve ser alinhado ao page_size, exemplo:
+0x1000 em x86_64</p>
+<p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
+manual (opcao chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
+<a class="header" href="./stack/ret2libc/intro.html#perms" id="perms"><h4>Perms</h4></a>
+<p>As permissoes sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
+<blockquote>
+<p>OBS: existem outras permissoes relacionadas a memoria privada vs compartilhada etc</p>
+</blockquote>
+<p>Porem, essas sao somente macros de valor substituidas por <code>ints</code></p>
+<blockquote>
+<p>read=1 write=2 exec=4</p>
+</blockquote>
+<p>Assim, para termos todas as permissoes, o valor de perms deve ser <code>7</code>!</p>
+<a class="header" href="./stack/ret2libc/intro.html#classificacao" id="classificacao"><h3>Classificacao</h3></a>
 <p>Esses tipo de exploit se classifica como: exploit de multiplas etapas</p>
-<p>Esses exploits vem se tornando mais e mais comuns conforme novas protecoes
+<p>Assim, tornando a regiao do nosso shellcode executavel, e somente depois
+pulando para ele!
+Esses exploits vem se tornando mais e mais comuns conforme novas protecoes
 sao adicionadas!</p>
-<p>Porem, essa tecnica sera usada predominantemente em SROP 64 bits !</p>
-<p>Entao aqui ta uma analise meio chata mas que vai ser util no futuro</p>
-<p>Caso voce nao esteja vendo SROP no momento, pode pular e voltar no futuro!</p>
 <a class="header" href="./stack/ret2libc/intro.html#analise" id="analise"><h3>Analise</h3></a>
+<p>Porem, essa tecnica sera usada predominantemente em SROP 64 bits !</p>
+<p>Caso voce nao esteja vendo SROP no momento, pode pular e voltar no futuro!</p>
 <p>Eu recomendo que voce pegue o exemplo em <code>man mprotect</code> e brinque com ele +
 <code>strace --trace=mprotect</code> para criar uma intuicao!</p>
 <p>Eu alterei o meu para ficar assim:</p>
@@ -532,22 +549,6 @@ edx            0x2                 2
 rsi            0x1000              4096
 rdi            0x7ffff7fc7000      140737353904128
 </code></pre>
-<a class="header" href="./stack/ret2libc/intro.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
-<a class="header" href="./stack/ret2libc/intro.html#size" id="size"><h4>Size</h4></a>
-<p>O valor deve ser alinhado ao page_size, exemplo:
-0x1000 em x86_64</p>
-<p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
-manual (opcao chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
-<a class="header" href="./stack/ret2libc/intro.html#perms" id="perms"><h4>Perms</h4></a>
-<p>As permissoes sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
-<blockquote>
-<p>OBS: existem outras permissoes relacionadas a memoria privada vs compartilhada etc</p>
-</blockquote>
-<p>Porem, essas sao somente macros de valor substituidas por <code>ints</code></p>
-<blockquote>
-<p>read=1 write=2 exec=4</p>
-</blockquote>
-<p>Assim, para termos todas as permissoes, o valor de perms deve ser <code>7</code>!</p>
 
                 </div>
 
