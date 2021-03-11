@@ -2146,7 +2146,7 @@ endereço absoluto.</p>
 <li><a href="print.html#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
 </ul>
 </li>
-<li><a href="print.html#funcoes-uteis-pt-2">Funcoes Uteis Pt 2</a>
+<li><a href="print.html#fun%C3%A7%C3%B5es-uteis-pt-2">Funções Uteis Pt 2</a>
 <ul>
 <li><a href="print.html#execve--exit">Execve() + Exit()</a></li>
 <li><a href="print.html#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a>
@@ -2157,7 +2157,7 @@ endereço absoluto.</p>
 <li><a href="print.html#perms">Perms</a></li>
 </ul>
 </li>
-<li><a href="print.html#classificacao">Classificacao</a></li>
+<li><a href="print.html#classifica%C3%A7%C3%A3o">Classificação</a></li>
 <li><a href="print.html#analise">Analise</a></li>
 </ul>
 </li>
@@ -2310,7 +2310,7 @@ potencial do libc. Porem caso o computador possua ASLR ligado, sera
 necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
 executar o exploit em loop ate voce dar sorte (viável somente em
 computadores 32 bits).</p>
-<a class="header" href="print.html#funcoes-uteis-pt-2" id="funcoes-uteis-pt-2"><h1>Funcoes Uteis Pt 2</h1></a>
+<a class="header" href="print.html#funções-uteis-pt-2" id="funções-uteis-pt-2"><h1>Funções Uteis Pt 2</h1></a>
 <a class="header" href="print.html#execve--exit" id="execve--exit"><h2>Execve() + Exit()</h2></a>
 <p><a href="https://godbolt.org/z/7c6xWd">Compiler Explorer: System</a></p>
 <p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e
@@ -2443,7 +2443,7 @@ payload += p32(0)                                 # envp execve()
 sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p>
 </blockquote>
 <a class="header" href="print.html#mprotect--ret2shellcode" id="mprotect--ret2shellcode"><h2>Mprotect() + ret2shellcode</h2></a>
-<p><code>Mprotect</code> pode ser usado para tornar uma regiao da memoria <code>RWX</code> novamente!</p>
+<p><code>Mprotect</code> pode ser usado para tornar uma região da memoria <code>RWX</code> novamente!</p>
 <p>A funcao recebe 3 argumentos: mprotect(memory, size, perms)</p>
 <p>Assim, em 64 bits vamos precisar de uma chain, e em 32 bits dar push da
 direita pra esquerda!</p>
@@ -2458,28 +2458,28 @@ perms
 <p>O valor deve ser alinhado ao page_size, exemplo:
 0x1000 em x86_64</p>
 <p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
-manual (opcao chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
+manual (opção chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
 <a class="header" href="print.html#perms" id="perms"><h4>Perms</h4></a>
-<p>As permissoes sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
+<p>As permissões sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
 <blockquote>
-<p>OBS: existem outras permissoes relacionadas a memoria privada vs compartilhada etc</p>
+<p>OBS: existem outras permissões relacionadas a memoria privada vs compartilhada etc</p>
 </blockquote>
-<p>Porem, essas sao somente macros de valor substituidas por <code>ints</code></p>
+<p>Porem, essas sao somente macros de valor substituídas por <code>ints</code></p>
 <blockquote>
 <p>read=1 write=2 exec=4</p>
 </blockquote>
-<p>Assim, para termos todas as permissoes, o valor de perms deve ser <code>7</code>!</p>
-<a class="header" href="print.html#classificacao" id="classificacao"><h3>Classificacao</h3></a>
-<p>Esses tipo de exploit se classifica como: exploit de multiplas etapas</p>
-<p>Assim, tornando a regiao do nosso shellcode executavel, e somente depois
+<p>Assim, para termos todas as permissões, o valor de perms deve ser <code>7</code>!</p>
+<a class="header" href="print.html#classificação" id="classificação"><h3>Classificação</h3></a>
+<p>Esses tipo de exploit se classifica como: exploit de múltiplas etapas</p>
+<p>Assim, tornando a região do nosso shellcode executável, e somente depois
 pulando para ele!
-Esses exploits vem se tornando mais e mais comuns conforme novas protecoes
+Esses exploits vem se tornando mais e mais comuns conforme novas proteções
 sao adicionadas!</p>
 <a class="header" href="print.html#analise" id="analise"><h3>Analise</h3></a>
-<p>Porem, essa tecnica sera usada predominantemente em SROP 64 bits !</p>
+<p>Porem, essa técnica sera usada predominantemente em SROP 64 bits !</p>
 <p>Caso voce nao esteja vendo SROP no momento, pode pular e voltar no futuro!</p>
 <p>Eu recomendo que voce pegue o exemplo em <code>man mprotect</code> e brinque com ele +
-<code>strace --trace=mprotect</code> para criar uma intuicao!</p>
+<code>strace --trace=mprotect</code> para criar uma intuição!</p>
 <p>Eu alterei o meu para ficar assim:</p>
 <pre><code class="language-C">#include &lt;fcntl.h&gt;
 #include &lt;signal.h&gt;
@@ -2538,7 +2538,7 @@ int main ()
 }
 </code></pre>
 <p>Eu coloquei a funcao dentro do <code>foo()</code>, caso o gcc esteja colocando ela inline,
-vale a pena checar as flags de otimizacao!</p>
+vale a pena checar as flags de otimização!</p>
 <p>A funcao fica:</p>
 <pre><code class="language-x86asm">   0x00005555555552a7 &lt;+0&gt;:	endbr64 
    0x00005555555552ab &lt;+4&gt;:	push   rbp
@@ -2578,8 +2578,8 @@ info registers $rax
 c
 info registers $edx $rsi $rcx $rdi $rax
 </code></pre>
-<p>Assim, temos uma visao de todos os registers afetados na funcao! E fica mais
-facil de brincar com o progama, ver o que causa erro, etcetc....</p>
+<p>Assim, temos uma visão de todos os registers afetados na funcao! E fica mais
+fácil de brincar com o programa, ver o que causa erro, etcetc....</p>
 <pre><code class="language-x86asm">Efetivamente, a funcao recebe:
 edx = flags
 rsi = page size
@@ -2838,7 +2838,7 @@ Mesmos bytes, instruções diferentes
 sequencia especifica de gadgets, funções, etcetc.</p>
 <p>Normalmente, voce vai adicionar funções aos seus scripts que usem o primitivo,
 acelerando a velocidade de desenvolvimento dos exploits.</p>
-<a class="header" href="print.html#classificação" id="classificação"><h1>Classificação</h1></a>
+<a class="header" href="print.html#classificação-1" id="classificação-1"><h1>Classificação</h1></a>
 <a class="header" href="print.html#write---what---where" id="write---what---where"><h2>Write - What - Where</h2></a>
 <p>Esse primitivo te permite escrever algo (what) em algum lugar, esse algo pode
 ser desde 1 byte, ate uma qword inteira!</p>
