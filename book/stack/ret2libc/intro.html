@@ -112,6 +112,7 @@
 <ul>
 <li><a href="./stack/ret2libc/intro.html#argumentos">Argumentos</a>
 <ul>
+<li><a href="./stack/ret2libc/intro.html#addr">Addr</a></li>
 <li><a href="./stack/ret2libc/intro.html#size">Size</a></li>
 <li><a href="./stack/ret2libc/intro.html#perms">Perms</a></li>
 </ul>
@@ -403,18 +404,26 @@ sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p
 </blockquote>
 <a class="header" href="./stack/ret2libc/intro.html#mprotect--ret2shellcode" id="mprotect--ret2shellcode"><h2>Mprotect() + ret2shellcode</h2></a>
 <p><code>Mprotect</code> pode ser usado para tornar uma região da memoria <code>RWX</code> novamente!</p>
-<p>A funcao recebe 3 argumentos: mprotect(memory, size, perms)</p>
+<p>A funcao recebe 3 argumentos: mprotect(addr, size, perms)</p>
 <p>Assim, em 64 bits vamos precisar de uma chain, e em 32 bits dar push da
 direita pra esquerda!</p>
 <pre><code>mprotect
 ret       -&gt; shellcode
-memory
+addr
 size
 perms
 </code></pre>
 <a class="header" href="./stack/ret2libc/intro.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
+<a class="header" href="./stack/ret2libc/intro.html#addr" id="addr"><h4>Addr</h4></a>
+<p>O endereço deve ser alinhado ao page_size, assim podemos fazer:</p>
+<pre><code class="language-py">((addr &gt;&gt; 12) &lt;&lt; 12)
+</code></pre>
+<p>Alinhando o endereço fazendo shift-direita shift-esquerda, 4 por digito hex!</p>
+<pre><code class="language-py">&gt;&gt;&gt; hex((0x7ffe23668bf4 &gt;&gt; 12) &lt;&lt; 12 )
+'0x7ffe23668000'
+</code></pre>
 <a class="header" href="./stack/ret2libc/intro.html#size" id="size"><h4>Size</h4></a>
-<p>O valor deve ser alinhado ao page_size, exemplo:
+<p>O valor deve ser multiplo de page_size, exemplo:
 0x1000 em x86_64</p>
 <p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
 manual (opção chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
