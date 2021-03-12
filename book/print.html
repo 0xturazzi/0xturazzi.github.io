@@ -2457,7 +2457,7 @@ perms
 <a class="header" href="print.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
 <a class="header" href="print.html#addr" id="addr"><h4>Addr</h4></a>
 <p>O endereço deve ser alinhado ao page_size, assim podemos fazer:</p>
-<pre><code class="language-py">((addr &gt;&gt; 12) &lt;&lt; 12)
+<pre><code class="language-py">((addr &gt;&gt; 4*n) &lt;&lt; 4*n)
 </code></pre>
 <p>Alinhando o endereço fazendo shift-direita shift-esquerda, 4 por digito hex!</p>
 <pre><code class="language-py">&gt;&gt;&gt; hex((0x7ffe23668bf4 &gt;&gt; 12) &lt;&lt; 12 )
