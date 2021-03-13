@@ -3256,7 +3256,7 @@ implementado pelo programa)... Semelhantemente a quando ocorre uma
 ser salvos), para criar o <code>signal handler</code> antes precisamos salvar
 o estado atual usando um struct <code>sigreturn context</code> !</p>
 <p><img src="./sigcontext_structure.jpg" alt="sigreturn context diagram" /></p>
-<p><img src="https://amriunix.com/img/Sigreturn-oriented-programming-SROP/sigcontext_structure.jpg" alt="Fonte imagem: amriunix" /></p>
+<p><img src="https://amriunix.com/img/Sigreturn-oriented-programming-SROP/sigcontext_structure.jpg" alt="" /></p>
 <p><a href="https://amriunix.com/img/Sigreturn-oriented-programming-SROP/sigcontext_structure.jpg">Fonte imagem: amriunix</a></p>
 <p>Para retornar, o <code>signal handler</code> nao pode usar um simples <code>ret</code>,
 portanto usando a <code>syscall sigreturn</code> (<code>rax</code> = <code>0xf</code>)</p>
