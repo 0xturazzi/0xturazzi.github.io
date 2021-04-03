@@ -86,7 +86,58 @@
                 </div>
 
                 <div id="content" class="content">
-                    
+                    <p>Isso e uma tradução / resumo desse post <a href="https://www.nickgregory.me/security/2019/04/06/pivoting-around-memory/">nickgregory: pivoting-around-memory</a></p>
+<p>Todos os créditos vao para o autor original! :D</p>
+<a class="header" href="./stack/leakAll.html#intro" id="intro"><h1>Intro</h1></a>
+<p>Existem 4 regiões importantes quando exploitando um programa:</p>
+<ul>
+<li>O binário</li>
+<li>Stack</li>
+<li>LibC</li>
+<li>Heap</li>
+</ul>
+<p>Em resumo:
+<img src="./src/stack/mem_region_pivoting.png" alt="Imagem representando rotas entre as partes" />
+<img src="https://raw.githubusercontent.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/main/src/stack/mem_region_pivoting.png" alt="Imagem representando rotas entre as partes" /></p>
+<a class="header" href="./stack/leakAll.html#bin---libc--got" id="bin---libc--got"><h1>Bin -&gt; LibC : GOT</h1></a>
+<p>Se <code>PIE == False</code> ou se voce tem um leak da base do programa,
+basta ler a GOT.</p>
+<a class="header" href="./stack/leakAll.html#libc---heap--main_arena-pointers" id="libc---heap--main_arena-pointers"><h1>LibC &lt;-&gt; Heap : main_arena pointers</h1></a>
+<p>Se voce tem um read arbitrário ou read-after-free, voce pode
+conseguir o endereço do libc se a arena for a main ...
+normalmente como o <code>next</code> pointer nas <code>freelists</code></p>
+<p>Seguindo o outro sentido, se voce consegue ler no libc, basta
+ler <code>main_arena</code> para conseguir um pointer para o heap</p>
+<a class="header" href="./stack/leakAll.html#stack---bin-eou-libc--ler-ret-salvo" id="stack---bin-eou-libc--ler-ret-salvo"><h1>Stack -&gt; Bin e/ou LibC : Ler ret salvo</h1></a>
+<p>Ler o valor do ret salvo pode te dar um pointer para uma função
+do <code>bin</code> (derrotando <code>PIE</code>) ou para uma do <code>LibC</code> (ou de outra lib... o que pode ser util para a exploit chain)</p>
+<a class="header" href="./stack/leakAll.html#libc---stack--__libc_argv-ou-environ" id="libc---stack--__libc_argv-ou-environ"><h1>LibC -&gt; Stack : __libc_argv ou environ</h1></a>
+<p>Se voce tem um read no <code>LibC</code>, voce pode ler os símbolos:
+<code>__libc_argv</code> ou <code>environ</code>. Eles apontam para valores bem altos
+na stack, e muitas vezes existe uma diferença <strong>ALEATORIA</strong>
+(<code>ASLR</code>) entre eles e o <code>RSP</code>.</p>
+<p>De qualquer maneira, voce tem um leak de um pointer na stack, e
+pode iterar ate encontrar o ret salvo que aponta para
+<code>__libc_start_main</code>, para encontrar a parte importante da stack.</p>
+<a class="header" href="./stack/leakAll.html#libc---ld---bin" id="libc---ld---bin"><h1>LibC -&gt; ld -&gt; Bin</h1></a>
+<p>Nessa tecnica e nescessario passar por um nivel de abstracao, dado
+que o <code>LibC</code> nao tem pointers para <code>Bin</code> ! Assim:</p>
+<p><strong>LibC -&gt; ld</strong></p>
+<p>O Linker Dinamico (<code>ld</code>) sempre esta na memoria e <code>LibC</code> sempre
+contem pointers para ele: <code>GOT do libc -&gt; _dl_runtime_resolve</code></p>
+<p>E na maior parte dos casos, <code>ld</code> esta em um offset constante em
+relação ao <code>LibC</code> pois:</p>
+<ul>
+<li><code>mmap</code> usa valores alinhados a <code>PAGE_SIZE</code></li>
+<li>Normalmente, <code>LibC</code> e <code>ld</code> costumam ser as 2 primeiras libs a
+serem carregadas e portanto &quot;<code>mmap</code>adas&quot;</li>
+</ul>
+<p><strong>ld -&gt; Bin</strong></p>
+<p>O valor <code>name</code> dentro do struct <code>_dl_rtld_libname</code> aponta para
+<code>.interp</code>, mais especificamente para uma string com o <code>path</code> do
+linker, assim, calculando o offset dela dentro de <code>.interp</code> e
+consequentemente leakando a bse do <code>Bin</code> .</p>
+
                 </div>
 
                 <!-- Mobile navigation buttons -->
