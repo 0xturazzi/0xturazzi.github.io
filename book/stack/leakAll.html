@@ -99,6 +99,14 @@
 <p>Em resumo:
 <img src="./src/stack/mem_region_pivoting.png" alt="Imagem representando rotas entre as partes" />
 <img src="https://raw.githubusercontent.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/main/src/stack/mem_region_pivoting.png" alt="Imagem representando rotas entre as partes" /></p>
+<ul>
+<li><a href="./stack/leakAll.html#intro">Intro</a></li>
+<li><a href="./stack/leakAll.html#bin---libc--got">Bin -&gt; LibC : GOT</a></li>
+<li><a href="./stack/leakAll.html#libc---heap--main_arena-pointers">LibC &lt;-&gt; Heap : main_arena pointers</a></li>
+<li><a href="./stack/leakAll.html#stack---bin-eou-libc--ler-ret-salvo">Stack -&gt; Bin e/ou LibC : Ler ret salvo</a></li>
+<li><a href="./stack/leakAll.html#libc---stack--__libc_argv-ou-environ">LibC -&gt; Stack : __libc_argv ou environ</a></li>
+<li><a href="./stack/leakAll.html#libc---ld---bin">LibC -&gt; ld -&gt; Bin</a></li>
+</ul>
 <a class="header" href="./stack/leakAll.html#bin---libc--got" id="bin---libc--got"><h1>Bin -&gt; LibC : GOT</h1></a>
 <p>Se <code>PIE == False</code> ou se voce tem um leak da base do programa,
 basta ler a GOT.</p>
