@@ -89,54 +89,45 @@
                     <a class="header" href="print.html#mapa" id="mapa"><h1>Mapa</h1></a>
 <p>Isso nao ta pronto aaaaaaa foi mal :(</p>
 <p>Recomendação:</p>
-<pre><code>                    stack                                           |
-                      |                                             | Continuamente:
-   ___________________|___________________________                  | 
-  |                   |                           |                 | Uma dose saudável 
-  V                   V                           V                 | de fuzzing
-Heap                Kernel                Outras Arquiteturas       | 
-              ________|_________                                    | :D
-             |                  |                                   |
-             V                  V                                   |
-            Win               Linux                                 v
+<pre><code>                    Stack                                   |
+                      |                                     | Continuamente:
+   ___________________|___________________                  | 
+  |                   |                   |                 | Uma dose saudável 
+  V                   V                   V                 | de fuzzing
+Heap                Kernel        Outras Arquiteturas       | 
+              ________|________                             | :D
+             |                 |                            |
+             V                 V                            |
+            Win               Linux                         v
 </code></pre>
 <a class="header" href="print.html#stack" id="stack"><h2>Stack</h2></a>
 <pre><code>Phoenix Stack:
 BoF Tradicional, Assembly,... etc
-     |__________ ______________
-     |          |                  
-     V          V
-    W^X     GOT e PLT
-     |          |
-     V          V
-  Ret2libC     ASLR
-     |                   
-     |                 
-     V          
-    ROP               
+     |__________ _______________ ____
+     |          |               |    |        
+     V          V               |    V
+    W^X     GOT e PLT           | Canary
+     |          |_________      V    |                 
+     |          |         |    PIE   |
+     V          V         V     |    |
+  Ret2libC     ASLR     RELRO   |    |
+     |          |               |    |
+     |          V__ ____________V_ __V        
+     |             |              |
+     V             V              V
+    ROP           Leak          Brute     
  ____|____     
 |         |   
 V         V   
 SROP   ret2dl_resolve 
-
-
-
-
-
-
-
-
-
-
-
 </code></pre>
 <a class="header" href="print.html#fuzz" id="fuzz"><h2>Fuzz</h2></a>
 <pre><code>Fuzz
   |
-  |____________ ____________ ___________
-  |            |            |           |
-  V            V            V           V
- Genético     Taint       Symbolic      Peach
+  |____________ ____________ 
+  |            |            |
+  V            V            V 
+ Genético     Taint       Symbolic
   |           Analysis    Exec
   V            |______ _____|
  AFL+                 |
@@ -147,10 +138,11 @@ SROP   ret2dl_resolve
 </code></pre>
 <a class="header" href="print.html#heap-todo" id="heap-todo"><h2>Heap ~TODO~</h2></a>
 <pre><code></code></pre>
+<a class="header" href="print.html#linux-internals-todo" id="linux-internals-todo"><h2>Linux Internals ~TODO~</h2></a>
+<pre><code></code></pre>
 <a class="header" href="print.html#stack-1" id="stack-1"><h1>Stack</h1></a>
 <p>Nesse capitulo vamos aprender sobre:</p>
 <ul>
-<li>O que é a stack, pointers, e outras coisas assim...</li>
 <li>Introdução a Assembly e conceitos relacionados!</li>
 <li>Buffer Overflow Clássico</li>
 <li>Mitigações comuns e como derrota-las:
@@ -162,7 +154,7 @@ SROP   ret2dl_resolve
 <li>RELRO</li>
 </ul>
 </li>
-<li>ROP Avançado</li>
+<li>ROP Avançado </li>
 </ul>
 <p>Se encontrar algum erro, abre uma issue pf :)</p>
 <p><strong>Link pros desafios: <a href="https://exploit.education/phoenix/">Exploit Education Phoenix</a></strong></p>
