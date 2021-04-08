@@ -103,20 +103,32 @@ Heap                Kernel                Outras Arquiteturas       |
 <a class="header" href="./mapa.html#stack" id="stack"><h2>Stack</h2></a>
 <pre><code>Phoenix Stack:
 BoF Tradicional, Assembly,... etc
-    |
-    | Mitigacoes estilo
-    | NX ASLR PIE
-    | 
-    V      
-  Ret2libC 
-    |_____ _____________________      
-          |                     |
-          V                     V
-         ROP                GOT e PLT
-      ____|____ 
-     |         |
-     V         V
-    SROP   ret2dl_resolve        
+     |__________ ______________
+     |          |                  
+     V          V
+    W^X     GOT e PLT
+     |          |
+     V          V
+  Ret2libC     ASLR
+     |                   
+     |                 
+     V          
+    ROP               
+ ____|____     
+|         |   
+V         V   
+SROP   ret2dl_resolve 
+
+
+
+
+
+
+
+
+
+
+
 </code></pre>
 <a class="header" href="./mapa.html#fuzz" id="fuzz"><h2>Fuzz</h2></a>
 <pre><code>Fuzz
