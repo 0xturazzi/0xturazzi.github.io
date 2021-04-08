@@ -87,6 +87,51 @@
 
                 <div id="content" class="content">
                     <a class="header" href="./stack/ASLR/corromperGOT.html#corromper-got" id="corromper-got"><h1>Corromper GOT</h1></a>
+<p>Voce provavelmente ja conhece essa técnica, visto que eu usei ela em ROP!</p>
+<p>Mas resumindo, a GOT armazena o endereço das funções, se voce corromper um item da GOT, quando o programa-lo, vai redirecionar para a função que voce escolheu.</p>
+<p>Porem no contexto de ASLR, nao podemos so botar o endereço de system, pq ne.... ASLR!!!</p>
+<p>Então, nos podemos fazer um overwrite parcial!</p>
+<p>Dependendo da arquitetura e sistema operacional isso pode variar, porem:</p>
+<pre><code class="language-py">   7f ff ff    xx xx xx   12 34 
+|  Prefixo  | Parte com |  Nosso |
+| SEM ASLR  |    ASLR   |  ALVO  |
+</code></pre>
+<p>Assim, se corrompermos so os <code>LSB</code>s, podemos ignorar a parte do ASLR...</p>
+<pre><code class="language-py">puts:    7f ff ff   xx xx xx   10 00 -| offset constante
+system:  7f ff ff   xx xx xx   12 34 -| entre elas 0x234
+
+puts:    7f ff ff   11 3c 4c   10 00 -| 0x234
+system:  7f ff ff   11 3c 4c   12 34 -|
+
+puts:    7f ff ff   4c 1d 42   10 00 -| 0x234
+system:  7f ff ff   4c 1d 42   12 34 -|
+</code></pre>
+<p>Assim, se adicionarmos ao <code>puts</code> o offset entre ele e <code>system</code>... Usando por exemplo, um gadget
+<code>add [rbx] al</code></p>
+<p>Isso também pode ser usado no valor armazenado para o <code>ret</code> em BoFs tradicionais! Caso a função
+tenha sido chamada pelo libc!</p>
+<p><strong>Obs:</strong> Dependendo da vuln, voce usa tipos de offsets diferentes</p>
+<ul>
+<li>Write -&gt; offset = System - Base_Libc</li>
+<li>Add   -&gt; offset = System - puts # Ou qualquer outra função</li>
+</ul>
+<a class="header" href="./stack/ASLR/corromperGOT.html#exemplo" id="exemplo"><h1>Exemplo</h1></a>
+<p>Vamos supor que temos um <code>add-what-where</code> -&gt; Ex: <code>add [rbx] al;ret;</code></p>
+<pre><code class="language-py">elf = ELF(&quot;vuln123&quot;)
+libc = elf.libc
+
+got = elf.got.puts # Endereço de Puts na got
+got += 7 # Queremos alterar somente os bytes 7 e 8
+         # Lembrando que isso depende, em alguma outra
+         # Pode ser 6 7 8, etc etc....
+
+offset = libc.sym.system - libc.sym.puts
+
+payload = vuln_add(got, offset)
+payload += elf.plt.puts # Chamar Puts por meio da plt
+
+io.interactive()
+</code></pre>
 
                 </div>
 
