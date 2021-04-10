@@ -86,19 +86,55 @@
                 </div>
 
                 <div id="content" class="content">
-                    <a class="header" href="./heap/intro.html#intro" id="intro"><h1>Intro</h1></a>
-<p>~TODO~</p>
-<a class="header" href="./heap/intro.html#malloc" id="malloc"><h1>Malloc</h1></a>
+                    <ul>
+<li><a href="./heap/intro.html#setup">Setup</a>
+<ul>
+<li><a href="./heap/intro.html#pwndbg">Pwndbg</a></li>
+<li><a href="./heap/intro.html#villoc--dynamorio">Villoc + DynamoRIO</a></li>
+</ul>
+</li>
+<li><a href="./heap/intro.html#teoria">Teoria</a></li>
+</ul>
+<a class="header" href="./heap/intro.html#setup" id="setup"><h1>Setup</h1></a>
+<a class="header" href="./heap/intro.html#pwndbg" id="pwndbg"><h2>Pwndbg</h2></a>
+<ul>
+<li>
+<p>gdb base: <code>sudo apt-get install gdb</code></p>
+</li>
+<li>
+<p>e os coisos de teste: <code>sudo apt-get install libc6-dbg libc6-dbg:i386 libc6-dbg:amd64</code> caso voce tambem queira arm, mips, sei la,....</p>
+</li>
+<li>
+<p><a href="https://github.com/pwndbg/pwndbg">Github: pwndbg</a></p>
+</li>
+<li>
+<p>ou <a href="https://github.com/apogiatzis/gdb-peda-pwndbg-gef">Github: gdb-peda-pwndbg-gef </a></p>
+</li>
+</ul>
+<a class="header" href="./heap/intro.html#villoc--dynamorio" id="villoc--dynamorio"><h2>Villoc + DynamoRIO</h2></a>
+<ul>
+<li><a href="https://github.com/DynamoRIO/dynamorio/releases">Github: DynamoRIO</a> Ai voce baixa a versão mais recente pra sua plataforma.</li>
+<li><a href="https://github.com/wapiflapi/villoc/tree/master/tracers/dynamorio">Github: Villoc</a> e aqui as instruções para usar DynamoRIO</li>
+</ul>
+<p>Mas resumindo, voce baixa o <code>tar</code> do DynamoRIO, extrai em <code>/usr/bin</code> ou <code>local</code>,... ou onde voce preferir</p>
+<p>E executa <code>export DYNAMORIO_HOME=/usr/bin/DynamoRIO/</code></p>
+<p>Ai voce baixa <code>sudo apt-get install cmake</code></p>
+<p>Em seguida voce baixa villoc usando <code>git</code> e executa</p>
+<pre><code class="language-bash">git clone https://github.com/wapiflapi/villoc.git
+cd villoc/tracers/dynamorio
+./build.sh
+</code></pre>
+<p>Para usar usar basta substituir <code>./target</code> pelo programa e <code>bin64</code> por <code>bin32</code> caso necessário!</p>
+<pre><code>$DYNAMORIO_HOME/bin64/drrun  -c villoc_tracer villoc.trace -- ./target
+
+villoc.py villoc.trace out.html
+</code></pre>
+<a class="header" href="./heap/intro.html#teoria" id="teoria"><h1>Teoria</h1></a>
 <ul>
 <li><a href="http://gee.cs.oswego.edu/dl/html/malloc.html">1996: Doug Lea - A Memory Allocator</a></li>
 <li><a href="https://heap-exploitation.dhavalkapil.com/">dhavalkapil: Heap Exploitation book</a></li>
 <li><a href="https://sploitfun.wordpress.com/2015/02/11/syscalls-used-by-malloc/">SploitFUN: sbrk</a></li>
 <li><a href="https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/">SploitFUN: Malloc</a></li>
-</ul>
-<a class="header" href="./heap/intro.html#visualizar" id="visualizar"><h1>Visualizar</h1></a>
-<p><a href="https://github.com/wapiflapi/villoc">GitHub: Villoc</a></p>
-<a class="header" href="./heap/intro.html#hooks" id="hooks"><h1>Hooks</h1></a>
-<ul>
 <li><a href="https://www.gnu.org/software/libc/manual/html_node/Hooks-for-Malloc.html">GNU: malloc hooks</a></li>
 <li><a href="https://linux.die.net/man/3/__malloc_hook">man: __malloc_hook</a></li>
 <li><a href="https://stackoverflow.com/questions/120627/is-there-a-way-to-redefine-malloc-at-link-time-on-windows">stackoverflow: Is there a way to redefine malloc at link time on Windows?</a></li>

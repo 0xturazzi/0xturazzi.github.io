@@ -4060,19 +4060,55 @@ serem carregadas e portanto &quot;<code>mmap</code>adas&quot;</li>
 linker, assim, calculando o offset dela dentro de <code>.interp</code> e
 consequentemente leakando a base do <code>Bin</code> .</p>
 <a class="header" href="print.html#heap" id="heap"><h1>Heap</h1></a>
-<a class="header" href="print.html#intro-1" id="intro-1"><h1>Intro</h1></a>
-<p>~TODO~</p>
-<a class="header" href="print.html#malloc" id="malloc"><h1>Malloc</h1></a>
+<ul>
+<li><a href="print.html#setup">Setup</a>
+<ul>
+<li><a href="print.html#pwndbg">Pwndbg</a></li>
+<li><a href="print.html#villoc--dynamorio">Villoc + DynamoRIO</a></li>
+</ul>
+</li>
+<li><a href="print.html#teoria">Teoria</a></li>
+</ul>
+<a class="header" href="print.html#setup-1" id="setup-1"><h1>Setup</h1></a>
+<a class="header" href="print.html#pwndbg" id="pwndbg"><h2>Pwndbg</h2></a>
+<ul>
+<li>
+<p>gdb base: <code>sudo apt-get install gdb</code></p>
+</li>
+<li>
+<p>e os coisos de teste: <code>sudo apt-get install libc6-dbg libc6-dbg:i386 libc6-dbg:amd64</code> caso voce tambem queira arm, mips, sei la,....</p>
+</li>
+<li>
+<p><a href="https://github.com/pwndbg/pwndbg">Github: pwndbg</a></p>
+</li>
+<li>
+<p>ou <a href="https://github.com/apogiatzis/gdb-peda-pwndbg-gef">Github: gdb-peda-pwndbg-gef </a></p>
+</li>
+</ul>
+<a class="header" href="print.html#villoc--dynamorio" id="villoc--dynamorio"><h2>Villoc + DynamoRIO</h2></a>
+<ul>
+<li><a href="https://github.com/DynamoRIO/dynamorio/releases">Github: DynamoRIO</a> Ai voce baixa a versão mais recente pra sua plataforma.</li>
+<li><a href="https://github.com/wapiflapi/villoc/tree/master/tracers/dynamorio">Github: Villoc</a> e aqui as instruções para usar DynamoRIO</li>
+</ul>
+<p>Mas resumindo, voce baixa o <code>tar</code> do DynamoRIO, extrai em <code>/usr/bin</code> ou <code>local</code>,... ou onde voce preferir</p>
+<p>E executa <code>export DYNAMORIO_HOME=/usr/bin/DynamoRIO/</code></p>
+<p>Ai voce baixa <code>sudo apt-get install cmake</code></p>
+<p>Em seguida voce baixa villoc usando <code>git</code> e executa</p>
+<pre><code class="language-bash">git clone https://github.com/wapiflapi/villoc.git
+cd villoc/tracers/dynamorio
+./build.sh
+</code></pre>
+<p>Para usar usar basta substituir <code>./target</code> pelo programa e <code>bin64</code> por <code>bin32</code> caso necessário!</p>
+<pre><code>$DYNAMORIO_HOME/bin64/drrun  -c villoc_tracer villoc.trace -- ./target
+
+villoc.py villoc.trace out.html
+</code></pre>
+<a class="header" href="print.html#teoria-3" id="teoria-3"><h1>Teoria</h1></a>
 <ul>
 <li><a href="http://gee.cs.oswego.edu/dl/html/malloc.html">1996: Doug Lea - A Memory Allocator</a></li>
 <li><a href="https://heap-exploitation.dhavalkapil.com/">dhavalkapil: Heap Exploitation book</a></li>
 <li><a href="https://sploitfun.wordpress.com/2015/02/11/syscalls-used-by-malloc/">SploitFUN: sbrk</a></li>
 <li><a href="https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/">SploitFUN: Malloc</a></li>
-</ul>
-<a class="header" href="print.html#visualizar" id="visualizar"><h1>Visualizar</h1></a>
-<p><a href="https://github.com/wapiflapi/villoc">GitHub: Villoc</a></p>
-<a class="header" href="print.html#hooks" id="hooks"><h1>Hooks</h1></a>
-<ul>
 <li><a href="https://www.gnu.org/software/libc/manual/html_node/Hooks-for-Malloc.html">GNU: malloc hooks</a></li>
 <li><a href="https://linux.die.net/man/3/__malloc_hook">man: __malloc_hook</a></li>
 <li><a href="https://stackoverflow.com/questions/120627/is-there-a-way-to-redefine-malloc-at-link-time-on-windows">stackoverflow: Is there a way to redefine malloc at link time on Windows?</a></li>
@@ -4123,7 +4159,7 @@ login() # pointer usado after free, apontando para service
 <li><a href="print.html#limita%C3%A7%C3%B5es">Limitações</a></li>
 <li><a href="print.html#fontes-e-materiais-para-praticar">Fontes e Materiais para praticar</a></li>
 </ul>
-<a class="header" href="print.html#teoria-3" id="teoria-3"><h1>Teoria</h1></a>
+<a class="header" href="print.html#teoria-4" id="teoria-4"><h1>Teoria</h1></a>
 <p>A técnica da House Of Force consiste em usar um heap overflow para alterar o
 tamanho do top_chunk para o valor máximo ( 0xffffffffffffffff ) ... permitindo
 que um malloc enorme seja alocado pelo top_chunk!</p>
