@@ -4106,6 +4106,18 @@ cd villoc/tracers/dynamorio
 
 villoc.py villoc.trace out.html
 </code></pre>
+<p>Se voce mudou o local do villoc, voce tambem precisara mudar <code>villoc_tracer</code> para <code>/usr/bin/villoc/tracers/dynamorio/villoc_tracer</code> (com o local certo)</p>
+<p>eu recomendo alterar o seu <code>.bashrc</code> para facilitar :D</p>
+<pre><code class="language-bash">PATH=&quot;$PATH:/usr/bin/villoc&quot;
+export DYNAMORIO_HOME=/usr/bin/DynamoRIO/
+
+villoc() {
+    $DYNAMORIO_HOME/bin64/drrun  -c /usr/bin/villoc/tracers/dynamorio/villoc_tracer villoc.trace -- $1
+    villoc.py villoc.trace $1-villoc.html
+    firefox a-villoc.html
+}
+
+</code></pre>
 <a class="header" href="print.html#teoria-3" id="teoria-3"><h1>Teoria</h1></a>
 <ul>
 <li><a href="http://gee.cs.oswego.edu/dl/html/malloc.html">1996: Doug Lea - A Memory Allocator</a></li>
