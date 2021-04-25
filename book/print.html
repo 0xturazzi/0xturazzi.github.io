@@ -4174,7 +4174,7 @@ login() # pointer usado after free, apontando para service
 <li><a href="print.html#ataques">Ataques</a>
 <ul>
 <li><a href="print.html#alocar-um-chunk">Alocar um chunk</a></li>
-<li><a href="print.html#rce">RCE</a></li>
+<li><a href="print.html#exec">Exec</a></li>
 <li><a href="print.html#escrever-um-valor-na-main_arena">Escrever um valor na main_arena</a></li>
 <li><a href="print.html#alocar-um-chunk-na-main_arena">Alocar um chunk na main_arena</a>
 <ul>
@@ -4249,13 +4249,13 @@ o <code>fd</code>. Então, o <code>fd</code> fica na <strong>PRIMEIRA QWORD</str
 <li>edit(alvo, blablabla)</li>
 </ul>
 <blockquote>
-<p>Nos temos um write abitrario</p>
+<p>Nos temos um write arbitrário</p>
 </blockquote>
 <p>Porem existe uma excesso, o <strong>ALVO + 0x8</strong> precisa ser <strong>IGUAL AO TAMANHO DO FASTBIN</strong></p>
 <p>Assim, se for o <code>fastbin 0x60</code>,  <code>ALVO + 0x8 == 0x60</code></p>
-<p>Para achar um chunk que se encaixa nesses criterios, voce pode usar<br />
+<p>Para achar um chunk que se encaixa nesses critérios, voce pode usar<br />
 <code>find_fake_fast</code> no <code>pwntools</code></p>
-<a class="header" href="print.html#rce" id="rce"><h3>RCE</h3></a>
+<a class="header" href="print.html#exec" id="exec"><h3>Exec</h3></a>
 <p>Nos podemos, por exemplo, fazer o anterior com <strong>ALVO = __malloc_hook</strong></p>
 <ul>
 <li>Double free</li>
@@ -4273,8 +4273,8 @@ o <code>fd</code>. Então, o <code>fd</code> fica na <strong>PRIMEIRA QWORD</str
 <li>malloc() <strong>ativar o hook</strong></li>
 </ul>
 <a class="header" href="print.html#escrever-um-valor-na-main_arena" id="escrever-um-valor-na-main_arena"><h3>Escrever um valor na main_arena</h3></a>
-<p>O valor das <code>head</code>s fica armazenado na <code>main_arena</code>, assim enves de
-colocar um endereco em <code>alvo</code>, podemos colocar um valor:</p>
+<p>O valor das <code>head</code>s fica armazenado na <code>main_arena</code>, assim invés de
+colocar um endereço em <code>alvo</code>, podemos colocar um valor:</p>
 <ul>
 <li>Double free</li>
 </ul>
@@ -4318,7 +4318,7 @@ colocar um endereco em <code>alvo</code>, podemos colocar um valor:</p>
 <blockquote>
 <p>head : 0x50</p>
 </blockquote>
-<p>Agora usar a tecnica de alocar um chunk, usando um Fastbin Dup no <code>0x50</code>:</p>
+<p>Agora usar a técnica de alocar um chunk, usando um Fastbin Dup no <code>0x50</code>:</p>
 <ul>
 <li>Double free</li>
 </ul>
@@ -4341,11 +4341,11 @@ fastbin 0x60 dentro da main arena == main_arena + 48</p>
 teste ja que o nosso fake chunk tem tamanho 0x50</p>
 </blockquote>
 <blockquote>
-<p>OBS 2 : Esse endereco pode mudar dependendo da versao do malloc, calcula
+<p>OBS 2 : Esse endereço pode mudar dependendo da versão do malloc, calcula
 de novo ai</p>
 </blockquote>
 <a class="header" href="print.html#exemplo-malloc-antigo" id="exemplo-malloc-antigo"><h4>Exemplo malloc antigo</h4></a>
-<p>Agora, por exemplo, em versoes antigas podemos alterar o <code>top</code> na main_arena</p>
+<p>Agora, por exemplo, em versões antigas podemos alterar o <code>top</code> na main_arena</p>
 <ul>
 <li>top = malloc()</li>
 <li>edit(top, b'G'*48 + p64(libc.sym.__malloc_hook-0x24))</li>
