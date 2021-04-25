@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fastbins Dup - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li><li><a href="./stack/ASLR/brute32.html"><strong>8.3.</strong> Bruteforce</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><strong>15.</strong> Conceitos Relacionados</li><li><ul class="section"><li><strong>15.1.</strong> _IO_list_all</li></ul></li><li><strong>16.</strong> Atacando Malloc</li><li><ul class="section"><li><a href="./heap/malloc/fastbinsDup.html" class="active"><strong>16.1.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.2.</strong> House of Force</a></li><li><strong>16.3.</strong> Unsafe Unlink</li><li><strong>16.4.</strong> Safe Unlink</li><li><strong>16.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>16.6.</strong> House of Spirit</li><li><strong>16.7.</strong> House of Orange</li><li><strong>16.8.</strong> House of Rust</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./heap/malloc/fastbinsDup.html#fastbins-dup" id="fastbins-dup"><h1>Fastbins Dup</h1></a>
+<ul>
+<li><a href="./heap/malloc/fastbinsDup.html#fastbins-dup">Fastbins Dup</a>
+<ul>
+<li><a href="./heap/malloc/fastbinsDup.html#teoria">Teoria</a></li>
+<li><a href="./heap/malloc/fastbinsDup.html#ataques">Ataques</a>
+<ul>
+<li><a href="./heap/malloc/fastbinsDup.html#alocar-um-chunk">Alocar um chunk</a></li>
+<li><a href="./heap/malloc/fastbinsDup.html#exec">Exec</a></li>
+<li><a href="./heap/malloc/fastbinsDup.html#escrever-um-valor-na-main_arena">Escrever um valor na main_arena</a></li>
+<li><a href="./heap/malloc/fastbinsDup.html#alocar-um-chunk-na-main_arena">Alocar um chunk na main_arena</a>
+<ul>
+<li><a href="./heap/malloc/fastbinsDup.html#exemplo-malloc-antigo">Exemplo malloc antigo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./heap/malloc/fastbinsDup.html#teoria" id="teoria"><h2>Teoria</h2></a>
+<p>Se o chunk tiver nos fastbins (<code>0x20</code> a <code>0x80</code>), voce pode passar
+pelas mitigações de double free.</p>
+<p>Se:</p>
+<ul>
+<li>free chunk_A</li>
+<li>free chunk_A</li>
+</ul>
+<p>As mitigações vao ser ativadas... porem se:</p>
+<ul>
+<li>free chunk_A</li>
+<li>free chunk_B</li>
+<li>free chunk_A</li>
+</ul>
+<p>Voce consegue linkar o chunk_A duas vezes em um fastbin (double free).</p>
+<a class="header" href="./heap/malloc/fastbinsDup.html#ataques" id="ataques"><h2>Ataques</h2></a>
+<a class="header" href="./heap/malloc/fastbinsDup.html#alocar-um-chunk" id="alocar-um-chunk"><h3>Alocar um chunk</h3></a>
+<p>Os fastbins sao linkados numa <code>single-linked-list</code>, portanto somente usa
+o <code>fd</code>. Então, o <code>fd</code> fica na <strong>PRIMEIRA QWORD</strong> do parte dos dados.</p>
+<ul>
+<li>Double free
+<ul>
+<li>free chunk_A</li>
+<li>free chunk_B</li>
+<li>free chunk_A</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_A = malloc()</li>
+</ul>
+<blockquote>
+<p>head : Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_B = malloc()</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>edit(chunk_A, <strong>ALVO</strong>)</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; ALVO</p>
+</blockquote>
+<ul>
+<li>malloc()</li>
+</ul>
+<blockquote>
+<p>head : ALVO</p>
+</blockquote>
+<blockquote>
+<p>O Proximo malloc ira alocar um chunk em ALVO</p>
+</blockquote>
+<ul>
+<li>alvo = malloc()</li>
+<li>edit(alvo, blablabla)</li>
+</ul>
+<blockquote>
+<p>Nos temos um write arbitrário</p>
+</blockquote>
+<p>Porem existe uma excesso, o <strong>ALVO + 0x8</strong> precisa ser <strong>IGUAL AO TAMANHO DO FASTBIN</strong></p>
+<p>Assim, se for o <code>fastbin 0x60</code>,  <code>ALVO + 0x8 == 0x60</code></p>
+<p>Para achar um chunk que se encaixa nesses critérios, voce pode usar<br />
+<code>find_fake_fast</code> no <code>pwntools</code></p>
+<a class="header" href="./heap/malloc/fastbinsDup.html#exec" id="exec"><h3>Exec</h3></a>
+<p>Nos podemos, por exemplo, fazer o anterior com <strong>ALVO = __malloc_hook</strong></p>
+<ul>
+<li>Double free</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_A = malloc()</li>
+<li>chunk_B = malloc()</li>
+<li>edit(chunk_A, <strong>__malloc_hook</strong>)</li>
+<li>malloc()</li>
+<li>alvo = malloc()</li>
+<li>edit(alvo, one_gadget)</li>
+<li>malloc() <strong>ativar o hook</strong></li>
+</ul>
+<a class="header" href="./heap/malloc/fastbinsDup.html#escrever-um-valor-na-main_arena" id="escrever-um-valor-na-main_arena"><h3>Escrever um valor na main_arena</h3></a>
+<p>O valor das <code>head</code>s fica armazenado na <code>main_arena</code>, assim invés de
+colocar um endereço em <code>alvo</code>, podemos colocar um valor:</p>
+<ul>
+<li>Double free</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_A = malloc()</li>
+<li>chunk_B = malloc()</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>edit(chunk_A, <strong>0x123</strong>)</li>
+<li>malloc()</li>
+</ul>
+<blockquote>
+<p>head : 0x123</p>
+</blockquote>
+<p>Com esse valor podemos facilitar outros tipo de exploit, por exemplo:</p>
+<a class="header" href="./heap/malloc/fastbinsDup.html#alocar-um-chunk-na-main_arena" id="alocar-um-chunk-na-main_arena"><h3>Alocar um chunk na main_arena</h3></a>
+<p>Repetindo o anterior usando um Fastbin Dup no <code>0x60</code>:</p>
+<ul>
+<li>Double free</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_A = malloc()</li>
+<li>chunk_B = malloc()</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>edit(chunk_A, <strong>0x50</strong>)</li>
+<li>malloc()</li>
+</ul>
+<blockquote>
+<p>head : 0x50</p>
+</blockquote>
+<p>Agora usar a técnica de alocar um chunk, usando um Fastbin Dup no <code>0x50</code>:</p>
+<ul>
+<li>Double free</li>
+</ul>
+<blockquote>
+<p>head : chunk_A -&gt; Chunk_B -&gt; chunk_A -&gt; [...]</p>
+</blockquote>
+<ul>
+<li>chunk_A = malloc()</li>
+<li>chunk_B = malloc()</li>
+<li>edit(chunk_A, <strong>main_arena + 48 - 8</strong>)</li>
+<li>malloc()</li>
+<li>fake = malloc() <strong>Fake Chunk Na Main_Arena</strong></li>
+</ul>
+<p>Agora temos um chunk que nos permite dar write na main_arena</p>
+<blockquote>
+<p>OBS :
+fastbin 0x60 dentro da main arena == main_arena + 48</p>
+<p>alvo == main_arena + 48 - 8</p>
+<p>alvo + 8 == head do 0x60 fastbin a.k.a. &quot;0x50&quot;, passando o
+teste ja que o nosso fake chunk tem tamanho 0x50</p>
+</blockquote>
+<blockquote>
+<p>OBS 2 : Esse endereço pode mudar dependendo da versão do malloc, calcula
+de novo ai</p>
+</blockquote>
+<a class="header" href="./heap/malloc/fastbinsDup.html#exemplo-malloc-antigo" id="exemplo-malloc-antigo"><h4>Exemplo malloc antigo</h4></a>
+<p>Agora, por exemplo, em versões antigas podemos alterar o <code>top</code> na main_arena</p>
+<ul>
+<li>top = malloc()</li>
+<li>edit(top, b'G'*48 + p64(libc.sym.__malloc_hook-0x24))</li>
+</ul>
+<pre><code>              Pad    +            top
+</code></pre>
+<p>Agora o proximo malloc vai alocar proximo ao <strong>__malloc_hook</strong></p>
+<ul>
+<li>malloc(b'H'*20 + p64(one_gadget)) <strong>Esse chunk ocupa o __malloc_hook</strong></li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./heap/geral/uaf/heap-two.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./heap/malloc/HouseOfForce.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./heap/geral/uaf/heap-two.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./heap/malloc/HouseOfForce.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
