@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>_IO_list_all - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li><li><a href="./stack/ASLR/brute32.html"><strong>8.3.</strong> Bruteforce</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><strong>15.</strong> Conceitos Relacionados</li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html" class="active"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.1.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.2.</strong> House of Force</a></li><li><strong>16.3.</strong> Unsafe Unlink</li><li><strong>16.4.</strong> Safe Unlink</li><li><strong>16.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>16.6.</strong> House of Spirit</li><li><strong>16.7.</strong> House of Orange</li><li><strong>16.8.</strong> House of Rust</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./heap/relacionados/io_list_all.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<a class="header" href="./heap/relacionados/io_list_all.html#intro" id="intro"><h2>Intro</h2></a>
+<p>No linux, para interagir com os <code>IO</code>s nao se usa o <code>file descriptors (fd)</code>
+padrões diretamente, e sim por meio de <code>file streams</code>. Esses sao wrappers que
+trazem funcionalidade adicional como por exemplo: <code>IO buffers</code></p>
+<p>Um programa sempre possui 3 file streams, mesmo que nao use input nem output,
+esses sao os <code>stdIOs</code>: <code>stdin</code>, <code>stdout</code> e <code>stderr</code>. Isso quer dizer que essa
+técnica funciona praticamente universalmente! :D</p>
+<p>Porem com a evolução de C para C++ , as file streams receberam mais um upgrade:
+agora elas possuem <code>file stream + vtable</code>. Essa <code>vtable</code> possui funcionalidades
+que tornam IO mais fluido.</p>
+<p>Por exemplo, quando o programa esta encerrando, para limpar os buffers, a
+função <code>overflow</code> é chamada.</p>
+<p>Porem como C++ depende muito em C, essas file streams melhoradas foram
+adicionados ao LibC, ie portanto elas estão sempre presente em todos programas
+que dependem de C...</p>
+<p>Se nos apontarmos essa <code>vtable</code> para uma vtable falsa, podemos alterar o
+<code>overflow</code> e quando o programa encerrar, ganhar execução de código!</p>
+<a class="header" href="./heap/relacionados/io_list_all.html#struct" id="struct"><h2>Struct</h2></a>
+<p>As files streams sao definidas por:</p>
+<pre><code class="language-C">pwndbg&gt; p *_IO_list_all 
+$2 = {
+  file = {
+    _flags = -72540026,
+    _IO_read_ptr = 0x0,
+    _IO_read_end = 0x0,
+    _IO_read_base = 0x0,
+    _IO_write_base = 0x0,
+    _IO_write_ptr = 0x0,
+    _IO_write_end = 0x0,
+    _IO_buf_base = 0x0,
+    _IO_buf_end = 0x0,
+    _IO_save_base = 0x0,
+    _IO_backup_base = 0x0,
+    _IO_save_end = 0x0,
+    _markers = 0x0,
+    _chain = 0x7fd57b9fb680 &lt;_IO_2_1_stdout_&gt;,
+    _fileno = 2,
+    _flags2 = 0,
+    _old_offset = -1,
+    _cur_column = 0,
+    _vtable_offset = 0 '\000',
+    _shortbuf = &quot;&quot;,
+    _lock = 0x7fd57b9fc7b0 &lt;_IO_stdfile_2_lock&gt;,
+    _offset = -1,
+    _codecvt = 0x0,
+    _wide_data = 0x7fd57b9fa760 &lt;_IO_wide_data_2&gt;,
+    _freeres_list = 0x0,
+    _freeres_buf = 0x0,
+    __pad5 = 0,
+    _mode = 0,
+    _unused2 = '\000' &lt;repeats 19 times&gt;
+  },
+  vtable = 0x7fd57b9f7420 &lt;__GI__IO_file_jumps&gt;
+}
+pwndbg&gt; p *_IO_list_all.vtable 
+$3 = {
+  __dummy = 0,
+  __dummy2 = 0,
+  __finish = 0x7fd57b6c08a0 &lt;_IO_new_file_finish&gt;,
+  __overflow = 0x7fd57b6c12f0 &lt;_IO_new_file_overflow&gt;,
+  __underflow = 0x7fd57b6c0f70 &lt;_IO_new_file_underflow&gt;,
+  __uflow = 0x7fd57b6c22c0 &lt;__GI__IO_default_uflow&gt;,
+  __pbackfail = 0x7fd57b6c3620 &lt;__GI__IO_default_pbackfail&gt;,
+  __xsputn = 0x7fd57b6c04a0 &lt;_IO_new_file_xsputn&gt;,
+  __xsgetn = 0x7fd57b6c0070 &lt;__GI__IO_file_xsgetn&gt;,
+  __seekoff = 0x7fd57b6bf880 &lt;_IO_new_file_seekoff&gt;,
+  __seekpos = 0x7fd57b6c26a0 &lt;_IO_default_seekpos&gt;,
+  __setbuf = 0x7fd57b6bf160 &lt;_IO_new_file_setbuf&gt;,
+  __sync = 0x7fd57b6befe0 &lt;_IO_new_file_sync&gt;,
+  __doallocate = 0x7fd57b6b32e0 &lt;__GI__IO_file_doallocate&gt;,
+  __read = 0x7fd57b6c0480 &lt;__GI__IO_file_read&gt;,
+  __write = 0x7fd57b6bfe70 &lt;_IO_new_file_write&gt;,
+  __seek = 0x7fd57b6bf5b0 &lt;__GI__IO_file_seek&gt;,
+  __close = 0x7fd57b6bf150 &lt;__GI__IO_file_close&gt;,
+  __stat = 0x7fd57b6bfe60 &lt;__GI__IO_file_stat&gt;,
+  __showmanyc = 0x7fd57b6c37a0 &lt;_IO_default_showmanyc&gt;,
+  __imbue = 0x7fd57b6c37b0 &lt;_IO_default_imbue&gt;
+
+</code></pre>
+<a class="header" href="./heap/relacionados/io_list_all.html#campos" id="campos"><h2>Campos</h2></a>
+<p>Relevante para nos temos:</p>
+<ul>
+<li>chain
+<ul>
+<li>Aponta para a proxima file stream assim, formando um singly linked list.
+<ul>
+<li>Normalmente contendo os <code>std IO</code>s</li>
+</ul>
+</li>
+<li>Nos podemos altera-lo e apontar para o heap, e no heap criar uma file stream falsa.</li>
+</ul>
+</li>
+<li>Vtable
+<ul>
+<li>overflow: podemos apontar para um one_gadget ou system</li>
+</ul>
+</li>
+<li>Flags
+<ul>
+<li>Quando forjamos uma file stream falsa e chamamos <code>overflow</code>, <code>flags</code> sera
+passado por meio do <code>RDI</code>.</li>
+<li>Assim podemos colocar <code>flags = /bin/sh</code> e <code>overflow = system</code></li>
+</ul>
+</li>
+<li>Proteções: No futuro provavelmente vai ter mais, mas no mínimo voce deve esperar:
+<ul>
+<li>write_ptr &gt; write_base</li>
+<li>mode = 0
+<ul>
+<li>obs: os primeiros 4 bytes de mode podem ser afetados por ASLR, tornando seu exploit funcional apenas 50% da vezes.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./heap/relacionados/io_list_all.html#offsets" id="offsets"><h2>Offsets</h2></a>
+<ul>
+<li>
+<p>File: 0x20</p>
+<ul>
+<li>flags: 0x0</li>
+<li>write_base: 0x20</li>
+<li>write_ptr: 0x28</li>
+<li>chain: 0x68</li>
+<li>mode: 0xc0</li>
+</ul>
+</li>
+<li>
+<p>Vtable: 0xd0</p>
+<ul>
+<li>Overflow: 0x18 (em realacao a vtable)</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./heap/relacionados/io_list_all.html#exploit" id="exploit"><h1>Exploit</h1></a>
+<p>Então recapitulando, nos podemos forjar uma file stream falsa no heap ou stack,
+e apontar <code>_IO_list_all</code> ou alguma das <code>chain</code>s para ela.</p>
+<p>Alem disso, podemos simplesmente alterar a <code>vtable</code> ou somente o <code>overflow dentro da vtable</code> de um dos <code>std IO</code>s.</p>
+<p>Nos caso mais complexo, caso tenhamos um pointer para a nossa file stream falsa
+podemos apontar <code>_IO_list_all</code> para <code>pointer - 0x68</code>, fazendo com que o segundo
+item na <code>linked list formada pelas chains</code> seja a nossa file stream falsa.</p>
+<p>A nossa file stream falsa precisa conter valores que passem pelas restrições
+mencionadas anteriormente e possua uma vtable falsa que aponte o seu overflow
+para system. Assim, quando o programa sair, nos conseguiremos uma shell.</p>
+<p>A maior parte dos outros valores nao importam, portanto uma file stream falsa
+poderia ser definida por:</p>
+<pre><code class="language-py">flat(
+    b&quot;/bin/sh\0&quot;,#                    flags | 0x00
+    0,0,0,
+    1,#                          write base | 0x20
+    2,#                           write ptr | 0x28
+    '\0'*8*20,#   mode ta no meio desses 0s
+    libc.sym.system,#              overflow | 0xc8
+    fake_file_stream +0xc8 -0x18,#   vtable | 0xd0
+)
+</code></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./heap/geral/uaf/heap-two.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./heap/malloc/intro.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./heap/geral/uaf/heap-two.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./heap/malloc/intro.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
