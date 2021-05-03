@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Safe Unlink - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.1.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.2.</strong> House of Force</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.3.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html" class="active"><strong>16.4.</strong> Safe Unlink</a></li><li><strong>16.5.</strong> Unsorted bins: Partial Unlink</li><li><strong>16.6.</strong> House of Spirit</li><li><strong>16.7.</strong> House of Orange</li><li><strong>16.8.</strong> House of Rust</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <ul>
+<li><a href="./heap/malloc/safeUnlink.html#teoria">Teoria</a></li>
+<li><a href="./heap/malloc/safeUnlink.html#data">.data</a>
+<ul>
+<li><a href="./heap/malloc/safeUnlink.html#exploit">Exploit</a>
+<ul>
+<li><a href="./heap/malloc/safeUnlink.html#safe-unlink">Safe Unlink</a></li>
+<li><a href="./heap/malloc/safeUnlink.html#edit-no-usr123-para-controlar-todos-os-pointers">Edit no usr123 para controlar todos os pointers</a></li>
+<li><a href="./heap/malloc/safeUnlink.html#arbwrite---definir-alvo">Arbwrite - Definir alvo</a></li>
+<li><a href="./heap/malloc/safeUnlink.html#arbwrite---definir-valor">Arbwrite - Definir valor</a></li>
+</ul>
+</li>
+<li><a href="./heap/malloc/safeUnlink.html#unindo-tudo">Unindo tudo</a></li>
+</ul>
+</li>
+<li><a href="./heap/malloc/safeUnlink.html#outros-exemplos">Outros exemplos</a></li>
+</ul>
+<a class="header" href="./heap/malloc/safeUnlink.html#teoria" id="teoria"><h2>Teoria</h2></a>
+<p>O safe unlink depende muito da implementação do programa, isso quer dizer
+que nao existe uma formula bonitinha para conseguir uma shell...</p>
+<p>A mitigação que foi introduzida se consiste em:</p>
+<ul>
+<li><code>assert</code>(vitima.fd.bk == vitima)</li>
+<li><code>assert</code>(vitima.bk.fd == vitima)</li>
+</ul>
+<p>Assim, agora alem de o <code>fd falso</code> e <code>bk falso</code> precisarem ser endereços
+validos, precisaremos de que:</p>
+<ul>
+<li><code>fd falso</code> + 0x18 == pointer para <code>vitima</code></li>
+<li><code>bk falso</code> + 0x10 == pointer para <code>vitima</code></li>
+</ul>
+<p>Assim, precisamos de 1 ou 2 pointers que apontam para o nosso chunk, e que
+esse pointer seja importante.</p>
+<a class="header" href="./heap/malloc/safeUnlink.html#data" id="data"><h2>.data</h2></a>
+<p>Caso o programa tenha um struct com pointers para o heap, e acesse o heap por meio deles</p>
+<pre><code class="language-x86asm">.data
+struct UsuárioLogado:
+    nome: pointer para chunk, -&gt; aponta para vitima
+    senha: pointer para chunk,
+    metadados: pointer para chunk,
+
+</code></pre>
+<p>E o programa use:</p>
+<pre><code>edit( * usr123.nome, novo_nome )
+</code></pre>
+<a class="header" href="./heap/malloc/safeUnlink.html#exploit" id="exploit"><h3>Exploit</h3></a>
+<a class="header" href="./heap/malloc/safeUnlink.html#safe-unlink" id="safe-unlink"><h4>Safe Unlink</h4></a>
+<p>Nos podemos mirar o <code>fd falso</code> e <code>bk falso</code> apontando para o pointer que
+aponta para a vitima, passando o check de segurança...</p>
+<p>Agora <code>fd</code> sera escrito no <code>*bk</code> e <code>bk</code> sera escrito no <code>*fd</code> (+ os offsets),
+mas os dois sao o mesmo alvo, então como consequência somente teremos a
+alteração de <code>usr123.nome</code> para o valor de <code>fd/bk</code> isto e:
+ele aponta para ele mesmo (ou antes por causa dos offsets (+0x16,0x10,...))
+<code>usr123.nome</code> = <code>&amp; usr123.nome</code></p>
+<a class="header" href="./heap/malloc/safeUnlink.html#edit-no-usr123-para-controlar-todos-os-pointers" id="edit-no-usr123-para-controlar-todos-os-pointers"><h4>Edit no usr123 para controlar todos os pointers</h4></a>
+<p>Agora, caso tentemos editar o nome, vamos na verdade ter um write no struct
+<code>usr123</code> (e adjacentes)</p>
+<pre><code>edit( * usr123.nome, novo_nome )
+</code></pre>
+<p>E agora que controlamos todos os pointers por meio do <code>novo_nome</code>, podemos
+altera-los, com cada um abrindo uma nova avenida de exploitação...</p>
+<a class="header" href="./heap/malloc/safeUnlink.html#arbwrite---definir-alvo" id="arbwrite---definir-alvo"><h4>Arbwrite - Definir alvo</h4></a>
+<p>O mais obvio é alterar o <code>usr123.nome</code> de novo... nos dando um <code>arbwrite</code></p>
+<pre><code>edit( * usr123.nome, __malloc_hook - 0x20 )
+</code></pre>
+<a class="header" href="./heap/malloc/safeUnlink.html#arbwrite---definir-valor" id="arbwrite---definir-valor"><h4>Arbwrite - Definir valor</h4></a>
+<p>agora <code>usr123.nome</code> aponta para o <code>__malloc_hook</code> e o proximo edit vai
+altera-lo...</p>
+<a class="header" href="./heap/malloc/safeUnlink.html#unindo-tudo" id="unindo-tudo"><h3>Unindo tudo</h3></a>
+<blockquote>
+<p><code>mudarNome</code>(<code>novo_nome</code>) = wrapper para interagir com o programa chamando o código de editar o nome</p>
+</blockquote>
+<ul>
+<li>Start
+<ul>
+<li><code>usr123.nome</code> -&gt; vitima</li>
+</ul>
+</li>
+<li>Safe Unlink apontando para <code>usr123.nome</code>
+<ul>
+<li><code>usr123.nome</code> -&gt; <code>usr123.nome</code></li>
+</ul>
+</li>
+<li>mudarNome( <code>__malloc_hook</code> - <code>0x20</code> )
+<ul>
+<li><code>usr123.nome</code> -&gt; antes do <code>__malloc_hook</code></li>
+</ul>
+</li>
+<li>mudarNome( <code>A</code>*<code>pad</code> + <code>libc.system</code> )</li>
+</ul>
+<a class="header" href="./heap/malloc/safeUnlink.html#outros-exemplos" id="outros-exemplos"><h2>Outros exemplos</h2></a>
+<p>Outros cenários que podem ser viáveis passar essa mitigação incluem:</p>
+<ul>
+<li>Pointer na stack para o chunk
+<ul>
+<li>talvez de para alterar o ret salvo</li>
+</ul>
+</li>
+<li>Voce forjar o seu próprio pointer caso tenha um heap leak</li>
+<li>Os metadados de um free chunk que aponte para vitima</li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./heap/malloc/unsafeUnlink.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./linux_internals/linux.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./heap/malloc/unsafeUnlink.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./linux_internals/linux.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
