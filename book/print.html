@@ -4442,8 +4442,10 @@ armazenam os free chunks, com cada chunk sendo um node na list.</p>
 no caso dos fastbins, por ser uma singly-linked-list somente um pointer (<code>FD</code>) para
 o proximo chunk na lista.</p>
 <p>Alem disso, essa lista é nao circular, isto é: o ultimo chunk tem FD=0 (NULL)</p>
+<p>Como os fastbins nao sao consolidados com outros free chunks adjacentes, eles sempre
+possuem <code>PREV_INUSE</code>=<code>1</code></p>
 <p>Então por exemplo um chunk do fastbin 0x30 contem:</p>
-<pre><code class="language-x86asm">0000000000000000     size=0x30
+<pre><code class="language-x86asm">0000000000000000     size=0x31
         FD       0000000000000000
 0000000000000000 0000000000000000
 0000000000000000
@@ -4483,13 +4485,13 @@ Heap:
 0000000000000000 0000000000000000
 0000000000000000 0000000000000021 &lt;- Chunk 2 - Fastbin 0x20 [3]
     &amp; Chunk 4    0000000000000000
-0000000000000000 0000000000000020 &lt;- Chunk 3 - Fastbin 0x20 [4]
+0000000000000000 0000000000000021 &lt;- Chunk 3 - Fastbin 0x20 [4]
     &amp; Chunk 5    0000000000000000
-0000000000000000 0000000000000020 &lt;- Chunk 4 - Fastbin 0x20 [0]
+0000000000000000 0000000000000021 &lt;- Chunk 4 - Fastbin 0x20 [0]
    00000 (NULL)  0000000000000000
-0000000000000000 0000000000000020 &lt;- Chunk 5 - Fastbin 0x20 [1]
+0000000000000000 0000000000000021 &lt;- Chunk 5 - Fastbin 0x20 [1]
     &amp; Chunk 2    0000000000000000
-0000000000000000 0000000000000020 &lt;- Chunk 6
+0000000000000000 0000000000000021 &lt;- Chunk 6
 0000000000000000 0000000000000000
 0000000000000000 0000000000003d11 &lt;- top
 </code></pre>
