@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Teoria - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html" class="active"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.4.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.5.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.6.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.7.</strong> House of Orange</a></li><li><strong>16.8.</strong> House of Spirit</li><li><strong>16.9.</strong> House of Rust</li><li><strong>16.10.</strong> House of Corrosion</li><li><strong>16.11.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./heap/malloc/teoria.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<ul>
+<li><a href="./heap/malloc/teoria.html#teoria">Teoria</a></li>
+<li><a href="./heap/malloc/teoria.html#chunk">Chunk</a></li>
+<li><a href="./heap/malloc/teoria.html#top">Top</a></li>
+<li><a href="./heap/malloc/teoria.html#arena">Arena</a></li>
+<li><a href="./heap/malloc/teoria.html#binlists">Binlists</a>
+<ul>
+<li><a href="./heap/malloc/teoria.html#fastbins">Fastbins</a></li>
+<li><a href="./heap/malloc/teoria.html#unsorted-bins">Unsorted bins</a></li>
+<li><a href="./heap/malloc/teoria.html#small-bins">Small Bins</a></li>
+<li><a href="./heap/malloc/teoria.html#large-bins">Large Bins</a></li>
+</ul>
+</li>
+<li><a href="./heap/malloc/teoria.html#outras-opera%C3%A7%C3%B5es">Outras operações</a></li>
+</ul>
+<p>O Heap é composto por chunks, alocados por meio de <code>malloc()</code> e liberados por meio de <code>free()</code>.</p>
+<p>Malloc recebe normalmente 1 parâmetro: tamanho! Porem esse valor a esse valor é
+adicionado <code>0x08</code> e arredondado para cima. Por exemplo:</p>
+<ul>
+<li>malloc(0x18) -&gt; 0x20 -&gt; 0x20</li>
+<li>malloc(0x20) -&gt; 0x28 -&gt; 0x30</li>
+<li>malloc(1)    -&gt; 0x20 TAMANHO MINIMO!
+Esse é o tamanho (<code>size</code>) do chunk!</li>
+</ul>
+<a class="header" href="./heap/malloc/teoria.html#chunk" id="chunk"><h1>Chunk</h1></a>
+<p>O chunk, quando alocado consiste em:</p>
+<pre><code>0000000000000000        size      -&gt; Lembrando que size inclui os metadados
+0000000000000000 0000000000000000 &lt;- dados do usuário
+0000000000000000 0000000000000000
+</code></pre>
+<p>A visão do usuário e a visão interna de um chunk sao diferentes:</p>
+<pre><code class="language-x86asm">0000000000000000 0000000000000031 &lt;- visão malloc
+AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBBB &lt;- visão usuário
+CCCCCCCCCCCCCCCC EEEEEEEEEEEEEEEE
+FFFFFFFFFFFFFFFF 0000000000000020 &lt;- visão malloc
+AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBBB &lt;- visão usuário
+CCCCCCCCCCCCCCCC 
+</code></pre>
+<p>Nos vamos usar a visão do malloc daqui em diante! Portanto:
+<code>Chunk + 0x08 -&gt; size</code> e <code>Chunk + 0x10 -&gt; dados</code></p>
+<p>O tamanho do chunk, por ser alinhado a 16 bytes, nas usa os últimos 4 bits do size,
+e assim eles sao usados pra flags:</p>
+<ul>
+<li>1 - PREV_INUSE
+<ul>
+<li><code>1</code> se o <code>chunk adjacente anterior</code> esta em uso (nao free)</li>
+<li>Se o <code>chunk anterior</code> esta livre (<code>0</code>), o nosso chunk rouba a ultima qword (a
+logo antes do <code>size</code>) para armazenar o <code>size do chunk anterior</code>: <code>PREV_SIZE</code></li>
+</ul>
+</li>
+<li>2 - IS_MMAPPED
+<ul>
+<li><code>1</code> se o chunk foi adquirido via <code>mmap</code></li>
+<li>Os outros bits sao ignorados pois:
+<ul>
+<li>Nao possui chunks adjacente</li>
+<li>Nao faz parte de uma arena</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>4 - NON_MAIN_ARENA
+<ul>
+<li><code>0</code> se esta na <code>main_arena</code></li>
+<li><code>1</code> se esta em qualquer outra thread</li>
+</ul>
+</li>
+<li>8 - Sem uso atualmente</li>
+</ul>
+<a class="header" href="./heap/malloc/teoria.html#top" id="top"><h1>Top</h1></a>
+<p>O chunk <code>top</code> fica na borda do heap:</p>
+<pre><code class="language-x86asm">0000000000000000 0000000000000031 &lt;- chunk 1
+AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCC EEEEEEEEEEEEEEEE 
+FFFFFFFFFFFFFFFF 0000000000000020 &lt;- chunk 2
+AAAAAAAAAAAAAAAA BBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCC 0000000000003f41 &lt;- top
+</code></pre>
+<p>O top chunk tem um tamanho enorme, e quando nos alocamos um novo chunk, estamos
+tirando uma fatia dele.</p>
+<p>Se ele ficar pequeno de mais, pode ser extendido por meio da syscall <code>sbrk</code> (system
+break)</p>
+<p>O system break é um limite de quanta memoria nos podemos gastar, e é controlado pelo
+sistema operacional.</p>
+<p>Alem disso, caso o chunk que passe do limite do <code>top</code> seja enorme (0x5000 por
+exemplo) ao envés de gastar o <code>top</code> todo e precisar chamar <code>srbk</code>, basta alocar o
+espaço desse chunk em outro canto usando <code>mmap</code>.</p>
+<a class="header" href="./heap/malloc/teoria.html#arena" id="arena"><h1>Arena</h1></a>
+<p>Uma arena é um agregador de metadados referentes a aquele heap, com cada thread tendo
+uma. A da main thread é chamada de <code>main_arena</code> !</p>
+<p>Entre os metadados armazenados nos temos, por exemplo:</p>
+<ul>
+<li>Endereço do top chunk</li>
+<li>Head das binlists</li>
+<li>Pointer para outras arenas</li>
+<li>Quanta memoria o sistema operacional disponibilizou</li>
+</ul>
+<p>A main_arena é uma variável global, enquanto as outras sao segmentos de heap!</p>
+<p>O comportamento do <code>top</code> descrito anteriormente somente ocorre na main_arena</p>
+<a class="header" href="./heap/malloc/teoria.html#binlists" id="binlists"><h1>Binlists</h1></a>
+<p>Quando um chunk nao é mais util, voce pode chamar <code>free()</code> passando o chunk como
+parâmetro!</p>
+<p>Quando um chunk é liberado, ele é colocado em uma binlist e a sua estrutura muda!</p>
+<p>Binlists sao linked lists (single ou double | circular ou nao circular) que
+armazenam os free chunks, com cada chunk sendo um node na list.</p>
+<p>Sao as head dessas binlists que sao armazenadas na main arena!</p>
+<p>Elas sao classificadas pelo tamanho do chunk que armazenam:</p>
+<ul>
+<li>0x20, 0x30,....., 0x80: Fastbins</li>
+<li>unsortedbins</li>
+<li>smallbins</li>
+<li>largebins</li>
+</ul>
+<a class="header" href="./heap/malloc/teoria.html#fastbins" id="fastbins"><h3>Fastbins</h3></a>
+<p>Os fastbins sao usados para rapidamente alocar e liberar chunks.</p>
+<p>Cada um deles contem uma singly-linked-list de chunks de mesmo tamanho.</p>
+<p>O local aonde ficaria os <code>dados</code>, em um free chunk sera usado para metadados, e
+no caso dos fastbins, por ser uma singly-linked-list somente um pointer (<code>FD</code>) para
+o proximo chunk na lista.</p>
+<p>Alem disso, essa lista é nao circular, isto é: o ultimo chunk tem FD=0 (NULL)</p>
+<p>Então por exemplo um chunk do fastbin 0x30 contem:</p>
+<pre><code class="language-x86asm">0000000000000000     size=0x30
+        FD       0000000000000000
+0000000000000000 0000000000000000
+0000000000000000
+</code></pre>
+<p>Alem disso, os fastbins sao <code>LIFO</code>, assim como uma stack:</p>
+<pre><code class="language-C++">head: chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+
+free(chunk 4)
+head: chunk 4 -&gt; chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+
+malloc()
+head: chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+
+free(chunk 5)
+head: chunk 5 -&gt; chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+
+free(chunk 10)
+head: chunk 10 -&gt; chunk 5 -&gt; chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+
+malloc()
+head: chunk 5 -&gt; chunk 1 -&gt; chunk 3 -&gt; 0 (NULL)
+</code></pre>
+<p>Então por exemplo:</p>
+<pre><code class="language-C++">Código:
+malloc() 6 vezes
+free(Chunk 4)
+free(Chunk 2)
+free(Chunk 5)
+free(Chunk 3)
+
+Main Arena:
+Fastbin 0x20 = &amp; Chunk 3   
+Fastbin 0x20 : Chunk 3 -&gt; Chunk 5 -&gt; Chunk 2 -&gt; Chunk 4 -&gt; 0 (NULL)
+
+Heap:
+0000000000000000 0000000000000021 &lt;- Chunk 1
+0000000000000000 0000000000000000
+0000000000000000 0000000000000021 &lt;- Chunk 2 - Fastbin 0x20 [3]
+    &amp; Chunk 4    0000000000000000
+0000000000000000 0000000000000020 &lt;- Chunk 3 - Fastbin 0x20 [4]
+    &amp; Chunk 5    0000000000000000
+0000000000000000 0000000000000020 &lt;- Chunk 4 - Fastbin 0x20 [0]
+   00000 (NULL)  0000000000000000
+0000000000000000 0000000000000020 &lt;- Chunk 5 - Fastbin 0x20 [1]
+    &amp; Chunk 2    0000000000000000
+0000000000000000 0000000000000020 &lt;- Chunk 6
+0000000000000000 0000000000000000
+0000000000000000 0000000000003d11 &lt;- top
+</code></pre>
+<a class="header" href="./heap/malloc/teoria.html#unsorted-bins" id="unsorted-bins"><h3>Unsorted bins</h3></a>
+<a class="header" href="./heap/malloc/teoria.html#small-bins" id="small-bins"><h3>Small Bins</h3></a>
+<a class="header" href="./heap/malloc/teoria.html#large-bins" id="large-bins"><h3>Large Bins</h3></a>
+<a class="header" href="./heap/malloc/teoria.html#outras-operações" id="outras-operações"><h1>Outras operações</h1></a>
+<ul>
+<li><code>calloc( size )</code>: igual <code>malloc()</code> porem inicializa a região para NULL
+<ul>
+<li>Ineficiente porem mais seguro</li>
+</ul>
+</li>
+<li><code>realloc( chunk , size )</code>: muda o tamanho de um chunk
+<ul>
+<li>Chama <code>free()</code> no chunk, <code>malloc()</code> um novo chunk de tamanho <code>size</code> e transfere os dados do chunk antigo para o novo</li>
+<li>Se <code>size == 0</code>, simplesmente atua como um <code>free()</code>: muitos dev nao sabem disso
+<ul>
+<li>Sanitizam os <code>free()</code>s corretamente, mas esquecem de sanitizar os <code>realloc()</code>s</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./heap/malloc/intro.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./heap/malloc/fastbinsDup.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./heap/malloc/intro.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./heap/malloc/fastbinsDup.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
