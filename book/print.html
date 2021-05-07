@@ -4434,8 +4434,8 @@ armazenam os free chunks, com cada chunk sendo um node na list.</p>
 <p>Sao as head dessas binlists que sao armazenadas na main arena!</p>
 <p>Elas sao classificadas pelo tamanho do chunk que armazenam:</p>
 <ul>
-<li>0x20, 0x30,....., 0x80: Fastbins</li>
-<li>unsortedbins</li>
+<li>Fastbins: 0x20, 0x30,....., 0x80</li>
+<li>Unsorted bin: *</li>
 <li>smallbins</li>
 <li>largebins</li>
 </ul>
@@ -4572,7 +4572,7 @@ Coloca o segundo no unsortedbin e
 <li><code>realloc( chunk , size )</code>: muda o tamanho de um chunk
 <ul>
 <li>Chama <code>free()</code> no chunk, <code>malloc()</code> um novo chunk de tamanho <code>size</code> e transfere os dados do chunk antigo para o novo</li>
-<li>Se <code>size == 0</code>, simplesmente atua como um <code>free()</code>: muitos dev nao sabem disso
+<li>Se <code>size == 0</code>, simplesmente atua como um <code>free()</code>: muitos devs nao sabem disso
 <ul>
 <li>Sanitizam os <code>free()</code>s corretamente, mas esquecem de sanitizar os <code>realloc()</code>s</li>
 </ul>
