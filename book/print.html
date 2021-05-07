@@ -4330,7 +4330,11 @@ E aquele outro pedaço de meta-dados, e se eu mudar ele?.... etc etc</p>
 <li><a href="print.html#binlists">Binlists</a>
 <ul>
 <li><a href="print.html#fastbins">Fastbins</a></li>
-<li><a href="print.html#unsorted-bins">Unsorted bins</a></li>
+<li><a href="print.html#unsorted-bin">Unsorted bin</a>
+<ul>
+<li><a href="print.html#remaindering">Remaindering</a></li>
+</ul>
+</li>
 <li><a href="print.html#small-bins">Small Bins</a></li>
 <li><a href="print.html#large-bins">Large Bins</a></li>
 </ul>
@@ -4495,7 +4499,67 @@ Heap:
 0000000000000000 0000000000000000
 0000000000000000 0000000000003d11 &lt;- top
 </code></pre>
-<a class="header" href="print.html#unsorted-bins" id="unsorted-bins"><h3>Unsorted bins</h3></a>
+<a class="header" href="print.html#unsorted-bin" id="unsorted-bin"><h3>Unsorted bin</h3></a>
+<p>O unsorted bin armazena chunks de tamanho diversos, que serão distribuídos
+(<strong>SORT</strong>) para uma <code>small</code>/<code>large</code> bin de tamanho apropriado</p>
+<p>A Unsorted bin é uma doubly linked list (<code>FD</code> e <code>BK</code>) circular!</p>
+<p>Na hora de procurar um chunk de tamanho adequado para um <code>malloc()</code>, começa-se
+a busca pela <code>tail</code> e somente retorna um chunk de tamanho idêntico
+(<code>exact fit</code>) ao pedido!</p>
+<p>Conforme essa lista vai sendo atravessada, o processo de <strong>SORT</strong> vai ocorrer!</p>
+<p>Quando o chunk de tamanho correto é encontrado, ele sofre um
+<a href="https://0xturazzi.github.io/book/heap/malloc/PartialUnlink.html">parcial unlink</a> !</p>
+<a class="header" href="print.html#remaindering" id="remaindering"><h4>Remaindering</h4></a>
+<p>Caso a busca chegue no <code>ultimo chunk do unsorted bins</code> e ele seja maior do que
+o pedido, ele sera dividido em 2 em um processo chamado <code>remaindering</code>:</p>
+<pre><code> _________
+|    |size|
+| FD | BK |
+|         |
+|         |
+|         |
+|         |
+|         |
+|         |
+|         |
+|         |
+|_________|
+
+Divide o chunk em 2
+ _________
+|    |size|
+| FD | BK |
+|         |
+|         |
+|         |
+|_________|
+|         |
+|         |
+|         |
+|         |
+|_________|
+
+Retorna o primeiro
+
+Coloca o segundo no unsortedbin e 
+      o define como last_remainder 
+      (pointer na main_arena que 
+      aponta para o ultimo chunk
+      a ser dividido) 
+ _________
+|    |size| &lt;- Nosso chunk
+|  dados  |
+| AAAAAAA |
+|         |
+|         |
+|_________|
+|    |size| &lt;-- Unsorted Bins e last_remainder
+| FD | BK |
+|         |
+|         |
+|_________|
+
+</code></pre>
 <a class="header" href="print.html#small-bins" id="small-bins"><h3>Small Bins</h3></a>
 <a class="header" href="print.html#large-bins" id="large-bins"><h3>Large Bins</h3></a>
 <a class="header" href="print.html#outras-operações" id="outras-operações"><h1>Outras operações</h1></a>
@@ -5196,7 +5260,7 @@ nao alocadas da memoria (gerando <code>SEGFAULT</code>) quando olhando os chunks
 </blockquote>
 <p>Assim, nos conseguimos um free chunk mesmo que o programa nunca chame free
 diretamente!</p>
-<a class="header" href="print.html#unsorted-bins-1" id="unsorted-bins-1"><h2>Unsorted Bins</h2></a>
+<a class="header" href="print.html#unsorted-bins" id="unsorted-bins"><h2>Unsorted Bins</h2></a>
 <p>O Ataque ja foi descrito em outro post, então nao vou perder muito tempo aqui,
 o fato a se ressaltar é que na HoO idealmente devemos realizar o parcial unlink
 por meio de um <strong>SORT</strong> !!</p>
