@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>House of Lore - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html" class="active"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./heap/malloc/HouseOfLore.html#house-of-lore" id="house-of-lore"><h1>House of Lore</h1></a>
+<ul>
+<li><a href="./heap/malloc/HouseOfLore.html#house-of-lore">House of Lore</a></li>
+<li><a href="./heap/malloc/HouseOfLore.html#unsortedbin">UnsortedBin</a>
+<ul>
+<li><a href="./heap/malloc/HouseOfLore.html#ataque">Ataque</a></li>
+<li><a href="./heap/malloc/HouseOfLore.html#obs">Obs</a></li>
+</ul>
+</li>
+</ul>
+<p>Na house of Lore vamos colocar um chunk falso no UnsortedBin, SmallBins ou LargeBins.</p>
+<p>Porem, nao iremos chamar <code>free()</code> no chunk falso (como na House
+of Spirit) ou um double free (como no fastbin dup).</p>
+<p>Esse foi um dos ataques do malloc malleficarium</p>
+<a class="header" href="./heap/malloc/HouseOfLore.html#unsortedbin" id="unsortedbin"><h1>UnsortedBin</h1></a>
+<blockquote>
+<p>Versão &lt; 2.29
+Para a HoL nos unsortedbins, precisamos de um <code>write-after-free</code> em um chunk
+dos unsorted bins.... Seja isso por meio de um overflow, ou o programa
+permitindo alterar chunks livres...</p>
+</blockquote>
+<p>Isso deve te lembrar do Partial Unlink nos Unsorted Bins e da House of Orange.
+Porem, nesses casos a parte importante era o write na hora da alocação, e nao
+a alocação em si, com na HoO ate usando o crash mitigação nessa alocação ao
+nosso favor.</p>
+<p>Porem neses caso, nos queremos que o chunk seja usável quando nos alocamos e
+que o programa nao crash... então precisaremos mudar um pouco a estrategia ...</p>
+<a class="header" href="./heap/malloc/HouseOfLore.html#ataque" id="ataque"><h2>Ataque</h2></a>
+<p>Nos podemos usar o UAF no chunk do heap para alterar o bk, da mesma maneira que
+faríamos com o ataque dos unsortedbins...</p>
+<p>Assim, vamos supor que o chunk falso sera criado no <code>username</code> (armazenado na
+<code>data</code> section)</p>
+<pre><code class="language-py">change_username(flat(
+    0,
+    0xc0,# size
+    0,#fd
+    0,#bk
+
+)) 
+
+edit_chunk_A(flat(
+    0,# fd
+    elf.sym.username
+))
+</code></pre>
+<p>Assim, o unsorted bin fica:</p>
+<blockquote>
+<p>head bk: chunk_A -&gt; username -&gt; 0
+Em seguida, nos poderíamos alocar o chunk_A e sem seguida o nosso chunk falso</p>
+</blockquote>
+<p>Porem, durante a alocação desses chunks, um ataque do unsorted bin acidental
+ocorreria, ok se mostra ok no caso do chunk_A, pois aponta para memoria valida
+( a data section aonde o chunk falso fica)</p>
+<p>Entretanto, no caso do chunk falso, ele tentaria fazer um ataque dos
+unsortedbins em <code>0 + 0x10</code>, memoria invalida: SEGFAULT!!!!</p>
+<p>Assim, nos precisamos garantir que o bk do chunk falso aponta para memoria
+escrevível! A solução mais fácil é aponta-lo para ele mesmo, corrompendo os
+8 bytes inúteis antes do size</p>
+<pre><code class="language-py">change_username(flat(
+    0,
+    0xc0,# size
+    0,#fd
+    elf.sym.username - 0x10,#bk
+)) 
+</code></pre>
+<p>Agora basta realizar um malloc com o size do chunk falso, e pronto! Nos temos
+um chunk na data section (ou aonde vc criou o chunk falso)</p>
+<a class="header" href="./heap/malloc/HouseOfLore.html#obs" id="obs"><h2>Obs</h2></a>
+<p>Como nos controlamos o bk do chunk falso, podemos apontar para outro chunk
+falso, ou ate pra ele mesmo contanto que voce nao danifique o bk entre
+alocações :D</p>
+<p>Voce pode ter pode ter a 8 flag acidentalmente ligada que nao interfere</p>
+<p>O size precisa &lt; do que system_mem</p>
+<p>o bk do chunk falso precisa apontar para memoria escrevível</p>
+<p>Quando tentar encontrar sizes que ocorrem naturalmente, eles PODEM nao estar
+alinhados</p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./heap/malloc/HouseOfOrange.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./linux_internals/linux.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./heap/malloc/HouseOfOrange.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./linux_internals/linux.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
