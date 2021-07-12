@@ -1,118 +1,172 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="pt-br" class="sidebar-visible no-js ayu">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>House of Orange - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="../../">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <!-- Custom theme stylesheets -->
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html" class="active"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><a href="../../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item expanded "><a href="../../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item expanded "><a href="../../heap/malloc/HouseOfOrange.html" class="active">House of Orange</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
+            <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <ul>
-<li><a href="./heap/malloc/HouseOfOrange.html#house-of-orange">House Of Orange</a></li>
-<li><a href="./heap/malloc/HouseOfOrange.html#teoria">Teoria</a>
+                    <main>
+                        <ul>
+<li><a href="#house-of-orange">House Of Orange</a></li>
+<li><a href="#teoria">Teoria</a>
 <ul>
-<li><a href="./heap/malloc/HouseOfOrange.html#gerar-um-free-chunk">Gerar um Free Chunk</a>
+<li><a href="#gerar-um-free-chunk">Gerar um Free Chunk</a>
 <ul>
-<li><a href="./heap/malloc/HouseOfOrange.html#extens%C3%A3o-do-heap">Extensão do heap</a></li>
+<li><a href="#extens%C3%A3o-do-heap">Extensão do heap</a></li>
 </ul>
 </li>
-<li><a href="./heap/malloc/HouseOfOrange.html#unsorted-bins">Unsorted Bins</a></li>
-<li><a href="./heap/malloc/HouseOfOrange.html#corromper-_io_list_all">Corromper _IO_list_all</a></li>
+<li><a href="#unsorted-bins">Unsorted Bins</a></li>
+<li><a href="#corromper-_io_list_all">Corromper _IO_list_all</a></li>
 </ul>
 </li>
-<li><a href="./heap/malloc/HouseOfOrange.html#exploit">Exploit</a>
+<li><a href="#exploit">Exploit</a>
 <ul>
-<li><a href="./heap/malloc/HouseOfOrange.html#heap-extension">Heap Extension</a></li>
-<li><a href="./heap/malloc/HouseOfOrange.html#unsorted-bins--io_list_all">Unsorted Bins + IO_list_all</a></li>
+<li><a href="#heap-extension">Heap Extension</a></li>
+<li><a href="#unsorted-bins--io_list_all">Unsorted Bins + IO_list_all</a></li>
 </ul>
 </li>
 </ul>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#house-of-orange" id="house-of-orange"><h1>House Of Orange</h1></a>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<h1 id="house-of-orange"><a class="header" href="#house-of-orange">House Of Orange</a></h1>
+<h1 id="teoria"><a class="header" href="#teoria">Teoria</a></h1>
 <p>O ataque da House Of Orange se consiste em:</p>
 <ul>
 <li>Gerar um free chunk
 <ul>
-<li>Por exemplo, ativando o código de extensão do heap</li>
+<li>Por exemplo, ativando o código de extensão do heap </li>
 </ul>
 </li>
 <li>Corromper o free chunk</li>
@@ -124,14 +178,14 @@
 </li>
 </ul>
 <blockquote>
-<p>OBS: Glibc &lt;=</p>
+<p>OBS: Glibc &lt;= </p>
 </blockquote>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#gerar-um-free-chunk" id="gerar-um-free-chunk"><h2>Gerar um Free Chunk</h2></a>
-<p>Para executar esse ataque, voce vai precisar de um free chunk nos unsorted
+<h2 id="gerar-um-free-chunk"><a class="header" href="#gerar-um-free-chunk">Gerar um Free Chunk</a></h2>
+<p>Para executar esse ataque, voce vai precisar de um free chunk nos unsorted 
 bins. Ele obviamente pode ser corrompido com um <code>write-after-free</code> ou overflow.</p>
-<p>Porem um técnica que costuma vir combinada com a HoO é ativar o código de
+<p>Porem um técnica que costuma vir combinada com a HoO é ativar o código de 
 extensão do heap</p>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#extensão-do-heap" id="extensão-do-heap"><h3>Extensão do heap</h3></a>
+<h3 id="extensão-do-heap"><a class="header" href="#extensão-do-heap">Extensão do heap</a></h3>
 <p>Explicada melhor em breve, porem resumindo... Corromper o top chunk com:</p>
 <pre><code>PAGE_SIZE    -    usado     +      1
 0x1000       soma do tamanho   PREV_INUSE
@@ -145,50 +199,50 @@ extensão do heap</p>
 <li>Coloque FencePost chunks no final do heap antigo</li>
 </ul>
 <blockquote>
-<p>Fencepost: Chunk de tamanho ilegal 0x10 usado para evitar que malloc leia regiões
+<p>Fencepost: Chunk de tamanho ilegal 0x10 usado para evitar que malloc leia regiões 
 nao alocadas da memoria (gerando <code>SEGFAULT</code>) quando olhando os chunks para frente!</p>
 </blockquote>
-<p>Assim, nos conseguimos um free chunk mesmo que o programa nunca chame free
+<p>Assim, nos conseguimos um free chunk mesmo que o programa nunca chame free 
 diretamente!</p>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#unsorted-bins" id="unsorted-bins"><h2>Unsorted Bins</h2></a>
+<h2 id="unsorted-bins"><a class="header" href="#unsorted-bins">Unsorted Bins</a></h2>
 <p>O Ataque ja foi descrito em outro post, então nao vou perder muito tempo aqui,
-o fato a se ressaltar é que na HoO idealmente devemos realizar o parcial unlink
-por meio de um <strong>SORT</strong> !!</p>
-<p>Alem disso, apos o sort, ele precisa ser a head do seu respectivo fastbin.
-Portanto sera necessário voce preparar o heap anteriormente caso ja exista
+o fato a se ressaltar é que na HoO idealmente devemos realizar o parcial unlink 
+por meio de um <strong>SORT</strong> !! </p>
+<p>Alem disso, apos o sort, ele precisa ser a head do seu respectivo fastbin. 
+Portanto sera necessário voce preparar o heap anteriormente caso ja exista 
 algo la antes...</p>
-<p>Isto ocorre pois quando realizarmos o unsorted bins vamos escrever o
+<p>Isto ocorre pois quando realizarmos o unsorted bins vamos escrever o 
 <strong>ENDEREÇO DA HEAD</strong>, e o valor nesse endereço sera o nosso chunk</p>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#corromper-_io_list_all" id="corromper-_io_list_all"><h2>Corromper _IO_list_all</h2></a>
+<h2 id="corromper-_io_list_all"><a class="header" href="#corromper-_io_list_all">Corromper _IO_list_all</a></h2>
 <p>O alvo do nosso unsorted bins sera o _IO_list_all</p>
-<p>Porem, ele nao vai passar os checks de segurança do unlink, mas isso nao é um
+<p>Porem, ele nao vai passar os checks de segurança do unlink, mas isso nao é um 
 problema, pois em versões do <strong>Glibc &lt;=</strong> os <code>overflows</code> do <code>stdio</code> (e outras<br />
-filestreams) ainda serão chamados, nos permitindo executar o ataque do
+filestreams) ainda serão chamados, nos permitindo executar o ataque do 
 IO_list_all :D</p>
-<p>Assim, uma parte da <code>main arena</code> sera interpretada como uma filestream, porem
+<p>Assim, uma parte da <code>main arena</code> sera interpretada como uma filestream, porem 
 nao passara os checks de <code>mode</code>, etcetc</p>
-<p>Assim, o seu <code>_chain</code> sera seguido, e justamente nesse endereço precisamos dar
-o sort para a head mencionada anteriormente! Agora, o nosso chunk sera tratado
-como uma filestream, e nos podemos passar os checks de segurança e forjar uma
-vtable.</p>
-<p>Assim ganhando a shell apos as mitigações do Glibc serem ativadas e <code>abort()</code>
+<p>Assim, o seu <code>_chain</code> sera seguido, e justamente nesse endereço precisamos dar 
+o sort para a head mencionada anteriormente! Agora, o nosso chunk sera tratado 
+como uma filestream, e nos podemos passar os checks de segurança e forjar uma 
+vtable. </p>
+<p>Assim ganhando a shell apos as mitigações do Glibc serem ativadas e <code>abort()</code> 
 chamado, no ultimo segundo do processo de finalização!</p>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#exploit" id="exploit"><h1>Exploit</h1></a>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#heap-extension" id="heap-extension"><h2>Heap Extension</h2></a>
-<p>Vamos supor que o programa tenha chunk tem tamanho <code>0x20</code> e ao
-edita-lo temos um overflow. Assim podemos criar um helper no nosso
+<h1 id="exploit"><a class="header" href="#exploit">Exploit</a></h1>
+<h2 id="heap-extension"><a class="header" href="#heap-extension">Heap Extension</a></h2>
+<p>Vamos supor que o programa tenha chunk tem tamanho <code>0x20</code> e ao 
+edita-lo temos um overflow. Assim podemos criar um helper no nosso 
 exploit para editar esse chunk: <code>edit_vuln()</code></p>
-<p>Também vamos supor que esse foi o primeiro e único chunk, assim fazendo
+<p>Também vamos supor que esse foi o primeiro e único chunk, assim fazendo 
 fronteira com o <code>top chunk</code>, e tornando a quantidade usada do heap = <code>0x20</code></p>
 <blockquote>
-<p>Para a técnica, o único requerimento é poder corromper o top chunk, essas
+<p>Para a técnica, o único requerimento é poder corromper o top chunk, essas 
 condições ideais sao somente para simplificar a explicação</p>
 </blockquote>
 <pre><code class="language-x86asm">Allocated chunk | PREV_INUSE
 Addr: 0x55bca860c000
 Size: 0x21
 </code></pre>
-<p>Por ultimo, nos temos um helper que nos permite alocar um chunk
+<p>Por ultimo, nos temos um helper que nos permite alocar um chunk 
 grande: <code>malloc_grande()</code></p>
 <p>Assim, podemos corromper o tamanho do top chunk usando:</p>
 <pre><code class="language-py">usado = 0x20 # Quanto do heap ja foi usado, por exemplo 0xa0, 0xc0,...
@@ -202,7 +256,7 @@ edit_vuln(flat(
 
 malloc_grande()
 </code></pre>
-<p>Agora temos um free chunk, nos unsorted bins, logo apos o chunk do
+<p>Agora temos um free chunk, nos unsorted bins, logo apos o chunk do 
 overflow</p>
 <pre><code class="language-x86asm">Allocated chunk | PREV_INUSE
 Addr: 0x55bca860c000
@@ -247,9 +301,9 @@ Size: 0x00
 0x55bca860cfe0  0x0000000000000fc0  0x0000000000000010   &lt;-- Fenceposts
 0x55bca860cff0  0x0000000000000000  0x0000000000000011
 </code></pre>
-<a class="header" href="./heap/malloc/HouseOfOrange.html#unsorted-bins--io_list_all" id="unsorted-bins--io_list_all"><h2>Unsorted Bins + IO_list_all</h2></a>
-<p>Como o ataque nos unsorted bins ira causar um <code>abort</code>, ja precisamos preparar
-os dois ao mesmo tempo, criando a <code>file stream</code> falsa no chunk que também
+<h2 id="unsorted-bins--io_list_all"><a class="header" href="#unsorted-bins--io_list_all">Unsorted Bins + IO_list_all</a></h2>
+<p>Como o ataque nos unsorted bins ira causar um <code>abort</code>, ja precisamos preparar 
+os dois ao mesmo tempo, criando a <code>file stream</code> falsa no chunk que também 
 usamos para o unsorted bins.</p>
 <pre><code class="language-py">edit(flat(
     libc.sym.system,# vtable + 0x18
@@ -292,9 +346,9 @@ Algum lugar aqui o Vtable pointer
 ...
 Fenceposts
 </code></pre>
-<p>Agora basta um malloc para fazer o unsorted chunk sofrer <strong>SORT</strong> e acionar nosso
+<p>Agora basta um malloc para fazer o unsorted chunk sofrer <strong>SORT</strong> e acionar nosso 
 ataque...</p>
-<p>Como o <code>abort</code> chegou a ser chamado, um backtrace, mapa da memoria, etcetc sera
+<p>Como o <code>abort</code> chegou a ser chamado, um backtrace, mapa da memoria, etcetc sera 
 printado, para dar uma vibe mais polida para o exploit basta adicionar:</p>
 <pre><code>io.recvuntil(&quot;[vdso]\n&quot;)
 io.interactive()
@@ -366,59 +420,42 @@ while True:
     quit()
 </code></pre>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../heap/malloc/PartialUnlink.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../heap/malloc/HouseOfLore.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="./heap/malloc/PartialUnlink.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="./heap/malloc/HouseOfLore.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="./heap/malloc/PartialUnlink.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="./heap/malloc/HouseOfLore.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../heap/malloc/PartialUnlink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../heap/malloc/HouseOfLore.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+        <script type="text/javascript">
+            window.playground_copyable = true;
         </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-
+        <!-- Custom JS scripts -->
     </body>
 </html>

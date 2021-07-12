@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html lang="pt-br" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>House of Einherjar - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><a href="../../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item expanded "><a href="../../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item expanded "><a href="../../heap/malloc/HouseOfEinherjar.html" class="active">House of Einherjar</a></li><li class="chapter-item "><a href="../../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <ul>
+<li><a href="#prerrequisitos">Prerrequisitos</a></li>
+<li><a href="#chunk-falso">Chunk falso</a>
+<ul>
+<li><a href="#obs-libc-">OBS: libc &lt;</a></li>
+</ul>
+</li>
+<li><a href="#free">Free</a></li>
+<li><a href="#vitima-adjacente-ao-top">Vitima adjacente ao top</a></li>
+</ul>
+<p>Na House of Einherjar, nos queremos que malloc retorne um chunk 
+<strong>FORA</strong> do heap (<code>.data</code>, etc...) usando um 
+<code>single null byte overflow</code> (aka <code>poison null byte</code>). Quando 
+somente um null byte vaza o buffer, comumente sendo um null byte 
+de finalização de strings....</p>
+<h1 id="prerrequisitos"><a class="header" href="#prerrequisitos">Prerrequisitos</a></h1>
+<p>Para isso. alem do overflow, vamos precisar de um infoleak do 
+heap, e um do endereço do chunk falso. Pois nos vamos consolidar 
+um chunk ate o nosso chunk falso.</p>
+<p>Alem disso, o chunk vitima do overflow precisa ter tamanho 0x100, 
+0x200, etc... Pois, caso o tamanho fosse, por exemplo 0x30, ele 
+simplesmente viraria 0x00, o que nao seria muito util. Assim, o 
+nosso overflow nao muda o tamanho do chunk, somente as flags:</p>
+<blockquote>
+<p>0x0201 -&gt; 0x0200 (mesmo size, sem prev_use)</p>
+</blockquote>
+<p>Assim, quando chamarmos free no chunk vitima, por ter seu 
+<code>prev_use=0</code>, ele vai tentar consolidar com o chunk de trás (obs: 
+considerações adicionais sobre consolidar pra frente com o top 
+chunk ao final do post). </p>
+<p>Assim, nos devemos alterar o <code>prev-size</code> e deixa-lo enorme, para 
+que alcance o chunk falso:</p>
+<pre><code> ____________  
+|     | size | &lt;- FAKE
+|  fd |  bk  |      
+|____________|
+     ....
+
+     ....
+
+     ....
+
+     ....
+ ____________
+|     | size |
+| AAAAAAAAAA |
+| AAAAAAAAAA |
+|     ...    |
+| AAAAAAAAAA |
+| prev | 200 | -&gt; prev_use desativado
+|____________|
+
+</code></pre>
+<p>o <code>prev</code> deve ser igual ao offset: </p>
+<blockquote>
+<p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
+</blockquote>
+<h1 id="chunk-falso"><a class="header" href="#chunk-falso">Chunk falso</a></h1>
+<p>Alem disso, como nos vamos consolidar, precisaremos passar pelo 
+SAFE unlink... Portanto, basta colocar:</p>
+<blockquote>
+<p><code>fd</code> = <code>bk</code> = &amp;<code>FAKE</code></p>
+</blockquote>
+<p>Alem disso, por causo do check: <code>corrupted size versus prev size</code>, 
+nos precisamos que o size do chunk falso também seja:</p>
+<blockquote>
+<p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
+</blockquote>
+<h2 id="obs-libc"><a class="header" href="#obs-libc">OBS: libc &lt;</a></h2>
+<p>Nessas versões do libc, a implementação do 
+<code>corrupted size versus prev size</code> foi mal feita:</p>
+<pre><code class="language-C">if ( __builtin_expect (chunksize(P) != prev_size (next_chunk(P)) ,0))
+    malloc_printerr (&quot;corrupted size versus prev size&quot;);
+</code></pre>
+<p>O prev_size usado nao é o certo, e sim calculado usando o próprio 
+chunk fake</p>
+<pre><code> _____________  
+|      | size | 
+|  fd  |  bk  | 
+|             |
+|     ...     |
+|             |
+| prev |      | &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; E SIM ESSE
+|_____________|
+     ....
+
+     ....
+
+     ....
+
+     ....
+ ____________
+|     | size |
+| AAAAAAAAAA |
+| AAAAAAAAAA |
+|     ...    |
+| AAAAAAAAAA |
+| prev | 200 | &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; NAO SERA ESSE
+|____________|
+
+</code></pre>
+<p>Isso quer dizer que durante a criação do chunk falso, basta 
+colocar um <code>prev_size</code> (do fake) igual ao <code>size</code>....</p>
+<p>Porem existe um truque mais fácil: basta colocar <code>size=8</code></p>
+<p>Assim, o endereço dos dois fica igual... ja que o <code>prev_size</code> sera 
+calculado com :</p>
+<blockquote>
+<p>&amp;<code>FAKE</code> + <code>size</code> - <code>8</code></p>
+</blockquote>
+<p>Em condições normais, isso retorna o <code>prev_size</code> do proximo chunk..
+Porem com <code>size=8</code>, nos temos que ele aponta para o mesmo endereço 
+do <code>size</code>. Com isso, eles sao necessariamente iguais, passando o 
+<code>corrupted size versus prev size</code></p>
+<p>Portanto, voce tem no minimo 3 maneiras diferentes de burlar o 
+mecanismo de segurança :D</p>
+<h1 id="free"><a class="header" href="#free">Free</a></h1>
+<p>Com tudo isso pronto, basta chamar <code>free()</code> na vitima, que ela 
+sera consolidada com o chunk falso...</p>
+<p>Agora, basta chamar malloc que o chunk falso sera alocado, te 
+dando elevado controle sobre a <code>.data</code>...</p>
+<h1 id="vitima-adjacente-ao-top"><a class="header" href="#vitima-adjacente-ao-top">Vitima adjacente ao top</a></h1>
+<p>Caso a vitima esteja do lado do top chunk, ele sera consolidado 
+com ela e com o fake:</p>
+<pre><code> _____________  
+|      | size | 
+|  fd  |  bk  | 
+|             |
+|     ...     |
+|             |
+| prev |      |
+|_____________|
+     ....
+
+     ....
+
+     ....
+
+     ....
+ ____________
+|     | size |
+| AAAAAAAAAA |
+| AAAAAAAAAA |
+|     ...    |
+| AAAAAAAAAA |
+| prev | 200 |
+|     ...    |
+|     ...    |
+|     ...    |
+|      | top |
+|____________|
+
+</code></pre>
+<p>Assim, movendo o endereço do top para &amp;<code>FAKE</code></p>
+<pre><code> _____________  
+|      |  top | 
+|_____________| 
+|             |
+|             |
+|             |
+|             |
+|_____________|
+     ....
+
+     ....
+
+     ....
+
+     ....
+ ____________
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|            |
+|____________|
+
+</code></pre>
+<p>Com todas as alocações seguintes vindo de la!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../heap/malloc/safeUnlink.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../heap/malloc/PartialUnlink.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../heap/malloc/safeUnlink.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../heap/malloc/PartialUnlink.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

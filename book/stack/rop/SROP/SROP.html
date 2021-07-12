@@ -1,143 +1,197 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="pt-br" class="sidebar-visible no-js ayu">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>SROP - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="../../../">
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <!-- Custom theme stylesheets -->
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html" class="active"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../../../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../../../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../../../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><a href="../../../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../../../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item expanded "><a href="../../../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item expanded "><a href="../../../stack/rop/SROP/SROP.html" class="active">SROP</a></li><li class="chapter-item "><a href="../../../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../../../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../../../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../../../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../../../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../../../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item "><a href="../../../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../../../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../../../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../../../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../../../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../../../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../../../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../../../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../../../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../../../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../../../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../../../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
+            <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <a class="header" href="./stack/rop/SROP/SROP.html#srop" id="srop"><h1>SROP</h1></a>
+                    <main>
+                        <h1 id="srop"><a class="header" href="#srop">SROP</a></h1>
 <ul>
-<li><a href="./stack/rop/SROP/SROP.html#srop">SROP</a></li>
-<li><a href="./stack/rop/SROP/SROP.html#teoria">Teoria</a>
+<li><a href="#srop">SROP</a></li>
+<li><a href="#teoria">Teoria</a>
 <ul>
-<li><a href="./stack/rop/SROP/SROP.html#processos-e-signals">Processos e Signals</a></li>
-<li><a href="./stack/rop/SROP/SROP.html#sigreturn">Sigreturn</a></li>
-<li><a href="./stack/rop/SROP/SROP.html#fake">Fake</a></li>
+<li><a href="#processos-e-signals">Processos e Signals</a></li>
+<li><a href="#sigreturn">Sigreturn</a></li>
+<li><a href="#fake">Fake</a></li>
 </ul>
 </li>
-<li><a href="./stack/rop/SROP/SROP.html#exemplo-sem-leaks">Exemplo Sem leaks</a>
+<li><a href="#exemplo-sem-leaks">Exemplo Sem leaks</a>
 <ul>
-<li><a href="./stack/rop/SROP/SROP.html#download">Download</a></li>
-<li><a href="./stack/rop/SROP/SROP.html#solu%C3%A7%C3%A3o">Solução</a></li>
+<li><a href="#download">Download</a></li>
+<li><a href="#solu%C3%A7%C3%A3o">Solução</a></li>
 </ul>
 </li>
-<li><a href="./stack/rop/SROP/SROP.html#exemplo-com-leaks">Exemplo Com Leaks</a>
+<li><a href="#exemplo-com-leaks">Exemplo Com Leaks</a>
 <ul>
-<li><a href="./stack/rop/SROP/SROP.html#sropc">srop.c</a></li>
-<li><a href="./stack/rop/SROP/SROP.html#exploit">Exploit</a></li>
+<li><a href="#sropc">srop.c</a></li>
+<li><a href="#exploit">Exploit</a></li>
 </ul>
 </li>
 </ul>
-<a class="header" href="./stack/rop/SROP/SROP.html#teoria" id="teoria"><h1>Teoria</h1></a>
+<h1 id="teoria"><a class="header" href="#teoria">Teoria</a></h1>
 <p>Essa técnica que permite voce tornar a stack executável com somente 2 gadgets!</p>
 <p>A técnica depende da maneira como sistemas <code>UNIX</code> cuidam dos seus processos!</p>
 <p>Caso voce precise de uma revisão em <a href="https://0xturazzi.github.io/book/stack/ret2libc/intro.html#mprotect--ret2shellcode">mprotect + ret2shellcode</a> :D</p>
-<a class="header" href="./stack/rop/SROP/SROP.html#processos-e-signals" id="processos-e-signals"><h2>Processos e Signals</h2></a>
-<a class="header" href="./stack/rop/SROP/SROP.html#sigreturn" id="sigreturn"><h2>Sigreturn</h2></a>
+<h2 id="processos-e-signals"><a class="header" href="#processos-e-signals">Processos e Signals</a></h2>
+<h2 id="sigreturn"><a class="header" href="#sigreturn">Sigreturn</a></h2>
 <ul>
 <li><a href="https://www.tutorialspoint.com/unix_system_calls/sigreturn.htm">tutorialspoint</a></li>
 <li><a href="https://man7.org/linux/man-pages/man2/sigreturn.2.html">man sigreturn</a></li>
 </ul>
-<p>Quando o processo e interrompido, o kernel cria um <code>stack frame</code>
-para o <code>signal handler</code> (independentemente de padrão, ou
-implementado pelo programa)... Semelhantemente a quando ocorre uma
+<p>Quando o processo e interrompido, o kernel cria um <code>stack frame</code> 
+para o <code>signal handler</code> (independentemente de padrão, ou 
+implementado pelo programa)... Semelhantemente a quando ocorre uma 
 <code>call</code> !</p>
-<p>Assim como em funções (aonde os registers <code>non-scratch</code> precisam
-ser salvos), para criar o <code>signal handler</code> antes precisamos salvar
+<p>Assim como em funções (aonde os registers <code>non-scratch</code> precisam 
+ser salvos), para criar o <code>signal handler</code> antes precisamos salvar 
 o estado atual usando um struct <code>sigreturn context</code> !</p>
 <p><img src="./sigcontext_structure.jpg" alt="sigreturn context diagram" /></p>
 <p><img src="https://amriunix.com/img/Sigreturn-oriented-programming-SROP/sigcontext_structure.jpg" alt="" /></p>
 <p><a href="https://amriunix.com/img/Sigreturn-oriented-programming-SROP/sigcontext_structure.jpg">Fonte imagem: amriunix</a></p>
-<p>Para retornar, o <code>signal handler</code> nao pode usar um simples <code>ret</code>,
+<p>Para retornar, o <code>signal handler</code> nao pode usar um simples <code>ret</code>, 
 portanto usando a <code>syscall sigreturn</code> (<code>rax</code> = <code>0xf</code>)</p>
-<p>A syscall era consumir o <code>sigreturn context</code> e continuar execução
+<p>A syscall era consumir o <code>sigreturn context</code> e continuar execução 
 normalmente!</p>
 <p>Pera ai, e se nos criarmos um <code>sigreturn context</code> falso e chamarmos
-essa syscall manualmente????? Como se nos fossemos um
+essa syscall manualmente????? Como se nos fossemos um 
 <code>signal handler</code> retornando?????</p>
-<a class="header" href="./stack/rop/SROP/SROP.html#fake" id="fake"><h2>Fake</h2></a>
-<p>Para facilitar a criação desse struct, podemos usar o nosso
+<h2 id="fake"><a class="header" href="#fake">Fake</a></h2>
+<p>Para facilitar a criação desse struct, podemos usar o nosso 
 amigo pwntools: <a href="https://docs.pwntools.com/en/dev/rop/srop.html">pwntools SROP</a></p>
 <p>Criando um struct vazio, e preenchendo-o!</p>
 <pre><code class="language-py">frame = SigreturnFrame(arch=&quot;amd64&quot;)
@@ -147,23 +201,23 @@ frame.rdx = 1234
 frame.rip = 123
 </code></pre>
 <blockquote>
-<p>OBS: O struct e dependente da arquitetura, por exemplo, os
+<p>OBS: O struct e dependente da arquitetura, por exemplo, os 
 registers presente num processador ARM sao diferentes de um amd</p>
 </blockquote>
 <blockquote>
 <p>OBS 2: Voce nao coloca p64() nos valores, se nao buga sei la</p>
 </blockquote>
 <p>Agora, nos somente precisamos de uma chain que chame <code>sigreturn</code></p>
-<p>Eu imagino que voce possa chamar o wrapper em libc, mas para
+<p>Eu imagino que voce possa chamar o wrapper em libc, mas para 
 chamar a syscall basta executar!</p>
 <pre><code class="language-x86asm">mov rax, 0xf  ; 15
 syscall       ; ou int_80 em 32 bits sei la
 </code></pre>
-<a class="header" href="./stack/rop/SROP/SROP.html#exemplo-sem-leaks" id="exemplo-sem-leaks"><h1>Exemplo Sem leaks</h1></a>
+<h1 id="exemplo-sem-leaks"><a class="header" href="#exemplo-sem-leaks">Exemplo Sem leaks</a></h1>
 <p>Tabela de syscalls linux: <a href="https://filippo.io/linux-syscall-table/">filippo.io</a></p>
-<a class="header" href="./stack/rop/SROP/SROP.html#download" id="download"><h2>Download</h2></a>
+<h2 id="download"><a class="header" href="#download">Download</a></h2>
 <p><a href="https://github.com/guyinatuxedo/nightmare/blob/master/modules/16-srop/csaw19_smallboi/small_boi">nightmare: small_boi</a></p>
-<a class="header" href="./stack/rop/SROP/SROP.html#solução" id="solução"><h2>Solução</h2></a>
+<h2 id="solução"><a class="header" href="#solução">Solução</a></h2>
 <pre><code class="language-py">#!/usr/bin/python3
 from pwn import *
 
@@ -187,8 +241,8 @@ io.sendline(payload)
 io.interactive()
 
 </code></pre>
-<a class="header" href="./stack/rop/SROP/SROP.html#exemplo-com-leaks" id="exemplo-com-leaks"><h1>Exemplo Com Leaks</h1></a>
-<a class="header" href="./stack/rop/SROP/SROP.html#sropc" id="sropc"><h2>srop.c</h2></a>
+<h1 id="exemplo-com-leaks"><a class="header" href="#exemplo-com-leaks">Exemplo Com Leaks</a></h1>
+<h2 id="sropc"><a class="header" href="#sropc">srop.c</a></h2>
 <ul>
 <li><a href="https://amriunix.com/post/sigreturn-oriented-programming-srop/">amriunix</a></li>
 <li><a href="https://0x00sec.org/t/srop-signals-you-say/2890">0x00sec</a></li>
@@ -212,7 +266,7 @@ int main(){
        return 0;
 }
 </code></pre>
-<a class="header" href="./stack/rop/SROP/SROP.html#exploit" id="exploit"><h2>Exploit</h2></a>
+<h2 id="exploit"><a class="header" href="#exploit">Exploit</a></h2>
 <pre><code class="language-py">#!/usr/bin/python3
 from pwn import *
 
@@ -276,59 +330,42 @@ io.sendline(payload)
 io.interactive()
 </code></pre>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../stack/rop/ROPE/pivot.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../../stack/rop/ret2dlresolve.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="./stack/rop/ROPE/pivot.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="./stack/rop/ret2dlresolve.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="./stack/rop/ROPE/pivot.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="./stack/rop/ret2dlresolve.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../stack/rop/ROPE/pivot.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../../stack/rop/ret2dlresolve.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+        <script type="text/javascript">
+            window.playground_copyable = true;
         </script>
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-
+        <!-- Custom JS scripts -->
     </body>
 </html>

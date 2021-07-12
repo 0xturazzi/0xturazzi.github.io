@@ -1,141 +1,195 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="pt-br" class="sidebar-visible no-js ayu">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Mitigações - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
 
-        <base href="../">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
-        <link rel="shortcut icon" href="favicon.png">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <!-- Custom theme stylesheets -->
     </head>
-    <body class="light">
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="./mapa.html"><strong>1.</strong> Mapa</a></li><li class="spacer"></li><li><a href="./stack/stack.html"><strong>2.</strong> Stack</a></li><li><a href="./stack/phoenix/setup.html"><strong>3.</strong> Phoenix Stack</a></li><li><ul class="section"><li><a href="./stack/phoenix/StackZero.html"><strong>3.1.</strong> Stack Zero</a></li><li><a href="./stack/phoenix/StackOne.html"><strong>3.2.</strong> Stack One</a></li><li><a href="./stack/phoenix/StackTwo.html"><strong>3.3.</strong> Stack Two</a></li><li><a href="./stack/phoenix/StackThree.html"><strong>3.4.</strong> Stack Three</a></li><li><a href="./stack/phoenix/StackFour.html"><strong>3.5.</strong> Stack Four</a></li><li><a href="./stack/phoenix/StackFive.html"><strong>3.6.</strong> Stack Five</a></li><li><a href="./stack/phoenix/StackSix.html"><strong>3.7.</strong> Stack Six</a></li></ul></li><li><a href="./stack/mitigacoes.html" class="active"><strong>4.</strong> Mitigações</a></li><li><a href="./stack/ret2libc.html"><strong>5.</strong> Ret2LibC</a></li><li><ul class="section"><li><strong>5.1.</strong> Protostar Stack Six</li><li><strong>5.2.</strong> Avançado: Múltiplos ret2libc</li></ul></li><li><a href="./stack/gotplt.html"><strong>6.</strong> GOT e PLT</a></li><li><a href="./stack/rop/intro.html"><strong>7.</strong> ROP</a></li><li><ul class="section"><li><a href="./stack/rop/primitivos.html"><strong>7.1.</strong> Primitivos</a></li><li><ul class="section"><li><a href="./stack/rop/ROPE/dump.html"><strong>7.1.1.</strong> ROPE</a></li></ul></li><li><strong>7.2.</strong> Pivot</li><li><ul class="section"><li><a href="./stack/rop/ROPE/pivot.html"><strong>7.2.1.</strong> ROPE: pivot</a></li></ul></li><li><a href="./stack/rop/SROP/SROP.html"><strong>7.3.</strong> SROP</a></li><li><a href="./stack/rop/ret2dlresolve.html"><strong>7.4.</strong> ret2dl-resolve</a></li></ul></li><li><a href="./stack/ASLR/aslr.html"><strong>8.</strong> ASLR</a></li><li><ul class="section"><li><a href="./stack/ASLR/corromperGOT.html"><strong>8.1.</strong> Corromper GOT</a></li><li><a href="./stack/ASLR/ret2plt.html"><strong>8.2.</strong> ret2plt</a></li></ul></li><li><strong>9.</strong> Canary</li><li><strong>10.</strong> PIE</li><li><a href="./stack/leakAll.html"><strong>11.</strong> Extra: Leakando tudo</a></li><li class="spacer"></li><li><a href="./heap/heap.html"><strong>12.</strong> Heap</a></li><li><a href="./heap/intro.html"><strong>13.</strong> Intro</a></li><li><strong>14.</strong> Bugs Gerais</li><li><ul class="section"><li><strong>14.1.</strong> UAF</li><li><ul class="section"><li><a href="./heap/geral/uaf/heap-two.html"><strong>14.1.1.</strong> Exploit Education: Heap Two</a></li></ul></li></ul></li><li><a href="./heap/relacionados/relacionados.html"><strong>15.</strong> Conceitos Relacionados</a></li><li><ul class="section"><li><a href="./heap/relacionados/io_list_all.html"><strong>15.1.</strong> _IO_list_all</a></li></ul></li><li><a href="./heap/malloc/intro.html"><strong>16.</strong> Atacando Malloc</a></li><li><ul class="section"><li><a href="./heap/malloc/teoria.html"><strong>16.1.</strong> Teoria</a></li><li><a href="./heap/malloc/fastbinsDup.html"><strong>16.2.</strong> Fastbins Dup</a></li><li><a href="./heap/malloc/HouseOfForce.html"><strong>16.3.</strong> House of Force</a></li><li><a href="./heap/malloc/HouseOfSpirit.html"><strong>16.4.</strong> House of Spirit</a></li><li><a href="./heap/malloc/unsafeUnlink.html"><strong>16.5.</strong> Unsafe Unlink</a></li><li><a href="./heap/malloc/safeUnlink.html"><strong>16.6.</strong> Safe Unlink</a></li><li><a href="./heap/malloc/PartialUnlink.html"><strong>16.7.</strong> Unsorted bins: Partial Unlink</a></li><li><a href="./heap/malloc/HouseOfOrange.html"><strong>16.8.</strong> House of Orange</a></li><li><a href="./heap/malloc/HouseOfLore.html"><strong>16.9.</strong> House of Lore</a></li><li><strong>16.10.</strong> House of Rust</li><li><strong>16.11.</strong> House of Corrosion</li><li><strong>16.12.</strong> House of Einherjar</li></ul></li><li><strong>17.</strong> Extra</li><li class="spacer"></li><li><a href="./linux_internals/linux.html"><strong>18.</strong> Linux Internals</a></li><li><a href="./linux_internals/prerequisitos.html"><strong>19.</strong> Prerequisitos</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item expanded "><a href="../stack/mitigacoes.html" class="active">Mitigações</a></li><li class="chapter-item "><a href="../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item "><a href="../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
+            <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <ul>
-<li><a href="./stack/mitigacoes.html#dep--nx--wx">DEP | NX | W^X</a></li>
-<li><a href="./stack/mitigacoes.html#system-aslr">System ASLR</a></li>
-<li><a href="./stack/mitigacoes.html#pie">PIE</a></li>
-<li><a href="./stack/mitigacoes.html#relro">RELRO</a>
+                    <main>
+                        <ul>
+<li><a href="#dep--nx--wx">DEP | NX | W^X</a></li>
+<li><a href="#system-aslr">System ASLR</a></li>
+<li><a href="#pie">PIE</a></li>
+<li><a href="#relro">RELRO</a>
 <ul>
-<li><a href="./stack/mitigacoes.html#parcial">Parcial</a></li>
-<li><a href="./stack/mitigacoes.html#full">Full</a></li>
-<li><a href="./stack/mitigacoes.html#fontes-e-recursos-adicionais">Fontes e Recursos Adicionais</a></li>
+<li><a href="#parcial">Parcial</a></li>
+<li><a href="#full">Full</a></li>
+<li><a href="#fontes-e-recursos-adicionais">Fontes e Recursos Adicionais</a></li>
 </ul>
 </li>
-<li><a href="./stack/mitigacoes.html#canaries">Canaries</a></li>
-<li><a href="./stack/mitigacoes.html#outras">Outras</a>
+<li><a href="#canaries">Canaries</a></li>
+<li><a href="#outras">Outras</a>
 <ul>
-<li><a href="./stack/mitigacoes.html#linux">Linux</a>
+<li><a href="#linux">Linux</a>
 <ul>
-<li><a href="./stack/mitigacoes.html#pointer-guard">Pointer Guard</a></li>
+<li><a href="#pointer-guard">Pointer Guard</a></li>
 </ul>
 </li>
-<li><a href="./stack/mitigacoes.html#windows">Windows</a></li>
+<li><a href="#windows">Windows</a></li>
 </ul>
 </li>
 </ul>
-<a class="header" href="./stack/mitigacoes.html#dep--nx--wx" id="dep--nx--wx"><h1>DEP | NX | W^X</h1></a>
-<p>Todas essas pretendem impedir a execução de código em
+<h1 id="dep--nx--wx"><a class="header" href="#dep--nx--wx">DEP | NX | W^X</a></h1>
+<p>Todas essas pretendem impedir a execução de código em 
 partes da memoria que sejam &quot;escreviveis&quot;.</p>
-<p>Impedir que x atacante execute o código escrito
+<p>Impedir que x atacante execute o código escrito 
 pelx mesmx, previne que Shellcodes sejam usados! :D</p>
-<p>Assim, ou uma parte da memoria ou pode ser escrita, ou
-executável, mas nunca as duas simultaneamente:
+<p>Assim, ou uma parte da memoria ou pode ser escrita, ou 
+executável, mas nunca as duas simultaneamente: 
 <strong>W</strong>rite <strong>XOR(^)</strong> e<strong>X</strong>ecute</p>
-<p>Você vai ouvir pessoas usando os 3 nomes para representar
+<p>Você vai ouvir pessoas usando os 3 nomes para representar 
 esse conceito, e dependendo do contexto não tem problema!</p>
 <p>Porem eles são tecnicamente diferentes:</p>
-<p><strong>DEP</strong> (<strong>P</strong>revencao da <strong>E</strong>xecucao de <strong>D</strong>ados):
+<p><strong>DEP</strong> (<strong>P</strong>revencao da <strong>E</strong>xecucao de <strong>D</strong>ados): 
 a implementação do <strong>Windows</strong></p>
-<p><strong>N</strong>ao e<strong>X</strong>ecute: um bit que pode ser colocado para
+<p><strong>N</strong>ao e<strong>X</strong>ecute: um bit que pode ser colocado para 
 garantir a exclusão mutua em processadores <strong>AMD</strong>.</p>
-<p>Intel tem um outro nome, que eu não lembro...
+<p>Intel tem um outro nome, que eu não lembro... 
 e não importa o suficiente para eu pesquisar! :P</p>
 <blockquote>
-<p>Atualmente, a exclusão mutua de escrever e executar
-ocorre por meio de paging: o sistema operacional decide
-as permissões das paginas de memorias, e garante que uma
-não viole W^X . <strong>No momento que você esta lendo, isso
+<p>Atualmente, a exclusão mutua de escrever e executar 
+ocorre por meio de paging: o sistema operacional decide 
+as permissões das paginas de memorias, e garante que uma 
+não viole W^X . <strong>No momento que você esta lendo, isso 
 pode ter mudado!</strong></p>
 </blockquote>
-<a class="header" href="./stack/mitigacoes.html#system-aslr" id="system-aslr"><h1>System ASLR</h1></a>
-<p>ASLR randomiza os endereços das coisas na memoria! Porem
-com as suas limitações, dado que depende doo sistema
+<h1 id="system-aslr"><a class="header" href="#system-aslr">System ASLR</a></h1>
+<p>ASLR randomiza os endereços das coisas na memoria! Porem 
+com as suas limitações, dado que depende doo sistema 
 operacional!</p>
 <p>Cada OS implementa de um jeito, mas em geral se randomiza:</p>
 <ul>
@@ -144,50 +198,50 @@ operacional!</p>
 <li>Stack e Heap</li>
 </ul>
 <p><strong>Porem, o endereço do código não muda!</strong></p>
-<a class="header" href="./stack/mitigacoes.html#pie" id="pie"><h1>PIE</h1></a>
-<p>Para garantir que o código também tenha sua posição
+<h1 id="pie"><a class="header" href="#pie">PIE</a></h1>
+<p>Para garantir que o código também tenha sua posição 
 randomizada, o binário precisa ser compilado com PIE !</p>
-<p>PIE (<strong>E</strong>xecucao <strong>I</strong>ndependente da <strong>P</strong>osição) impede
+<p>PIE (<strong>E</strong>xecucao <strong>I</strong>ndependente da <strong>P</strong>osição) impede 
 que o codigo possa ser executado independente da sua<br />
 posição na memoria (duh :P)</p>
 <p>Para garantir isso, todos endereços precisam ser relativos ao invés de absolutos!</p>
-<pre><code>            Endereço	Instrução
+<pre><code>			Endereço	Instrução
 Sem PIE     0x0001	jmp 0x0003 &lt;- EIP	
-            0x0002	add 1 2
-            0x0003	add 1 3
+			0x0002	add 1 2
+			0x0003	add 1 3
 
 Com PIE     ------	jmp EIP+2  &lt;- EIP
-            ------	add 1 2
-            ------	add 1 3
+			------	add 1 2
+			------	add 1 3
 </code></pre>
-<p>No primeiro caso, se o executável mudar de endereço
-o <code>JMP</code> pularia para a instrução errada, por causa do
+<p>No primeiro caso, se o executável mudar de endereço 
+o <code>JMP</code> pularia para a instrução errada, por causa do 
 endereço absoluto.</p>
-<a class="header" href="./stack/mitigacoes.html#relro" id="relro"><h1>RELRO</h1></a>
+<h1 id="relro"><a class="header" href="#relro">RELRO</a></h1>
 <p>Realocacoes Read-only: Dividido em 2 tipos: Parcial e Full</p>
 <p>Atualmente, somente o RELRO Parcial vem como padrao no gcc</p>
 <ul>
 <li>PARCIAL: <code>gcc -Wl,-z,relro</code> ou nenhuma flag, em versoes modernas</li>
 <li>FULL: <code>gcc -Wl,-z,relro,-z,now</code></li>
 </ul>
-<a class="header" href="./stack/mitigacoes.html#parcial" id="parcial"><h2>Parcial</h2></a>
+<h2 id="parcial"><a class="header" href="#parcial">Parcial</a></h2>
 <ul>
-<li>As <code>sections</code> de dados do ELF (<code>got</code>,<code>dtors</code>,<code>ctors</code>) precedem as do programa
-(<code>data</code>,<code>bss</code>). Assim, caso tenha um BoF no programa a estrutura do ELF fica
-intacta.</li>
+<li>As <code>sections</code> de dados do ELF (<code>got</code>,<code>dtors</code>,<code>ctors</code>) precedem as do programa 
+(<code>data</code>,<code>bss</code>). Assim, caso tenha um BoF no programa a estrutura do ELF fica 
+intacta. </li>
 </ul>
-<a class="header" href="./stack/mitigacoes.html#full" id="full"><h2>Full</h2></a>
+<h2 id="full"><a class="header" href="#full">Full</a></h2>
 <ul>
 <li>Tudo do parcial</li>
 <li>Re-Mapeia a GOT como <code>r--</code>, impedindo que a usemos para ganhar execucao.</li>
 </ul>
-<p>Porem para fazer isso torna-se nescessario pre-resolver todas as calls
-dinamicas. Assim. desativando <code>RTLD_LAZY</code> e consequentemente tornando a
+<p>Porem para fazer isso torna-se nescessario pre-resolver todas as calls 
+dinamicas. Assim. desativando <code>RTLD_LAZY</code> e consequentemente tornando a 
 inicializacao mais lenta.</p>
-<p>Da nossa perspectiva, ficamos com opcoes reduzidas para execucao de codigo,
-tendo de usar tecnicas como corromper os <code>malloc hooks</code> ou o <code>vtable</code> pointer
+<p>Da nossa perspectiva, ficamos com opcoes reduzidas para execucao de codigo, 
+tendo de usar tecnicas como corromper os <code>malloc hooks</code> ou o <code>vtable</code> pointer 
 do <code>stdio</code>. (mais sobre esses no futuro!)</p>
-<a class="header" href="./stack/mitigacoes.html#fontes-e-recursos-adicionais" id="fontes-e-recursos-adicionais"><h2>Fontes e Recursos Adicionais</h2></a>
+<h2 id="fontes-e-recursos-adicionais"><a class="header" href="#fontes-e-recursos-adicionais">Fontes e Recursos Adicionais</a></h2>
 <ul>
 <li><a href="https://www.trapkit.de/articles/relro/">trapkit: RELRO A (not so well known) Exploit Mitigation Technique</a></li>
 <li><a href="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/em386/Self-Protecting-GOT.html">Self Protecting GOT</a></li>
@@ -195,65 +249,48 @@ do <code>stdio</code>. (mais sobre esses no futuro!)</p>
 <hr />
 <p>TODO</p>
 <hr />
-<a class="header" href="./stack/mitigacoes.html#canaries" id="canaries"><h1>Canaries</h1></a>
-<a class="header" href="./stack/mitigacoes.html#outras" id="outras"><h1>Outras</h1></a>
-<a class="header" href="./stack/mitigacoes.html#linux" id="linux"><h2>Linux</h2></a>
-<a class="header" href="./stack/mitigacoes.html#pointer-guard" id="pointer-guard"><h3>Pointer Guard</h3></a>
-<a class="header" href="./stack/mitigacoes.html#windows" id="windows"><h2>Windows</h2></a>
+<h1 id="canaries"><a class="header" href="#canaries">Canaries</a></h1>
+<h1 id="outras"><a class="header" href="#outras">Outras</a></h1>
+<h2 id="linux"><a class="header" href="#linux">Linux</a></h2>
+<h3 id="pointer-guard"><a class="header" href="#pointer-guard">Pointer Guard</a></h3>
+<h2 id="windows"><a class="header" href="#windows">Windows</a></h2>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../stack/phoenix/StackSix.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../stack/ret2libc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="./stack/phoenix/StackSix.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="./stack/ret2libc.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="./stack/phoenix/StackSix.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
-
-            
-                <a href="./stack/ret2libc.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../stack/phoenix/StackSix.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../stack/ret2libc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
-
-        <!-- Local fallback for Font Awesome -->
-        <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+        <script type="text/javascript">
+            window.playground_copyable = true;
         </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-
+        <!-- Custom JS scripts -->
     </body>
 </html>
