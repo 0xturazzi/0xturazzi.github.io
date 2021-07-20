@@ -187,6 +187,19 @@ chunk_C = malloc(0x98)  # chunk consolidação: size &gt;= 0x90
 chunk_D = malloc(0x98)  # Prevenir consolidação TOP
 
 free(chunk_B)
+
+
+OBS: Caso o libc tenha &quot;prev vs prev size&quot; (&gt; 2.26) :
+  Precisaríamos forjar um PREV_SIZE falso pro chunk_B
+  (ele deve ficar na posição do prev_size caso o chunk_B ja 
+  tivesse sido reduzido (0x300-0x10))
+
+  edit(chunk_B, &quot;\x00&quot;*(0x2f0) + p16(0x300))
+  free(chunk_B)
+
+Para simplificar, vamos assumir uma versão mais antiga do libc
+  
+
  _______________  chunk_A
 |               |
 |               |
@@ -359,12 +372,6 @@ da habilidade de escrever NULLBYTES
 Para burlar isso, vamos simplesmente dar free() nele, gerando 
 pointers legítimos
 
-
-OBS: Caso o libc tenha &quot;prev vs prev size&quot; :
-  Também precisaríamos forjar um PREV_SIZE falso no meio do chunk_B
-  
-  Para simplificar, vamos assumir uma versão mais antiga do libc
-  
 free(chunk_B1)
 
  _______________  chunk_A
