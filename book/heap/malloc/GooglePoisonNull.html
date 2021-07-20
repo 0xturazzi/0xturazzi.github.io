@@ -194,7 +194,7 @@ OBS: Caso o libc tenha &quot;prev vs prev size&quot; (&gt; 2.26) :
   (ele deve ficar na posição do prev_size caso o chunk_B ja 
   tivesse sido reduzido (pad = 0x300-0x10))
 
-  edit(chunk_B, &quot;\x00&quot;*(0x2f0) + p16(0x300))
+  edit(chunk_B, &quot;\x00&quot;*0x2f0 + p16(0x300))
   free(chunk_B)
 
 Para simplificar, vamos assumir uma versão mais antiga do libc
