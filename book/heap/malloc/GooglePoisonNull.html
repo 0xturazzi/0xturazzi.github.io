@@ -480,11 +480,10 @@ espaço DIFF), ou os próprios pointers do chunk_B2
 
 </code></pre>
 <p>Agora com esse primitivo, voce poderia fazer muitas coisas, 
-por exemplo, um heap leak: </p>
+por exemplo, um libc leak: </p>
 <ul>
-<li><code>chunk_E</code> = <code>malloc()</code> naquele <code>chunk_B1 + chunk_C</code></li>
-<li><code>free</code>(<code>chunk_B2</code>)</li>
-<li><code>read</code>(<code>chunk_E</code>) </li>
+<li><code>chunk_E</code> = <code>malloc</code>(<code>size chunk_B1</code>)</li>
+<li><code>read</code>(<code>chunk_B2</code>)</li>
 </ul>
 
                     </main>
